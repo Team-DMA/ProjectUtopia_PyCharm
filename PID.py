@@ -31,7 +31,7 @@ class PID(object):
         self.buffer = self.difference * self.timeForARun + self.buffer
         
         #Haupt PID
-        self.output = compensatedInput + self.output + self.Kp * self.difference + self.Ki * self.buffer  + self.Kd * ((self.difference - self.difference_before) / self.timeForARun)
+        self.output = compensatedInput + self.output + self.Kp * self.difference + self.Ki * self.buffer  + self.Kd * ((self.difference_before - self.difference) / self.timeForARun)
         
         self.difference_before = self.difference
 
