@@ -60,4 +60,4 @@ class PID(object):
         
         print("Motorausgang = %f" % (self.output/self.maxOutput)*15)
         
-        return (self.output/self.maxOutput)*15
+        return -(self.output/self.maxOutput)*15
