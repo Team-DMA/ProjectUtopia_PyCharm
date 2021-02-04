@@ -81,7 +81,7 @@ if __name__ == "__main__":
 
                         speed = RcvWifiThread.targetSpeedFB
                         turn = RcvWifiThread.rotateStrength
-                        PID_CONTROL_CLASS.control(GYRO_CLASS.x_rotation, speed, turn, gyroCompensation)
+                        PID_CONTROL_CLASS.control(GYRO_CLASS.y_rotation, speed, turn, gyroCompensation)
 
                     else:
                         SELFDRIVING_CLASS.drive()
