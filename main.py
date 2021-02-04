@@ -41,7 +41,6 @@ SELFDRIVING_CLASS = None
 print ("Main-Class INIT finished.")
 
 if __name__ == "__main__":
-
     try:
         while True:
             try:
