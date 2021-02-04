@@ -45,11 +45,19 @@ class PID(object):
         if(self.output > self.maxOutput):
             self.output = self.maxOutput
             self.controlError = True
+            self.output = 0.0
+            self.buffer = 0.0
+            self.difference = 0.0
+            self.difference_before = 0.0
 
         if(self.output < -self.maxOutput):
             self.output = -self.maxOutput
             self.controlError = True
+            self.output = 0.0
+            self.buffer = 0.0
+            self.difference = 0.0
+            self.difference_before = 0.0
         
         print("Ausgang = %f" % self.output)
         
-        return self.Ausgang
+        return self.output
