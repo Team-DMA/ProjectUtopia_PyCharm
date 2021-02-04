@@ -59,7 +59,7 @@ if __name__ == "__main__":
 
                         print("Const. INIT finished.")
 
-                if(RcvWifiThread.KonstantenReceived == True and Kp != 0.0 and Ki != 0.0 and Kd != 0.0):
+                if(RcvWifiThread.KonstantenReceived == True):
 
                     if(RcvWifiThread.neueDaten == True):
                         print("\nTargetSpeedFB: "+str(RcvWifiThread.targetSpeedFB))
