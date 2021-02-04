@@ -54,7 +54,7 @@ class PID_CONTROL(object):
 
     def control(self, x_rotation, speed: int, turn: int, Gyrokompensation: float):
 
-        #if(self.PID_CLASS.controlError):
+        #if(self.PID_CLASS.controlError == False):
        print ("speed: %d" % speed)
        if (turn < 0 and speed > 0):
             self.speedleft = max(0, speed + turn)
