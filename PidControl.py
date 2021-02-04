@@ -37,7 +37,8 @@ class PID_CONTROL(object):
 
     def selfrighting(self, x_rotation, Gyrokompensation: float):
 
-        i=1000
+        print("selfrighting")
+        i = 1000
 
         while (i != 0):
             self.MOTOR_CONTROL_CLASS.setSpeed(-15)
