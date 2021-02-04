@@ -58,6 +58,6 @@ class PID(object):
             self.difference = 0.0
             self.difference_before = 0.0
         
-        print("Motorausgang = %f" % (self.output/self.maxOutput)*15)
+        print("Motorausgang = %f" % (self.output/self.maxOutput)*-15)
         
-        return -(self.output/self.maxOutput)*15
+        return -(self.output/self.maxOutput)*-15
