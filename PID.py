@@ -19,7 +19,7 @@ class PID(object):
 
         #muss noch angepasst werden
         self.maxBuffer = 100.0
-        self.maxOutput = 30.0
+        self.maxOutput = 50.0
 
 
         print("PID iniziiert")

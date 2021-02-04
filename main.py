@@ -56,7 +56,7 @@ if __name__ == "__main__":
                         # Klassen init
                         PID_CONTROL_CLASS = PID_CONTROL(MOTOR_CONTROL_CLASS, Kp, Ki, Kd)
                         if PID_CONTROL_CLASS is None:
-                            print("ERROR")
+                            print("PID_CLASS not defined")
                         SELFDRIVING_CLASS = SELFDRIVING(GYRO_CLASS, ECHO_CLASS, PID_CONTROL_CLASS, gyroCompensation)
 
                         print("Const. INIT finished.")
