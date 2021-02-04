@@ -54,8 +54,8 @@ if __name__ == "__main__":
                         Kd = RcvWifiThread.Kd
 
                         # Klassen init
-                        #PID_CONTROL_CLASS = PID_CONTROL(MOTOR_CONTROL_CLASS, Kp, Ki, Kd)
-                        #SELFDRIVING_CLASS = SELFDRIVING(GYRO_CLASS, ECHO_CLASS, PID_CONTROL_CLASS, gyroCompensation)
+                        PID_CONTROL_CLASS = PID_CONTROL(MOTOR_CONTROL_CLASS, Kp, Ki, Kd)
+                        SELFDRIVING_CLASS = SELFDRIVING(GYRO_CLASS, ECHO_CLASS, PID_CONTROL_CLASS, gyroCompensation)
 
                         print("Const. INIT finished.")
 
@@ -79,7 +79,7 @@ if __name__ == "__main__":
 
                         speed = RcvWifiThread.targetSpeedFB
                         turn = RcvWifiThread.rotateStrength
-                        #PID_CONTROL_CLASS.control(GYRO_CLASS.x_rotation, speed, turn, gyroCompensation)
+                        PID_CONTROL_CLASS.control(GYRO_CLASS.x_rotation, speed, turn, gyroCompensation)
 
                     else:
                         SELFDRIVING_CLASS.drive()
