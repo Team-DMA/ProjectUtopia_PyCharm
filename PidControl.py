@@ -12,7 +12,7 @@ class PID_CONTROL(object):
         self.Kd = Kd
         self.speedleft = 0
         self.speedright = 0
-        self.i = 100
+        self.i = 10
         #übergebene Klassen
         self.PID_CLASS = PID(self.Kp, self.Ki, self.Kd)
         self.MOTOR_CONTROL_CLASS = MotorControlClass
@@ -44,12 +44,12 @@ class PID_CONTROL(object):
             self.MOTOR_CONTROL_CLASS.setSpeed(-15)
             self.i = self.i - 1
 
-        if (abs(x_rotation - Gyrokompensation) > 25):
+        if (abs(x_rotation - Gyrokompensation) > 40):
             self.MOTOR_CONTROL_CLASS.setSpeed(15)
 
-        if (abs(x_rotation - Gyrokompensation) < 30 ):
-            self.PID_CLASS.regelerror = False
-            self.i = 100
+        if (abs(x_rotation - Gyrokompensation) < 45 ):
+            self.PID_CLASS.controlError = False
+            self.i = 10
             
 
     def control(self, x_rotation, speed: int, turn: int, Gyrokompensation: float):
