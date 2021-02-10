@@ -6,14 +6,15 @@ class PID_CONTROL(object):
 
     def __init__(self, MotorControlClass: MOTOR_CONTROL, Kp, Ki, Kd):
 
-        #übergebene Variablen
+        #given variables
         self.Kp = Kp
         self.Ki = Ki
         self.Kd = Kd
-        self.speedleft = 0
-        self.speedright = 0
+        self.speedLeft = 0
+        self.speedRight = 0
         self.i = 10
-        #übergebene Klassen
+
+        #given Classes
         self.PID_CLASS = PID(self.Kp, self.Ki, self.Kd)
         self.MOTOR_CONTROL_CLASS = MotorControlClass
         
@@ -21,71 +22,71 @@ class PID_CONTROL(object):
         print("Kp = {0}".format(self.Kp))
         print("Ki = {0}".format(self.Ki))
         print("Kd = {0}".format(self.Kd))
-        print("pid_control iniziiert")
+        print("PID_CONTROL initialized")
 
 
-    def motor_adj(self, x_rotation, speed, turn, Gyrokompensation:float):
+    def motor_adj(self, rotation, speed, turn, gyroCompensation: float):
       
         #ich weiß nicht, ob das funktioniert, gegebenenfalls muss auch noch turn miteinbezogen werden
         #Der veränderte Sollwert soll dafür sorgen, das sich die Drohne nach vorne/hinten kippt, wenn man speed verwendet.
         #vielleicht würde es auch reichen, den Speed nur über den Sollwert für den Regler zu steuern, da er dadurch automatisch nach vorne/hinten fährt.
-        sollwert = speed * 2
+        setpoint = speed * 2
 
-        geregelterWert = self.PID_CLASS.pid(x_rotation, sollwert, Gyrokompensation) #PID_CLASS.pid gibt Ausgang zurück
-        return geregelterWert
-
-
-    def selfrighting(self, x_rotation, Gyrokompensation: float):
-
-        print("selfrighting")
+        changedValue = self.PID_CLASS.pid(rotation, setpoint, gyroCompensation) #PID_CLASS.pid gibt Ausgang zurück
+        return changedValue
 
 
-        if (self.i != 0):
+    def selfrighting(self, x_rotation, gyroCompensation: float):
+
+        print("self righting")
+
+
+        if self.i != 0:
             self.MOTOR_CONTROL_CLASS.setSpeed(-15)
             self.i = self.i - 1
 
-        if (abs(x_rotation - Gyrokompensation) > 40):
+        if abs(x_rotation - Gyrokompensation) > 40:
             self.MOTOR_CONTROL_CLASS.setSpeed(15)
 
-        if (abs(x_rotation - Gyrokompensation) < 45 ):
+        if abs(x_rotation - Gyrokompensation) < 45:
             self.PID_CLASS.controlError = False
             self.i = 10
             
 
-    def control(self, x_rotation, speed: int, turn: int, Gyrokompensation: float):
+    def control(self, rotation, speed: int, turn: int, gyroCompensation: float):
 
         #if(self.PID_CLASS.controlError == False):
        print ("speed: %d" % speed)
-       if (turn < 0 and speed > 0):
-            self.speedleft = max(0, speed + turn)
-            self.speedright = speed
-       elif (turn > 0 and speed > 0):
-            self.speedright = max(0, speed - turn)
-            self.speedleft = speed
-       elif (turn < 0 and speed < 0):
-            self.speedleft = -max(0, abs(speed - turn))
-            self.speedright = speed
-       elif (turn > 0 and speed < 0):
-            self.speedright = -max(0, abs(speed + turn))
-            self.speedleft = speed
-       elif (speed == 0 and turn != 0):
-            self.speedleft = turn
-            self.speedright = -turn
-       elif (turn == 0 and speed != 0):
-            self.speedleft = speed
-            self.speedright = speed
+       if turn < 0 and speed > 0:
+            self.speedLeft = max(0, speed + turn)
+            self.speedRight = speed
+       elif turn > 0 and speed > 0:
+            self.speedRight = max(0, speed - turn)
+            self.speedLeft = speed
+       elif turn < 0 and speed < 0:
+            self.speedLeft = -max(0, abs(speed - turn))
+            self.speedRight = speed
+       elif turn > 0 and speed < 0:
+            self.speedRight = -max(0, abs(speed + turn))
+            self.speedLeft = speed
+       elif speed == 0 and turn != 0:
+            self.speedLeft = turn
+            self.speedRight = -turn
+       elif turn == 0 and speed != 0:
+            self.speedLeft = speed
+            self.speedRight = speed
        else:
-            self.speedleft = 0
-            self.speedright = 0
+            self.speedLeft = 0
+            self.speedRight = 0
 
 
-       motoranpassung = self.motor_adj(x_rotation, speed, turn, Gyrokompensation)
+       motorAdj = self.motor_adj(rotation, speed, turn, gyroCompensation)
        #motoranpassung = 0
-       print("Speedleft %d" % (self.speedleft + motoranpassung))
-       print("Speedright %d" % (self.speedright + motoranpassung))
+       print("speedLeft %d" % (self.speedLeft + motorAdj))
+       print("speedRight %d" % (self.speedRight + motorAdj))
 
-       self.MOTOR_CONTROL_CLASS.setSpeedL(self.speedleft + motoranpassung)
-       self.MOTOR_CONTROL_CLASS.setSpeedR(self.speedright + motoranpassung)
+       self.MOTOR_CONTROL_CLASS.setSpeedL(self.speedLeft + motorAdj)
+       self.MOTOR_CONTROL_CLASS.setSpeedR(self.speedRight + motorAdj)
             
         #else:
-        #   self.selfrighting(x_rotation, Gyrokompensation)
+        #   self.selfrighting(rotation, gyroCompensation)

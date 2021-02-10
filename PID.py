@@ -2,62 +2,63 @@ class PID(object):
 
     def __init__(self, Kp:float, Ki:float, Kd:float):
         
-        #übergebene Variablen
+        #given Variables
         self.Kp = Kp
         self.Ki = Ki
         self.Kd = Kd
         
-        #Variablen intiieren
+        #Variablen init
         self.output = 0.0
         self.buffer = 0.0
         self.difference = 0.0
-        self.difference_before = 0.0
+        self.differenceBefore = 0.0
         self.controlError = False
 
-        #Gemessen
+        #measured
         self.timeForARun = 0.00009
 
-        #muss noch angepasst werden
+        #still has to be adjusted
         self.maxBuffer = 100.0
         self.maxOutput = 50.0
 
 
-        print("PID iniziiert")
+        print("PID initialized")
         
-    def pid(self, input, Sollwert, gyroCompensation:float):
+    def pid(self, input, setpoint, gyroCompensation:float):
 
         compensatedInput = input - gyroCompensation
-        self.difference = Sollwert - self.output
+        self.difference = setpoint - self.output
         self.buffer = self.difference * self.timeForARun + self.buffer
         
-        #Haupt PID
-        self.output = compensatedInput + self.output + self.Kp * self.difference + self.Ki * self.buffer  + self.Kd * ((self.difference_before - self.difference) / self.timeForARun)
+        #main PID
+        self.output = compensatedInput + self.output + self.Kp * self.difference + self.Ki * self.buffer  + self.Kd * \
+                      ((self.differenceBefore - self.difference) / self.timeForARun)
         
-        self.difference_before = self.difference
+        self.differenceBefore = self.difference
 
-        #Abfangen extremer Werte
-        if(self.buffer > self.maxBuffer):
+        #Catch of extreme values
+        if self.buffer > self.maxBuffer:
             self.buffer = self.maxBuffer
 
-        if(self.buffer < -self.maxBuffer):
+        if self.buffer < -self.maxBuffer:
             self.buffer = -self.maxBuffer
 
-        if(self.output > self.maxOutput):
+        if self.output > self.maxOutput:
             self.output = self.maxOutput
             self.controlError = True
             self.output = 0.0
             self.buffer = 0.0
             self.difference = 0.0
-            self.difference_before = 0.0
+            self.differenceBefore = 0.0
 
-        if(self.output < -self.maxOutput):
+        if self.output < -self.maxOutput:
             self.output = -self.maxOutput
             self.controlError = True
             self.output = 0.0
             self.buffer = 0.0
             self.difference = 0.0
-            self.difference_before = 0.0
+            self.differenceBefore = 0.0
         
-        print("Motorausgang = %f" % int(round((self.output/self.maxOutput)*-15)))
+        print("motor output = %f" % int(round((self.output/self.maxOutput)*-15)))
         
         return int(round((self.output/self.maxOutput)*-15))

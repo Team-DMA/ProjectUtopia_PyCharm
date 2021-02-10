@@ -21,7 +21,7 @@ class ECHO(threading.Thread):
 
         self.start()
 
-        print("Ultraschall-Messer iniziiert")
+        print("Ultrasonic distance measurement system initialized")
 
     def run(self):
 
@@ -30,17 +30,17 @@ class ECHO(threading.Thread):
             GPIO.output(self.trigger, True)
             time.sleep(0.00001)
             GPIO.output(self.trigger, False)
-            starttime = time.time()
-            stoptime = time.time()
+            startTime = time.time()
+            stopTime = time.time()
             while (GPIO.input(self.echo)==0):
 
-                starttime = time.time()
+                startTime = time.time()
 
             while (GPIO.input(self.echo)==1):
 
-                stoptime = time.time()
+                stopTime = time.time()
 
-            duration = stoptime - starttime
-            self.distance = (duration * 34300) / 2
+            duration = stopTime - startTime
+            self.distance = (duration * 34320) / 2
 
             time.sleep(0.5)

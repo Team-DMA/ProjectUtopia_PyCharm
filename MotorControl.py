@@ -2,9 +2,10 @@ import RPi.GPIO as GPIO
 
 class MOTOR_CONTROL(object):
 
-    def __init__(self, enPinL: int,enPinR: int, inForewardPinL: int, inBackwardPinL: int,inForewardPinR: int, inBackwardPinR: int):
+    def __init__(self, enPinL: int,enPinR: int, inForwardPinL: int, inBackwardPinL: int,inForwardPinR: int,
+                 inBackwardPinR: int):
         
-        self.inForewardPinL = inForewardPinL
+        self.inForwardPinL = inForwardPinL
         GPIO.setup(inForewardPinL, GPIO.OUT)
         GPIO.output(inForewardPinL, False)
  
@@ -14,7 +15,7 @@ class MOTOR_CONTROL(object):
  
         GPIO.setup(enPinL, GPIO.OUT)
 
-        self.inForewardPinR = inForewardPinR
+        self.inForwardPinR = inForwardPinR
         GPIO.setup(inForewardPinR, GPIO.OUT)
         GPIO.output(inForewardPinL, False)
  
@@ -30,7 +31,7 @@ class MOTOR_CONTROL(object):
         self.pwmR.start(0)
         self.pwmL.ChangeDutyCycle(0)
         self.pwmR.ChangeDutyCycle(0)
-        print("motorcontrol iniziiert")
+        print("motorcontrol initialized")
 
 
     def setSpeedL(self, speed: int):
@@ -41,10 +42,10 @@ class MOTOR_CONTROL(object):
         forceL = min(15, abs(speed))
         #print ("forceL %d" % forceL)
 
-        if (speed > 0):
+        if speed > 0:
             GPIO.output(self.inBackwardPinL, False)
             GPIO.output(self.inForewardPinL, True)
-        elif (speed < 0):
+        elif speed < 0:
             GPIO.output(self.inForewardPinL, False)
             GPIO.output(self.inBackwardPinL, True)
         else:
@@ -65,10 +66,10 @@ class MOTOR_CONTROL(object):
         forceR = min(15, abs(speed))
         #print ("forceR %d" % forceR)
 
-        if (speed > 0):
+        if speed > 0:
             GPIO.output(self.inBackwardPinR, False)
             GPIO.output(self.inForewardPinR, True)
-        elif (speed < 0):
+        elif speed < 0:
             GPIO.output(self.inForewardPinR, False)
             GPIO.output(self.inBackwardPinR, True)
         else:
@@ -81,41 +82,41 @@ class MOTOR_CONTROL(object):
             self.pwmR.ChangeDutyCycle(0)
 
 
-    def setSpeed(self,speed: int):
+    def setSpeed(self, speed: int):
 
         self.setSpeedL(speed)
         self.setSpeedR(speed)
-        #print("Geschwindigkeit auf %f" % speed)
+        #print("speed: %f" % speed)
 
 
-    def turnLeft(speed: int):
+    def turnLeft(self, speed: int):
 
-        setSpeedL(0)
-        setSpeedR(speed)
-        print("links drehen")
-
-
-    def turnRight(speed: int):
-
-        setSpeedR(0)
-        setSpeedL(speed)
-        print("rechts drehen")
+        self.setSpeedL(0)
+        self.setSpeedR(speed)
+        print("turn left")
 
 
-    def forward(speed: int):
+    def turnRight(self, speed: int):
 
-        if(speed > 0):
-            setSpeed(speed)
-            print("Vorwaerts")
-
-
-    def backward(speed: int):
-
-        if(speed < 0):
-            setSpeed(speed)
-            print("Rueckwaerts")
+        self.setSpeedR(0)
+        self.setSpeedL(speed)
+        print("turn right")
 
 
-    def stopp():
+    def forward(self, speed: int):
 
-        setSpeed(0)
+        if speed > 0:
+            self.setSpeed(speed)
+            print("Forwards")
+
+
+    def backward(self, speed: int):
+
+        if speed < 0:
+            self.setSpeed(speed)
+            print("Backwards")
+
+
+    def stop(self):
+
+        self.setSpeed(0)

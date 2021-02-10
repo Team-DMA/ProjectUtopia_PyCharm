@@ -12,32 +12,32 @@ class GYRO(object):
         #Register
         self.power_mgmt_1 = 0x6b
 
-        self.bus = smbus.SMBus(1) # bus = smbus.SMBus(0) fuer Revision 1
+        self.bus = smbus.SMBus(1) # bus = smbus.SMBus(0) for Revision 1
         
-        self.address = 0x68       # via i2cdetect, Addresse rausfinden!
+        self.address = 0x68       # via i2c detect, address research!
         self.bus.write_byte_data(self.address, 0x19, 7)
         
-        # Aktivieren, um das Modul ansprechen zu koennen
+        # activate to communicate with the module
         self.bus.write_byte_data(self.address, self.power_mgmt_1, 1)
         self.bus.write_byte_data(self.address, 0x1A, 0)
         self.bus.write_byte_data(self.address, 0x1B, 24)
         self.bus.write_byte_data(self.address, 0x38, 1)
         
-        self.gyroskop_x = 0
-        self.gyroskop_y = 0
-        self.gyroskop_z = 0
-        self.gyroskop_x_skaliert = 0
-        self.gyroskop_y_skaliert = 0
-        self.gyroskop_z_skaliert = 0
-        self.beschleunigung_x = 0
-        self.beschleunigung_y = 0
-        self.beschleunigung_z = 0
-        self.beschleunigung_x_skaliert = 0
-        self.beschleunigung_y_skaliert = 0
-        self.beschleunigung_z_skaliert = 0
-        self.x_rotation = 0
-        self.y_rotation = 0
-        print("Gyroskop iniziiert")
+        self.gyroscopeX = 0
+        self.gyroscopeY = 0
+        self.gyroscopeZ = 0
+        self.gyroscopeXScaled = 0
+        self.gyroscopeYScaled = 0
+        self.gyroscopeZScaled = 0
+        self.accelerationX = 0
+        self.accelerationY = 0
+        self.accelerationZ = 0
+        self.accelerationXScaled = 0
+        self.accelerationYScaled = 0
+        self.accelerationZScaled = 0
+        self.xRotation = 0
+        self.yRotation = 0
+        print("gyroscope initialized")
 
 
     #Methoden
@@ -57,7 +57,7 @@ class GYRO(object):
     def read_word_2c(self,reg):
 
         val = self.read_word(reg)
-        if (val >= 0x8000):
+        if val >= 0x8000:
             return -((65535 - val) + 1)
         else:
             return val
@@ -82,38 +82,40 @@ class GYRO(object):
 
     def read_gyro(self):
         
-        #self.gyroskop_x = self.read_word_2c(0x43)
-        #self.gyroskop_y = self.read_word_2c(0x45)
-        #self.gyroskop_z = self.read_word_2c(0x47)
+        self.gyroscopeX = self.read_word_2c(0x43)
+        self.gyroscopeY = self.read_word_2c(0x45)
+        self.gyroscopeZ = self.read_word_2c(0x47)
 
-        #self.gyroskop_x_skaliert = self.gyroskop_x / 131
-        #self.gyroskop_y_skaliert = self.gyroskop_y / 131
-        #self.gyroskop_z_skaliert = self.gyroskop_z / 131
+        self.gyroscopeXScaled = self.gyroscopeX / 131
+        self.gyroscopeYScaled = self.gyroscopeY / 131
+        self.gyroscopeZScaled = self.gyroscopeZ / 131
 
-        self.beschleunigung_x = self.read_word_2c(0x3b)
-        self.beschleunigung_y = self.read_word_2c(0x3d)
-        self.beschleunigung_z = self.read_word_2c(0x3f)
+        self.accelerationX = self.read_word_2c(0x3b)
+        self.accelerationY = self.read_word_2c(0x3d)
+        self.accelerationZ = self.read_word_2c(0x3f)
      
-        self.beschleunigung_x_skaliert = self.beschleunigung_x / 16384.0
-        self.beschleunigung_y_skaliert = self.beschleunigung_y / 16384.0
-        self.beschleunigung_z_skaliert = self.beschleunigung_z / 16384.0
+        self.accelerationXScaled = self.accelerationX / 16384.0
+        self.accelerationYScaled = self.accelerationY / 16384.0
+        self.accelerationZScaled = self.accelerationZ / 16384.0
 
-        self.x_rotation = self.get_x_rotation(self.beschleunigung_x_skaliert, self.beschleunigung_y_skaliert, self.beschleunigung_z_skaliert)
-        self.y_rotation = self.get_y_rotation(self.beschleunigung_x_skaliert, self.beschleunigung_y_skaliert, self.beschleunigung_z_skaliert)
+        self.xRotation = self.get_x_rotation(self.accelerationXScaled, self.accelerationYScaled,
+                                             self.accelerationZScaled)
+        self.yRotation = self.get_y_rotation(self.accelerationXScaled, self.accelerationYScaled,
+                                             self.accelerationZScaled)
         
-        #print("gyroskop_x = %f" % self.gyroskop_x)
-        #print("gyroskop_y = %f" % self.gyroskop_y)
-        #print("gyroskop_z = %f" % self.gyroskop_z)
-        #print("gyroskop_x_skaliert = %f" % self.gyroskop_x_skaliert)
-        #print("gyroskop_y_skaliert = %f" % self.gyroskop_y_skaliert)
-        #print("gyroskop_z_skaliert = %f" % self.gyroskop_z_skaliert)
-        #print("beschleunigung_x = %f" % self.beschleunigung_x)
-        #print("beschleunigung_y = %f" % self.beschleunigung_x)
-        #print("beschleunigung_z = %f" % self.beschleunigung_x)
-        #print("beschleunigung_x_skaliert = %f" % self.beschleunigung_x_skaliert)
-        #print("beschleunigung_y_skaliert = %f" % self.beschleunigung_x_skaliert)
-        #print("beschleunigung_z_skaliert = %f" % self.beschleunigung_x_skaliert)
-        print("x_rotation = %f" % self.x_rotation)
-        print("y_rotation = %f" % self.y_rotation)
+        print("gyroscopeX = %f" % self.gyroscopeX)
+        print("gyroscopeY = %f" % self.gyroscopeY)
+        print("gyroscopeZ = %f" % self.gyroscopeZ)
+        print("gyroscopeXScaled = %f" % self.gyroscopeXScaled)
+        print("gyroscopeYScaled = %f" % self.gyroscopeYScaled)
+        print("gyroscopeZScaled = %f" % self.gyroscopeZScaled)
+        print("accelerationX = %f" % self.accelerationX)
+        print("accelerationY = %f" % self.accelerationY)
+        print("accelerationZ = %f" % self.accelerationZ)
+        print("accelerationXScaled = %f" % self.accelerationXScaled)
+        print("accelerationYScaled = %f" % self.accelerationYScaled)
+        print("accelerationZScaled = %f" % self.accelerationZScaled)
+        print("xRotation = %f" % self.xRotation)
+        print("yRotation = %f" % self.yRotation)
     
 
