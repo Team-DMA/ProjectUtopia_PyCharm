@@ -4,18 +4,16 @@ from PidControl import PID_CONTROL
 
 
 class SELFDRIVING(object):
-  
+
     def __init__(self, GyroClass: GYRO, EchoClass: ECHO, PidClass: PID_CONTROL, gyroCompensation):
-    
-        #given Variables
-        self.gyroCompensation = gyroCompensation  
-        
-        #given Classes
+
+        # given Variables
+        self.gyroCompensation = gyroCompensation
+
+        # given Classes
         self.ECHO_CLASS = EchoClass
         self.PID_CONTROL_CLASS = PidClass
         self.GYRO_CLASS = GyroClass
-
-
 
     def detect(self):
 
@@ -23,7 +21,6 @@ class SELFDRIVING(object):
             return True
         else:
             return False
-      
 
     def drive(self):
 

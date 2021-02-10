@@ -40,7 +40,7 @@ PID_CONTROL_CLASS = None
 SELFDRIVING_CLASS = None
 
 
-print ("Main-Class INIT finished.")
+print("Main-Class INIT finished.")
 
 if __name__ == "__main__":
     try:
@@ -79,8 +79,8 @@ if __name__ == "__main__":
                         # read gyroscope
                         GYRO_CLASS.read_gyro()
 
-                        distance = ECHO_CLASS.distance # Debug
-                        print("Debug distance: " + str(distance)) # Debug
+                        distance = ECHO_CLASS.distance  # Debug
+                        print("Debug distance: " + str(distance))  # Debug
 
                         speed = RCV_WIFI_MODULE_CLASS.targetSpeedFB
                         turn = RCV_WIFI_MODULE_CLASS.rotateStrength

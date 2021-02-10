@@ -9,11 +9,13 @@ class RCV_WIFI_MODULE(threading.Thread):
         threading.Thread.__init__(self)
         self.daemon = True
 
-        #VAR INIT
+        # VAR INIT
         self.udpIp = ""
         self.udpPort = 12345
         self.pingPort = 12346
-        self.smartphoneIP = 0
+        self.smartphoneIp = 0
+        self.ip = 0
+        self.port = 0
         self.sock = None
         self.data = None
         self.targetSpeedFB = 0
@@ -25,8 +27,8 @@ class RCV_WIFI_MODULE(threading.Thread):
         self.constantsReceived = False
         self.error = False
 
-        self.sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
-        self.sock.bind((self.udpIp,self.udpPort))
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.sock.bind((self.udpIp, self.udpPort))
 
         self.start()
 
@@ -34,21 +36,20 @@ class RCV_WIFI_MODULE(threading.Thread):
 
     def run(self):
 
-        #global newData
-        #newData = False
+        # global newData
+        # newData = False
 
         print("\nOwn IP: " + str(socket.gethostbyname(socket.gethostname() + ".local")))
-
 
         print("\nWait for first Data from Smartphone..")
         while True:
 
             if not self.newData:
 
-                #start = float(time.process_time()) #debug time measurement
+                # start = float(time.process_time()) #debug time measurement
 
-                self.data, (self.ip, self.port) = self.sock.recvfrom(1024) # buffer size is 1024 bytes
-                self.smartphoneIP = self.ip # set Smartphone IP
+                self.data, (self.ip, self.port) = self.sock.recvfrom(1024)  # buffer size is 1024 bytes
+                self.smartphoneIp = self.ip  # set Smartphone IP
 
                 if self.data is not None:
                     length = len(self.data)
@@ -56,7 +57,8 @@ class RCV_WIFI_MODULE(threading.Thread):
                     try:
 
                         if self.data.decode("utf-8").count("|") == 3:
-                            print("\nConnection initialization: send {0} Bytes back to {1}:{2}".format(length, self.ip, self.pingPort))
+                            print("\nConnection initialization: send {0} Bytes back to {1}:{2}".format(length, self.ip,
+                                                                                                       self.pingPort))
 
                             readableString = self.data.decode("utf-8")
                             randomBytes, Kp, Ki, Kd = readableString.split("|")
@@ -77,26 +79,27 @@ class RCV_WIFI_MODULE(threading.Thread):
                             print("strengthL: " + strengthL + ", strengthR: " + strengthR)
 
                             self.targetSpeedFB = int(strengthL)
-                            self.rotateStrength = int(strengthR)                        
+                            self.rotateStrength = int(strengthR)
 
-                            #print("\n cycletime: " + str(float(float(time.process_time()) - float(start)))) #debug zeitmessung
-                            
+                            # print("\n cycle time: " + str(float(float(time.process_time()) - float(start))))
+                            # debug cycle time
+
                             self.newData = True
                         else:
                             self.error = True
                     except Exception as e:
-                        print("\nWifi Error: "+ str(e))
-             
-                        
+                        print("\nWifi Error: " + str(e))
+
+
 class SEND_WIFI_MODULE(threading.Thread):
 
     def __init__(self):
         threading.Thread.__init__(self)
         self.daemon = True
 
-        #VAR INIT
-        self.smartphoneIP = 0
-        self.SEND_PORT = 12348
+        # VAR INIT
+        self.smartphoneIp = 0
+        self.sendPort = 12348
         self.sendFlag = True
         self.msg = ""
 
@@ -110,11 +113,11 @@ class SEND_WIFI_MODULE(threading.Thread):
 
             time.sleep(1)
 
-            if self.smartphoneIP != 0:
+            if self.smartphoneIp != 0:
 
                 if self.msg != "":
 
-                    #prepare data:
+                    # prepare data:
                     data = bytearray(self.msg, "UTF-8")
 
                     #
@@ -125,10 +128,9 @@ class SEND_WIFI_MODULE(threading.Thread):
 
                         try:
                             sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-                            sock.sendto(data, (self.Smartphone_IP, self.SEND_PORT))
-                            #print("Msg: '"+str(self.msg)+"' send to: "+str(self.Smartphone_IP)+":"+str(self.SEND_PORT))
+                            sock.sendto(data, (self.smartphoneIp, self.sendPort))
+                            # print("Msg: '"+str(self.msg)+"' send to: "+str(self.smartphoneIp)+":"+str(self.sendPort))
                             self.sendFlag = True
 
                         except Exception as e:
-                                print("\nWifi Error: "+ str(e))
-               
+                            print("\nWifi Error: " + str(e))

@@ -9,8 +9,6 @@ from i2clibraries import i2c_hmc5883l
 # cTemp MSB, cTemp CSB, cTemp LSB, pressure MSB, pressure CSB, pressure LSB
 
 
-
-
 class BAROMETER(object):
 
     def __init__(self):
@@ -65,15 +63,15 @@ class BAROMETER(object):
         self.getaltitude()
         return self.altitude
 
-class KOMPASS(object):
 
+class COMPASS(object):
     def __init__(self):
      
-        self.hmc5883l = i2c_hmc5883l.i2c_hmc5883l(1) #wenn nicht das erste I2C Gerät muss die Eins geändert werden
+        self.hmc5883l = i2c_hmc5883l.i2c_hmc5883l(1)  # if not the first I2C Device, the 1 has to be changed
 
         self.hmc5883l.setContinuousMode()
         self.hmc5883l.setDeclination(2, 15)
 
-    def kompass(self):
+    def compass(self):
 
         return self.hmc58831

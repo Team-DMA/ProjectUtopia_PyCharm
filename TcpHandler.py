@@ -13,9 +13,9 @@ class TCP_HANDLER(threading.Thread):
         self.bufferSize = 20
 
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.sock.bind((self.tcpIp,self.tcpPort))
+        self.sock.bind((self.tcpIp, self.tcpPort))
         self.sock.listen(1)
-        
+
         self.start()
         print("\nTCP Handler init.")
 
@@ -23,14 +23,14 @@ class TCP_HANDLER(threading.Thread):
 
         print("\nwait for first TCP Data")
         while True:
-            
+
             connection, client_address = self.sock.accept()
 
             try:
-                #print("\nConnection from: "+str(client_address))
+                # print("\nConnection from: "+str(client_address))
                 data = connection.recv(self.bufferSize)
 
             except Exception as e:
-                        print("\nTCP-Handler Error: "+ str(e))
+                print("\nTCP-Handler Error: " + str(e))
             finally:
                 connection.close()
