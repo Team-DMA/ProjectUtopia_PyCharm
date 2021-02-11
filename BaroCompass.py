@@ -76,6 +76,8 @@ class COMPASS(object):
         xMag = data[0] * 256 + data[1]
         if xMag > 32767:
             xMag -= 65536
+        xMag = xMag - 1048 # offset
+
 
         zMag = data[2] * 256 + data[3]
         if zMag > 32767:
@@ -84,6 +86,7 @@ class COMPASS(object):
         yMag = data[4] * 256 + data[5]
         if yMag > 32767:
             yMag -= 65536
+        yMag = yMag - 2048 # offset
 
         [x, y] = [xMag + 1048, yMag + 2048]
 
