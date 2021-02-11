@@ -113,4 +113,5 @@ class GYRO(object):
 
 
 temp = GYRO()
-temp.read_gyro()
+while True:
+    temp.read_gyro()
