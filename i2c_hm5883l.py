@@ -39,7 +39,7 @@ class HMC5883(object):
 
     def __init__(self, address=0x1e, busnum=-1, gauss=1.3, debug=False):
         self.debug = debug
-        self.i2c = i2c_core(address, busnum=busnum, debug=debug, )
+        self.i2c = i2c_core(address, busnum=busnum, debug=debug)
         self.i2c.write_8(self.ConfigurationRegisterA, 0b01110000)  # Set to 8 samples @ 15Hz
         self.set_scale(gauss, debug=debug)
         self.set_continuous_mode()  # Continuous sampling
