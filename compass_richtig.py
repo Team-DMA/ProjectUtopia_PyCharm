@@ -59,7 +59,7 @@ while True:
     z = (read_raw_data(Z_axis_H) - Z_OFFSET) * SCALE
     y = (read_raw_data(Y_axis_H) - Y_OFFSET) * SCALE
 
-    heading = math.atan2(z, y) + declination
+    heading = math.atan2(y, x) + declination
 
     # Due to declination check for >360 degree
     if (heading > 2 * pi):
