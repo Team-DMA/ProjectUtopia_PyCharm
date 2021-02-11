@@ -11,10 +11,12 @@ X_axis_H = 0x03  # Address of X-axis MSB data register
 Z_axis_H = 0x05  # Address of Z-axis MSB data register
 Y_axis_H = 0x07  # Address of Y-axis MSB data register
 
-X_OFFSET = 0
+X_OFFSET = 1048
 Z_OFFSET = 0
-Y_OFFSET = 0
-SCALE = 0.92
+Y_OFFSET = 1148
+X_SCALE = (1/4.5)
+Z_SCALE = 1.0
+Y_SCALE = 1.0
 declination = 2.916666
 
 pi = 3.14159265359  # define pi value
@@ -55,9 +57,9 @@ print(" Reading Heading Angle")
 while True:
 
     # Read Accelerometer raw value
-    x = (read_raw_data(X_axis_H) - X_OFFSET) * SCALE
-    z = (read_raw_data(Z_axis_H) - Z_OFFSET) * SCALE
-    y = (read_raw_data(Y_axis_H) - Y_OFFSET) * SCALE
+    x = (read_raw_data(X_axis_H) - X_OFFSET) * X_SCALE
+    z = (read_raw_data(Z_axis_H) - Z_OFFSET) * Z_SCALE
+    y = (read_raw_data(Y_axis_H) - Y_OFFSET) * Y_SCALE
 
     heading = math.atan2(y, x) + declination
 
