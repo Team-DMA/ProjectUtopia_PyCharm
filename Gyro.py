@@ -116,4 +116,4 @@ class GYRO(object):
 temp = GYRO()
 while True:
     temp.read_gyro()
-    time.sleep(1)
+    time.sleep(0.2)
