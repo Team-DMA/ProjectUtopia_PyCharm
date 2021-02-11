@@ -48,17 +48,17 @@ class BAROMETER(object):
         # Convert the data to 20-bits
         self.altitude = (((data[0] & 0x0F) * 65536) + (data[1] * 256) + data[2]) / 100.00
   
-    def temp(self):
+    def Temperature(self):
 
         self.gettemp()
         return self.cTemp
 
-    def pressure(self):
+    def Pressure(self):
 
         self.gettemp()
         return self.pressure
 
-    def altitude(self):
+    def Altitude(self):
 
         self.getaltitude()
         return self.altitude
@@ -72,7 +72,7 @@ class COMPASS(object):
         self.hmc5883l.setContinuousMode()
         self.hmc5883l.setDeclination(2, 15)
 
-    def compass(self):
+    def Compass(self):
 
         return self.hmc58831
 
@@ -80,8 +80,8 @@ class COMPASS(object):
 temp1 = BAROMETER()
 temp2 = COMPASS()
 while True:
-    print(str(temp1.temp()))
-    print(str(temp1.pressure()))
-    print(str(temp1.altitude()))
-    print(str(temp2.compass()))
+    print(str(temp1.Temperature()))
+    print(str(temp1.Pressure()))
+    print(str(temp1.Altitude()))
+    print(str(temp2.Compass()))
     time.sleep(0.2)
