@@ -93,7 +93,7 @@ class COMPASS(object):
             b = math.degrees(math.atan2(y, x))
             if b < 0:
                 b += 360.0
-            b += self._declination
+            b += 2.91666667
             if b < 0.0:
                 b += 360.0
             elif b >= 360.0:
