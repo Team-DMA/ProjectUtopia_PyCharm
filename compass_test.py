@@ -14,7 +14,7 @@ Register_mode = 0x02  # Address of mode register
 X_axis_H = 0x03  # Address of X-axis MSB data register
 Z_axis_H = 0x05  # Address of Z-axis MSB data register
 Y_axis_H = 0x07  # Address of Y-axis MSB data register
-declination = -0.00669  # define declination angle of location where measurement going to be done
+declination = 2.9166666666666666666666666666667  # define declination angle of location where measurement going to be done
 pi = 3.14159265359  # define pi value
 
 
