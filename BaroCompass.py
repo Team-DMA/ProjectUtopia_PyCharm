@@ -1,7 +1,7 @@
 import time
 
 import smbus
-import i2c_hmc5883l
+import i2c_QMC5883L
 
 
 # HP206C address, 0x76(118)
@@ -60,12 +60,10 @@ class BAROMETER(object):
 
 class COMPASS(object):
     def __init__(self):
-        self.hmc5883l = i2c_hmc5883l.HMC5883()  # if not the first I2C Device, the 1 has to be changed
-
-        self.hmc5883l.set_declination(2, 15)
+        self.hmc5883l = i2c_QMC5883L.QMC5883L()  # if not the first I2C Device, the 1 has to be changed
 
     def Compass(self):
-        tmp123 = self.hmc5883l.get_axes()
+        tmp123 = self.hmc5883l.get_magnet()
         return tmp123
 
 
