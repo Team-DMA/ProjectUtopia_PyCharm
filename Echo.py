@@ -32,9 +32,9 @@ class ECHO(threading.Thread):
             GPIO.output(self.trigger, False)
             startTime = time.time()
             stopTime = time.time()
-            while GPIO.input(self.echo) == 0:
+            # while GPIO.input(self.echo) == 0:
 
-                startTime = time.time()
+            #    startTime = time.time()
 
             while GPIO.input(self.echo) == 1:
 
