@@ -1,7 +1,7 @@
 import time
 
 import smbus
-from i2clibraries import i2c_hmc5883l
+import i2c_hmc5883l
 
 
 # HP206C address, 0x76(118)
