@@ -14,8 +14,8 @@ class ECHO(threading.Thread):
         self.trigger = trigger
         self.echo = echo
         self.distance = 0.0
-        self.startTime
-        self.stopTime
+        self.startTime = 0
+        self.stopTime = 0
 
 
         GPIO.setup(self.trigger, GPIO.OUT)
