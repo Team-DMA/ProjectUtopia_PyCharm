@@ -34,4 +34,5 @@ class GPS(object):
 
 temp = GPS()
 while True:
+    temp.gps()
     print(str(temp.get_latitude()) + ", " + str(temp.get_longitude()))
