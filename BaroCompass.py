@@ -76,5 +76,11 @@ class COMPASS(object):
 
         return self.hmc58831
 
+
 temp1 = BAROMETER()
-temp2 = COMPASS
+temp2 = COMPASS()
+while True:
+    print(str(temp1.temp()))
+    print(str(temp1.pressure()))
+    print(str(temp1.altitude()))
+    print(str(temp2.compass()))

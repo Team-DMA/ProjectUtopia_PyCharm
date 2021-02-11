@@ -15,8 +15,8 @@ pinMotorLeftBackwards = 33
 pinMotorRightBackwards = 35
 pinEnMotorLeft = 37
 pinEnMotorRight = 38
-pinEchoTrigger = 8
-pinEchoEcho = 10
+pinEchoTrigger = 16
+pinEchoEcho = 18
 
 Kp = 0.0
 Ki = 0.0
