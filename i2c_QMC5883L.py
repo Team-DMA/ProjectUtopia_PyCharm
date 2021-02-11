@@ -25,7 +25,7 @@ __email__ = "niccolo@rigacci.org"
 __version__ = "0.1.4"
 
 DFLT_BUS = 1
-DFLT_ADDRESS = 0x0d
+DFLT_ADDRESS = 0x1e
 
 REG_XOUT_LSB = 0x00     # Output Data Registers for magnetic sensor.
 REG_XOUT_MSB = 0x01
