@@ -49,6 +49,7 @@ class ECHO(threading.Thread):
             time.sleep(0.5)
 
 
+GPIO.setmode(GPIO.BOARD)
 temp = ECHO(16, 18)
 while True:
     print(str(temp.distance))
