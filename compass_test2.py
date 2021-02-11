@@ -29,19 +29,19 @@ def write_byte(adr, value):
     bus.write_byte_data(address, adr, value)
 
 
-write_byte(0, 0b01110000)  # Set to 8 samples @ 15Hz
-write_byte(1, 0b00100000)  # 1.3 gain LSb / Gauss 1090 (default)
-write_byte(2, 0b00000000)  # Continuous sampling
+while True:
+    write_byte(0, 0b01110000)  # Set to 8 samples @ 15Hz
+    write_byte(1, 0b00100000)  # 1.3 gain LSb / Gauss 1090 (default)
+    write_byte(2, 0b00000000)  # Continuous sampling
 
-scale = 0.92
+    scale = 0.92
 
-x_out = read_word_2c(3) * scale
-y_out = read_word_2c(7) * scale
-z_out = read_word_2c(5) * scale
+    x_out = read_word_2c(3) * scale
+    y_out = read_word_2c(7) * scale
+    z_out = read_word_2c(5) * scale
 
-bearing = math.atan2(y_out, x_out)
-if (bearing < 0):
-    bearing += 2 * math.pi
+    bearing = math.atan2(y_out, x_out)
+    if bearing < 0:
+        bearing += 2 * math.pi
 
-print
-"Bearing: ", math.degrees(bearing)
+    print("Bearing: ", math.degrees(bearing))
