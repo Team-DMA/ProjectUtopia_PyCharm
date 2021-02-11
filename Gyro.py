@@ -112,4 +112,5 @@ class GYRO(object):
         print("yRotation = %f" % self.yRotation)
 
 
-GYRO.read_gyro()
+temp = GYRO()
+temp.read_gyro()
