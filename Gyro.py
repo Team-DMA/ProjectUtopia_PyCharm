@@ -113,7 +113,7 @@ class GYRO(object):
         print("yRotation = %f" % self.yRotation)
 
 
-#temp = GYRO()
-#while True:
-#    temp.read_gyro()
-#    time.sleep(0.2)
+temp = GYRO()
+while True:
+    temp.read_gyro()
+    time.sleep(0.2)
