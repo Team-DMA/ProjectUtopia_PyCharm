@@ -1,4 +1,6 @@
 import serial
+import time
+import string
 import pynmea2
 
 
@@ -32,5 +34,4 @@ class GPS(object):
 
 temp = GPS()
 while True:
-    print(str(temp.get_latitude()))
-    print(str(temp.get_longitude()))
+    print(str(temp.get_latitude()) + ", " + str(temp.get_longitude()))
