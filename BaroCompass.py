@@ -60,7 +60,7 @@ class BAROMETER(object):
 
 class COMPASS(object):
     def __init__(self):
-        self.hmc5883l = i2c_QMC5883L.QMC5883L()  # if not the first I2C Device, the 1 has to be changed
+        self.hmc5883l = i2c_QMC5883L.QMC5883L(output_range=i2c_QMC5883L.RNG_8G)  # if not the first I2C Device, the 1 has to be changed
 
     def Compass(self):
         tmp123 = self.hmc5883l.get_magnet()
