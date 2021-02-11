@@ -9,5 +9,5 @@ def parseGPS(str):
 serialPort = serial.Serial("/dev/ttyAMA0", 9600, timeout=0.5)
 
 while True:
-    str = serialPort.readline()
-    parseGPS(str)
+    str1 = serialPort.readline()
+    parseGPS(str1)
