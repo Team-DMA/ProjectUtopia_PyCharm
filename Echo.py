@@ -14,6 +14,9 @@ class ECHO(threading.Thread):
         self.trigger = trigger
         self.echo = echo
         self.distance = 0.0
+        self.startTime
+        self.stopTime
+
 
         GPIO.setup(self.trigger, GPIO.OUT)
         GPIO.setup(self.echo, GPIO.IN)
@@ -30,17 +33,17 @@ class ECHO(threading.Thread):
             GPIO.output(self.trigger, True)
             time.sleep(0.00001)
             GPIO.output(self.trigger, False)
-            startTime = time.time()
-            stopTime = time.time()
+            self.startTime = time.time()
+            self.stopTime = time.time()
             # while GPIO.input(self.echo) == 0:
 
-            #    startTime = time.time()
+            #    self.startTime = time.time()
 
             while GPIO.input(self.echo) == 1:
 
-                stopTime = time.time()
+                self.stopTime = time.time()
 
-            duration = stopTime - startTime
+            duration = self.stopTime - self.startTime
             self.distance = (duration * 34320) / 2
 
             time.sleep(0.5)
