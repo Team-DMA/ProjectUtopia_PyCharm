@@ -34,10 +34,10 @@ class ECHO(threading.Thread):
             time.sleep(0.00001)
             GPIO.output(self.trigger, False)
             self.startTime = time.time()
-            self.stopTime = time.time()
-            while GPIO.input(self.echo) == 0:
+            # self.stopTime = time.time()
+            # while GPIO.input(self.echo) == 0:
 
-                self.startTime = time.time()
+            #     self.startTime = time.time()
 
             while GPIO.input(self.echo) == 1:
 
