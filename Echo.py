@@ -17,7 +17,6 @@ class ECHO(threading.Thread):
         self.startTime = 0
         self.stopTime = 0
 
-
         GPIO.setup(self.trigger, GPIO.OUT)
         GPIO.setup(self.echo, GPIO.IN)
         GPIO.output(self.trigger, False)
