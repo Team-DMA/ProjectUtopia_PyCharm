@@ -47,3 +47,7 @@ class ECHO(threading.Thread):
             self.distance = (duration * 34320) / 2
 
             time.sleep(0.5)
+
+temp = ECHO()
+while True:
+    print(str(temp.distance))
