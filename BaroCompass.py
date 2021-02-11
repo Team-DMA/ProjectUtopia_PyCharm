@@ -84,3 +84,4 @@ while True:
     print(str(temp1.pressure()))
     print(str(temp1.altitude()))
     print(str(temp2.compass()))
+    time.sleep(0.2)

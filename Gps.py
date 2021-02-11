@@ -28,3 +28,9 @@ class GPS(object):
 
     def get_longitude(self):
         return self.lng
+
+
+temp = GPS()
+while True:
+    print(str(temp.get_latitude()))
+    print(str(temp.get_longitude()))
