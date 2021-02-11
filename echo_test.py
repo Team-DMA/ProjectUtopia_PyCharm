@@ -3,7 +3,7 @@ import RPi.GPIO as GPIO
 import time
 
 # GPIO definieren (Modus, Pins, Output)
-GPIO.setmode(GPIO.BCM)
+GPIO.setmode(GPIO.BOARD)
 GPIO_TRIGGER = 16
 GPIO_ECHO = 18
 GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
