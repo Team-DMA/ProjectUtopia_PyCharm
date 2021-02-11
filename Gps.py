@@ -8,7 +8,7 @@ class GPS(object):
 
     def __init__(self):
 
-        port = "dev/ttyAMA0"
+        port = "/dev/ttyAMA0"
         self.ser = serial.Serial(port, baudrate=9600, timeout=0.5)
         self.lat = 0.0
         self.lng = 0.0
