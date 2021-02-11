@@ -20,7 +20,7 @@ class GPS(object):
         dataout = pynmea2.NMEAStreamReader()  # no idea what that is for
         newData = self.ser.readline()
 
-        if newData[0:6] == "$GPRMC":
+        if newData[0:6] == "$GPGLL":
             newMessage = pynmea2.parse(newData)
             self.lat = newMessage.latitude
             self.lng = newMessage.longitude
