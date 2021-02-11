@@ -110,3 +110,6 @@ class GYRO(object):
         print("accelerationZScaled = %f" % self.accelerationZScaled)
         print("xRotation = %f" % self.xRotation)
         print("yRotation = %f" % self.yRotation)
+
+
+GYRO.read_gyro()

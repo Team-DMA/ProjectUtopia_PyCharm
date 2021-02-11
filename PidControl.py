@@ -82,8 +82,8 @@ class PID_CONTROL(object):
         print("speedLeft %d" % (self.speedLeft + motorAdj))
         print("speedRight %d" % (self.speedRight + motorAdj))
 
-        # self.MOTOR_CONTROL_CLASS.setSpeedL(self.speedLeft + motorAdj)
-        # self.MOTOR_CONTROL_CLASS.setSpeedR(self.speedRight + motorAdj)
+        self.MOTOR_CONTROL_CLASS.setSpeedL(self.speedLeft + motorAdj)
+        self.MOTOR_CONTROL_CLASS.setSpeedR(self.speedRight + motorAdj)
 
         # else:
         #   self.selfrighting(rotation, gyroCompensation)
