@@ -28,5 +28,5 @@ while True:
         yMag -= 65536
 
     # Output data to screen
-    print("X-Axis : %d" % xMag + ", Y-Axis : %d" % yMag + ", Z-Axis : %d" % zMag)
+    print("X-Axis : %d" % (xMag-1048.0) + ", Y-Axis : %d" % (yMag-2048.0) + ", Z-Axis : %d" % (zMag-41.5))
     time.sleep(1)
