@@ -12,7 +12,7 @@
 # ==================================================
 
 import math
-import i2c_core
+from i2c_core import i2c_core
 
 
 class HMC5883(object):
