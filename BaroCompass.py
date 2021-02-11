@@ -66,7 +66,7 @@ class COMPASS(object):
         self.hmc5883l.setDeclination(2, 15)
 
     def Compass(self):
-        tmp123 = self.hmc5883l.getHeadingString()
+        tmp123 = self.hmc5883l.getHeading()
         return tmp123
 
 
