@@ -1,5 +1,5 @@
 import time
-
+import math
 import smbus
 import i2c_QMC5883L
 
@@ -60,11 +60,49 @@ class BAROMETER(object):
 
 class COMPASS(object):
     def __init__(self):
-        self.hmc5883l = i2c_QMC5883L.QMC5883L(output_range=i2c_QMC5883L.RNG_8G)  # if not the first I2C Device, the 1 has to be changed
+        # Get I2C bus
+        self.bus = smbus.SMBus(1)
+
+        # HMC5883 address, 0x1E
+        self.bus.write_byte_data(0x1E, 0x00, 0x60)
+        self.bus.write_byte_data(0x1E, 0x02, 0x00)
+        # self.hmc5883l = i2c_QMC5883L.QMC5883L(output_range=i2c_QMC5883L.RNG_8G)  # if not the first I2C Device, the 1 has to be changed
 
     def Compass(self):
-        tmp123 = self.hmc5883l.get_magnet()
-        return tmp123
+        # HMC5883 address, 0x1E and Read data
+        data = self.bus.read_i2c_block_data(0x1E, 0x03, 6)
+
+        # Convert the data
+        xMag = data[0] * 256 + data[1]
+        if xMag > 32767:
+            xMag -= 65536
+
+        zMag = data[2] * 256 + data[3]
+        if zMag > 32767:
+            zMag -= 65536
+
+        yMag = data[4] * 256 + data[5]
+        if yMag > 32767:
+            yMag -= 65536
+
+        [x, y] = [xMag, yMag]
+
+        if x is None or y is None:
+            return None
+        else:
+            b = math.degrees(math.atan2(y, x))
+            if b < 0:
+                b += 360.0
+            b += self._declination
+            if b < 0.0:
+                b += 360.0
+            elif b >= 360.0:
+                b -= 360.0
+        return b
+        # Output data to screen
+        # print("X-Axis : %d" % xMag + ", Y-Axis : %d" % yMag + ", Z-Axis : %d" % zMag)
+        # tmp123 = self.hmc5883l.get_magnet()
+        # return tmp123
 
 
 temp1 = BAROMETER()
