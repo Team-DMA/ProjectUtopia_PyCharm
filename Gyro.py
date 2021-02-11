@@ -76,13 +76,13 @@ class GYRO(object):
 
     def read_gyro(self):
 
-        self.gyroscopeX = self.read_word_2c(0x43)
-        self.gyroscopeY = self.read_word_2c(0x45)
-        self.gyroscopeZ = self.read_word_2c(0x47)
+        # self.gyroscopeX = self.read_word_2c(0x43)
+        # self.gyroscopeY = self.read_word_2c(0x45)
+        # self.gyroscopeZ = self.read_word_2c(0x47)
 
-        self.gyroscopeXScaled = self.gyroscopeX / 131
-        self.gyroscopeYScaled = self.gyroscopeY / 131
-        self.gyroscopeZScaled = self.gyroscopeZ / 131
+        # self.gyroscopeXScaled = self.gyroscopeX / 131
+        # self.gyroscopeYScaled = self.gyroscopeY / 131
+        # self.gyroscopeZScaled = self.gyroscopeZ / 131
 
         self.accelerationX = self.read_word_2c(0x3b)
         self.accelerationY = self.read_word_2c(0x3d)
@@ -97,23 +97,9 @@ class GYRO(object):
         self.yRotation = self.get_y_rotation(self.accelerationXScaled, self.accelerationYScaled,
                                              self.accelerationZScaled)
 
-        print("gyroscopeX = %f" % self.gyroscopeX)
-        print("gyroscopeY = %f" % self.gyroscopeY)
-        print("gyroscopeZ = %f" % self.gyroscopeZ)
-        print("gyroscopeXScaled = %f" % self.gyroscopeXScaled)
-        print("gyroscopeYScaled = %f" % self.gyroscopeYScaled)
-        print("gyroscopeZScaled = %f" % self.gyroscopeZScaled)
-        print("accelerationX = %f" % self.accelerationX)
-        print("accelerationY = %f" % self.accelerationY)
-        print("accelerationZ = %f" % self.accelerationZ)
-        print("accelerationXScaled = %f" % self.accelerationXScaled)
-        print("accelerationYScaled = %f" % self.accelerationYScaled)
-        print("accelerationZScaled = %f" % self.accelerationZScaled)
-        print("xRotation = %f" % self.xRotation)
-        print("yRotation = %f" % self.yRotation)
 
-
-temp = GYRO()
-while True:
-    temp.read_gyro()
-    time.sleep(0.2)
+# debug
+# temp = GYRO()
+# while True:
+#     temp.read_gyro()
+#     time.sleep(0.2)

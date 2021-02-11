@@ -48,6 +48,8 @@ class ECHO(threading.Thread):
 
             time.sleep(0.5)
 
+
 temp = ECHO()
 while True:
     print(str(temp.distance))
+    time.sleep(0.2)

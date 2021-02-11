@@ -75,3 +75,6 @@ class COMPASS(object):
     def compass(self):
 
         return self.hmc58831
+
+temp1 = BAROMETER()
+temp2 = COMPASS
