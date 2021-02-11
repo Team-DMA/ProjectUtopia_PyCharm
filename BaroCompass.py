@@ -65,7 +65,7 @@ class COMPASS(object):
         self.hmc5883l.set_declination(2, 15)
 
     def Compass(self):
-        tmp123 = self.hmc5883l.get_heading()
+        tmp123 = self.hmc5883l.get_axes()
         return tmp123
 
 
