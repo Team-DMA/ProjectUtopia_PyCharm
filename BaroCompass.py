@@ -62,11 +62,10 @@ class COMPASS(object):
     def __init__(self):
         self.hmc5883l = i2c_hmc5883l.i2c_hmc5883l(1)  # if not the first I2C Device, the 1 has to be changed
 
-        self.hmc5883l.setContinuousMode()
-        self.hmc5883l.setDeclination(2, 15)
+        self.hmc5883l.set_declination(2, 15)
 
     def Compass(self):
-        tmp123 = self.hmc5883l.getHeading()
+        tmp123 = self.hmc5883l.get_heading()
         return tmp123
 
 
