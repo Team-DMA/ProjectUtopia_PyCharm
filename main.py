@@ -100,8 +100,10 @@ if __name__ == "__main__":
     except Exception as e:
         print("Main-Error: " + str(e))
         GPIO.cleanup()
+
     except KeyboardInterrupt:
         print("Program manually aborted.")
         GPIO.cleanup()
+
     finally:
         GPIO.cleanup()
