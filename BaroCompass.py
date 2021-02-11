@@ -85,7 +85,7 @@ class COMPASS(object):
         if yMag > 32767:
             yMag -= 65536
 
-        [x, y] = [xMag, yMag]
+        [x, y] = [xMag + 1048, yMag + 2048]
 
         if x is None or y is None:
             return None
