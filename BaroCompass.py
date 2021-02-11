@@ -85,8 +85,8 @@ class COMPASS(object):
         if yMag > 32767:
             yMag -= 65536
 
-        [x, y] = [xMag + 1048, yMag + 2048]
-        print("X-Axis : %d" % xMag + ", Y-Axis : %d" % (yMag + 2048) + ", Z-Axis : %d" % zMag)
+        [x, y] = [xMag, yMag]
+        print("X-Axis : %d" % (xMag) + ", Y-Axis : %d" % (yMag) + ", Z-Axis : %d" % zMag)
         if x is None or y is None:
             return None
         else:
