@@ -39,7 +39,6 @@ GPS_CLASS = GPS()
 PID_CONTROL_CLASS = None
 SELFDRIVING_CLASS = None
 
-
 print("Main-Class INIT finished.")
 
 if __name__ == "__main__":
@@ -48,9 +47,9 @@ if __name__ == "__main__":
             try:
                 if Kp == 0.0 and Ki == 0.0 and Kd == 0.0:
                     if RCV_WIFI_MODULE_CLASS.constantsReceived:
-                        print("nKp: "+str(RcvWifiThread.Kp))
-                        print("nKi: "+str(RcvWifiThread.Ki))
-                        print("nKd: "+str(RcvWifiThread.Kd))
+                        print("nKp: " + str(RcvWifiThread.Kp))
+                        print("nKi: " + str(RcvWifiThread.Ki))
+                        print("nKd: " + str(RcvWifiThread.Kd))
                         Kp = RcvWifiThread.Kp
                         Ki = RcvWifiThread.Ki
                         Kd = RcvWifiThread.Kd
@@ -67,9 +66,9 @@ if __name__ == "__main__":
                 if RCV_WIFI_MODULE_CLASS.constantsReceived:
 
                     if RCV_WIFI_MODULE_CLASS.newData:
-                        print("\nTargetSpeedFB: "+str(RCV_WIFI_MODULE_CLASS.targetSpeedFB))
+                        print("\nTargetSpeedFB: " + str(RCV_WIFI_MODULE_CLASS.targetSpeedFB))
                         # forwards or backwards depending on +/-
-                        print("\nRotateStrength: "+str(RCV_WIFI_MODULE_CLASS.rotateStrength))
+                        print("\nRotateStrength: " + str(RCV_WIFI_MODULE_CLASS.rotateStrength))
                         # left or right depending on -/+
                         # SendWifiThread.Smartphone_IP = RcvWifiThread.Smartphone_IP #IP set
                         RCV_WIFI_MODULE_CLASS.newData = False
@@ -94,12 +93,12 @@ if __name__ == "__main__":
                         SELFDRIVING_CLASS.drive()
 
             except Exception as e:
-                print("Main-Error: "+str(e))
+                print("Main-Error: " + str(e))
                 GPIO.cleanup()
                 break
 
     except Exception as e:
-        print("Main-Error: "+str(e))
+        print("Main-Error: " + str(e))
         GPIO.cleanup()
     except KeyboardInterrupt:
         print("Program manually aborted.")
