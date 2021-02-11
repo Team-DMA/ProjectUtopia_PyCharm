@@ -11,9 +11,9 @@ X_axis_H = 0x03  # Address of X-axis MSB data register
 Z_axis_H = 0x05  # Address of Z-axis MSB data register
 Y_axis_H = 0x07  # Address of Y-axis MSB data register
 
-X_OFFSET = 1048
+X_OFFSET = -1048
 Z_OFFSET = 0
-Y_OFFSET = 1148
+Y_OFFSET = -1148
 X_SCALE = (1/4.5)
 Z_SCALE = 1.0
 Y_SCALE = 1.0
@@ -61,7 +61,7 @@ while True:
     z = (read_raw_data(Z_axis_H) - Z_OFFSET) * Z_SCALE
     y = (read_raw_data(Y_axis_H) - Y_OFFSET) * Y_SCALE
 
-    heading = math.atan2(y, x) + declination
+    heading = math.atan2(z, y) + declination
 
     # Due to declination check for >360 degree
     if (heading > 2 * pi):
