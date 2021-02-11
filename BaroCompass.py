@@ -74,7 +74,7 @@ class COMPASS(object):
 
     def Compass(self):
 
-        return self.hmc5883l
+        return self.hmc5883l.getHeadingString()
 
 
 temp1 = BAROMETER()
