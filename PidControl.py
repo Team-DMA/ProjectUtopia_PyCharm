@@ -10,6 +10,8 @@ class PID_CONTROL(object):
         self.Kp = Kp
         self.Ki = Ki
         self.Kd = Kd
+
+        # variables initialization
         self.speedLeft = 0
         self.speedRight = 0
         self.i = 10
@@ -24,7 +26,7 @@ class PID_CONTROL(object):
         print("Kd = {0}".format(self.Kd))
         print("PID_CONTROL initialized")
 
-    def motor_adj(self, rotation, speed, turn, gyroCompensation: float):
+    def motor_adjust(self, rotation, speed, turn, gyroCompensation: float):
 
         # ich weiß nicht, ob das funktioniert, gegebenenfalls muss auch noch turn miteinbezogen werden
         # Der veränderte Sollwert soll dafür sorgen, das sich die Drohne nach vorne/hinten kippt, wenn man speed
@@ -41,11 +43,11 @@ class PID_CONTROL(object):
         print("self righting")
 
         if self.i != 0:
-            self.MOTOR_CONTROL_CLASS.setSpeed(-15)
+            self.MOTOR_CONTROL_CLASS.set_speed(-15)
             self.i = self.i - 1
 
         if abs(rotation - gyroCompensation) > 40:
-            self.MOTOR_CONTROL_CLASS.setSpeed(15)
+            self.MOTOR_CONTROL_CLASS.set_speed(15)
 
         if abs(rotation - gyroCompensation) < 45:
             self.PID_CLASS.controlError = False
@@ -77,13 +79,13 @@ class PID_CONTROL(object):
             self.speedLeft = 0
             self.speedRight = 0
 
-        motorAdj = self.motor_adj(rotation, speed, turn, gyroCompensation)
+        motorAdj = self.motor_adjust(rotation, speed, turn, gyroCompensation)
         # motoranpassung = 0
         print("speedLeft %d" % (self.speedLeft + motorAdj))
         print("speedRight %d" % (self.speedRight + motorAdj))
 
-        # self.MOTOR_CONTROL_CLASS.setSpeedL(self.speedLeft + motorAdj)
-        # self.MOTOR_CONTROL_CLASS.setSpeedR(self.speedRight + motorAdj)
+        # self.MOTOR_CONTROL_CLASS.set_speed_left(self.speedLeft + motorAdj)
+        # self.MOTOR_CONTROL_CLASS.set_speed_right(self.speedRight + motorAdj)
 
         # else:
         #   self.selfrighting(rotation, gyroCompensation)

@@ -25,6 +25,6 @@ class SELFDRIVING(object):
     def drive(self):
 
         if not self.detect():
-            self.PID_CONTROL_CLASS.control(self.GYRO_CLASS.xRotation, 5, 0, self.gyroCompensation)
+            self.PID_CONTROL_CLASS.control(self.GYRO_CLASS.yRotation, 5, 0, self.gyroCompensation)
         else:
-            self.PID_CONTROL_CLASS.control(self.GYRO_CLASS.xRotation, 1, 1, self.gyroCompensation)
+            self.PID_CONTROL_CLASS.control(self.GYRO_CLASS.yRotation, 1, 1, self.gyroCompensation)

@@ -34,7 +34,7 @@ class MOTOR_CONTROL(object):
         self.pwmR.ChangeDutyCycle(0)
         print("motor control initialized")
 
-    def setSpeedL(self, speed: int):
+    def set_speed_left(self, speed: int):
 
         """
             speed might be -15...+15
@@ -57,7 +57,7 @@ class MOTOR_CONTROL(object):
         else:
             self.pwmL.ChangeDutyCycle(0)
 
-    def setSpeedR(self, speed: int):
+    def set_speed_right(self, speed: int):
 
         """
             speed might be -15...+15
@@ -80,36 +80,36 @@ class MOTOR_CONTROL(object):
         else:
             self.pwmR.ChangeDutyCycle(0)
 
-    def setSpeed(self, speed: int):
+    def set_speed(self, speed: int):
 
-        self.setSpeedL(speed)
-        self.setSpeedR(speed)
+        self.set_speed_left(speed)
+        self.set_speed_right(speed)
         # print("speed: %f" % speed)
 
-    def turnLeft(self, speed: int):
+    def turn_left(self, speed: int):
 
-        self.setSpeedL(0)
-        self.setSpeedR(speed)
+        self.set_speed_left(0)
+        self.set_speed_right(speed)
         print("turn left")
 
-    def turnRight(self, speed: int):
+    def turn_right(self, speed: int):
 
-        self.setSpeedR(0)
-        self.setSpeedL(speed)
+        self.set_speed_right(0)
+        self.set_speed_left(speed)
         print("turn right")
 
     def forward(self, speed: int):
 
         if speed > 0:
-            self.setSpeed(speed)
+            self.set_speed(speed)
             print("Forwards")
 
     def backward(self, speed: int):
 
         if speed < 0:
-            self.setSpeed(speed)
+            self.set_speed(speed)
             print("Backwards")
 
     def stop(self):
 
-        self.setSpeed(0)
+        self.set_speed(0)

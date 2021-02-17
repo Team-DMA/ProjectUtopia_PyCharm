@@ -19,6 +19,7 @@ class GYRO(object):
         self.bus.write_byte_data(self.address, 0x19, 7)
 
         # activate to communicate with the module
+        # first argument is address, second is offset, third is data
         self.bus.write_byte_data(self.address, self.power_mgmt_1, 1)
         self.bus.write_byte_data(self.address, 0x1A, 0)
         self.bus.write_byte_data(self.address, 0x1B, 24)
@@ -54,9 +55,9 @@ class GYRO(object):
 
     def read_word_2c(self, reg):
 
-        val = self.read_word(reg)
-        if val >= 0x8000:
-            return -((65535 - val) + 1)
+        value = self.read_word(reg)
+        if value >= 0x8000:
+            return -((65535 - value) + 1)
         else:
             return val
 
