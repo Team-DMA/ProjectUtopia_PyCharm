@@ -39,7 +39,7 @@ class GPS(object):
             self.Error = False
         else:
             self.Error = True
-            print("Waiting for GPS...")
+           #print("Waiting for GPS...")
 
         return self.lat, self.lng, self.alt
 
