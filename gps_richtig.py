@@ -28,7 +28,7 @@ class GPS(object):
         print(str(newData))
         # if "$GPGLL" in str(newData):
         #    print(str(newData))
-        if [line for line in self.ser if "GPGLL" in line]:
+        if [line for line in self.ser if str("GPGLL") in line]:
             print("Pimmel riecht.")
             #tmp1, tmp2 = newData.split("GPGLL,")
             #tmp2 = str(tmp2)
