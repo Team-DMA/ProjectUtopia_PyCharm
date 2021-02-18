@@ -28,11 +28,12 @@ class GPS(object):
         print(str(newData))
         # if "$GPGLL" in str(newData):
         #    print(str(newData))
-        if newData.find("GPGLL"):
-            tmp1, tmp2 = newData.split("GPGLL,")
-            tmp2 = str(tmp2)
-            Norden, tmp4, Osten, tmp5 = tmp2.split(",")
-            print("N: %d" % Norden + ", E: %d" % Osten)
+        if [line for line in self.ser if "GPGLL" in line]:
+            print("Pimmel riecht.")
+            #tmp1, tmp2 = newData.split("GPGLL,")
+            #tmp2 = str(tmp2)
+            #Norden, tmp4, Osten, tmp5 = tmp2.split(",")
+            #print("N: %d" % Norden + ", E: %d" % Osten)
         #if newData.find('GPGLL'):
         #    print("juhu")
 
