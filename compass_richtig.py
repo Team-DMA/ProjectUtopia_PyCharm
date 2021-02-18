@@ -15,9 +15,9 @@ X_OFFSET = 0
 Z_OFFSET = 0
 Y_OFFSET = 0
 SCALE = 1
-declination = 2.916666
+declination = 2.5
 
-pi = 3.14159265359  # define pi value
+pi = 3.14159265358979323846  # define pi value
 
 
 def Magnetometer_Init():
@@ -72,5 +72,6 @@ while True:
     # convert into angle
     heading_angle = int(heading * 180 / pi)
 
-    print("X: %d" % x + ", Y: %d" % y + ", Z: %d" % z + ", Heading = %d°" % heading_angle)
+    print("X-Raw: %d" % read_raw_data(X_axis_H) + ", Y-Raw: %d" % read_raw_data(Y_axis_H) + ", Z-Raw: %d" % read_raw_data(Z_axis_H))
+    #print("X: %d" % x + ", Y: %d" % y + ", Z: %d" % z + ", Heading = %d°" % heading_angle)
     sleep(0.5)
