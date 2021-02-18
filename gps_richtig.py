@@ -54,5 +54,5 @@ def generate_lines_that_equal(string, fp):
 temp = GPS()
 while True:
     x, y, alt = temp.gps()
-    print(str(x) + ", " + str(y) + ", Alt: " + alt)
+    print(str(x) + ", " + str(y) + ", Alt: " + str(alt))
     # time.sleep(0.1)
