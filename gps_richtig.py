@@ -24,11 +24,11 @@ class GPS(object):
     def gps(self):
 
         dataout = pynmea2.NMEAStreamReader()  # no idea what that is for
-        newData = self.ser.readline()
+        newData = str(self.ser.readline())
         print(str(newData))
         #if "$GPGLL" in str(newData):
         #    print(str(newData))
-        if newData[0:5] == "$GPGLL":
+        if newData.find('GPGLL'):
             print("juhu")
         if newData[2:7] == "$GPGLL":
             print("juhu2")
