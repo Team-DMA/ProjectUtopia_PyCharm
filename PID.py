@@ -25,7 +25,7 @@ class PID(object):
 
     def pid(self, inputVar, setpoint, gyroCompensation: float, timeForARun: float):
 
-        compensatedInput = inputVar/5 - gyroCompensation
+        compensatedInput = inputVar/3 - gyroCompensation
         self.difference = setpoint - self.output
         self.buffer = self.difference * timeForARun + self.buffer
 
