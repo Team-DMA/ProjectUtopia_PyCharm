@@ -28,8 +28,14 @@ class GPS(object):
         print(str(newData))
         #if "$GPGLL" in str(newData):
         #    print(str(newData))
-        if newData[2:7] == "$GPGLL":
+        if newData[0:5] == "$GPGLL":
             print("juhu")
+        if newData[2:7] == "$GPGLL":
+            print("juhu2")
+        if newData[0:7] == "b'$GPGLL":
+            print("juhu3")
+        if newData[0:2] == "b'":
+            print("juhu4")
           #  newMessage = pynmea2.parse(newData)
            # self.lat = newMessage.latitude
             #self.lng = newMessage.longitude
