@@ -43,9 +43,9 @@ class GPS(object):
         #    print("juhu3")
         #if newData[0:2] == "b'":
         #    print("juhu4")
-        #  newMessage = pynmea2.parse(newData)
-        # self.lat = newMessage.latitude
-        # self.lng = newMessage.longitude
+            newMessage = pynmea2.parse(newData)
+            self.lat = newMessage.latitude
+            self.lng = newMessage.longitude
 
     def get_latitude(self):
         return self.lat
@@ -62,5 +62,5 @@ def generate_lines_that_equal(string, fp):
 temp = GPS()
 while True:
     temp.gps()
-    # print(str(temp.get_latitude()) + ", " + str(temp.get_longitude()))
+    print(str(temp.get_latitude()) + ", " + str(temp.get_longitude()))
     # time.sleep(0.1)
