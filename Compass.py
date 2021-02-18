@@ -30,7 +30,7 @@ class COMPASS(object):
         yMag = data[4] * 256 + data[5]
         if yMag > 32767:
             yMag -= 65536
-        #yMag = yMag + 1148
+        yMag = yMag + 120
 
         [x, y] = [xMag, yMag]
         print("X-Axis : %d" % xMag + ", Y-Axis : %d" % yMag + ", Z-Axis : %d" % zMag)
