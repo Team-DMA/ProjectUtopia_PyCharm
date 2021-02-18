@@ -31,6 +31,7 @@ class GPS(object):
             newData = newData.replace("b'", "")
             newData = newData.replace("\\r\\n'", "")
             newData = newData.replace("\\n", "")
+            newData = newData.replace("'", "")
             newMessage = pynmea2.parse(newData)
             self.lat = newMessage.latitude
             self.lng = newMessage.longitude
