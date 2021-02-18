@@ -25,20 +25,21 @@ class GPS(object):
 
         dataout = pynmea2.NMEAStreamReader()  # no idea what that is for
         newData = str(self.ser.readline())
-        print(str(newData))
+        #print(str(newData))
         # if "$GPGLL" in str(newData):
         #    print(str(newData))
-        if generate_lines_that_equal("GPGLL", self.ser) != None:
-            print("Pimmel riecht.")
-            #tmp1, tmp2 = newData.split("GPGLL,")
-            #tmp2 = str(tmp2)
+
+        numb = input('GPGLL,')
+        for lines in newData:
+            if numb == lines[0]:
+                print(lines)
             #Norden, tmp4, Osten, tmp5 = tmp2.split(",")
             #print("N: %d" % Norden + ", E: %d" % Osten)
         #if newData.find('GPGLL'):
         #    print("juhu")
 
-        #if newData[3:8] == "$GPGLL":
-        #    print("juhu2")
+        if newData[3:7] == "GPGLL":
+            print("juhu2")
         #if newData[0:8] == "b'$GPGLL":
         #    print("juhu3")
         #if newData[0:2] == "b'":
