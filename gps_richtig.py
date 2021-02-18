@@ -28,7 +28,7 @@ class GPS(object):
         print(str(newData))
         # if "$GPGLL" in str(newData):
         #    print(str(newData))
-        if lines_that_contain("GPGLL", self.ser):
+        if generate_lines_that_equal("GPGLL", self.ser) != None:
             print("Pimmel riecht.")
             #tmp1, tmp2 = newData.split("GPGLL,")
             #tmp2 = str(tmp2)
@@ -54,8 +54,10 @@ class GPS(object):
         return self.lng
 
 
-def lines_that_contain(string, fp):
-    return [line for line in fp if string in line]
+def generate_lines_that_equal(string, fp):
+    for line in fp:
+        if line == string:
+            yield line
 
 temp = GPS()
 while True:
