@@ -38,12 +38,9 @@ class GPS(object):
     def get_longitude(self):
         return self.lng
 
-    def datei(self):
-        print(self.datei.readline())
 
 temp = GPS()
 while True:
     temp.gps()
     print(str(temp.get_latitude()) + ", " + str(temp.get_longitude()))
-    temp.datei()
     time.sleep(0.5)
