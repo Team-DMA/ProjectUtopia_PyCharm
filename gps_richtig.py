@@ -28,7 +28,7 @@ class GPS(object):
         print(str(newData))
         # if "$GPGLL" in str(newData):
         #    print(str(newData))
-        if [line for line in self.ser if str("GPGLL") in line]:
+        if lines_that_contain("GPGLL", self.ser):
             print("Pimmel riecht.")
             #tmp1, tmp2 = newData.split("GPGLL,")
             #tmp2 = str(tmp2)
@@ -53,6 +53,9 @@ class GPS(object):
     def get_longitude(self):
         return self.lng
 
+
+def lines_that_contain(string, fp):
+    return [line for line in fp if string in line]
 
 temp = GPS()
 while True:
