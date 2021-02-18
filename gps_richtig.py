@@ -28,6 +28,7 @@ class GPS(object):
         newData = self.ser.readline()
 
         if newData[0:6] == "$GPGLL":
+            print(newData)
             newMessage = pynmea2.parse(newData)
             self.lat = newMessage.latitude
             self.lng = newMessage.longitude
