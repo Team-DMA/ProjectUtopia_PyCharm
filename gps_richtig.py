@@ -29,15 +29,15 @@ class GPS(object):
         # if "$GPGLL" in str(newData):
         #    print(str(newData))
 
-        numb = input('GPGLL,')
-        for lines in newData:
-            if numb == lines[0]:
-                print(newData)
+        #numb = input('GPGLL,')
+        #for lines in newData:
+        #    if numb == lines[0]:
+        #        print(newData)
             #Norden, tmp4, Osten, tmp5 = tmp2.split(",")
             #print("N: %d" % Norden + ", E: %d" % Osten)
         #if newData.find('GPGLL'):
         #    print("juhu")
-
+        print("0: "+ newData[0]+"1: "+ newData[1]+"2: "+ newData[2]+"3: "+ newData[3]+"4: "+ newData[4]+"5: "+ newData[5]+"6: "+ newData[6]+"7: "+ newData[7]+"8: "+ newData[8])
         if newData[3:7] == "GPGLL":
             print("juhu2")
         #if newData[0:8] == "b'$GPGLL":
