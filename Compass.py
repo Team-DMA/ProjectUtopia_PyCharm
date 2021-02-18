@@ -37,7 +37,7 @@ class COMPASS(object):
         if x is None or y is None:
             return None
         else:
-            orientation = math.degrees(math.atan2(y, x))
+            orientation = math.degrees(math.atan2(y, x)) + 42
             if orientation < 0:
                 orientation += 360.0
             orientation += 2.91666667 # magnetic Correction
@@ -45,7 +45,7 @@ class COMPASS(object):
                 orientation += 360.0
             elif orientation >= 360.0:
                 orientation -= 360.0
-        return orientation + 42
+        return orientation
         # Output data to screen
 
         # tmp123 = self.hmc5883l.get_magnet()
