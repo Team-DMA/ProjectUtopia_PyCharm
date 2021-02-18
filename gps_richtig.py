@@ -19,6 +19,7 @@ class GPS(object):
         self.lat = 0.0
         self.lng = 0.0
         self.alt = 0.0
+        self.error = False
         print("GPS initialized")
 
     def gps(self):
@@ -33,8 +34,10 @@ class GPS(object):
             newMessage = pynmea2.parse(newData)
             self.lat = newMessage.latitude
             self.lng = newMessage.longitude
-            self.alt = newMessage.altitude
+            #self.alt = newMessage.altitude
+            self.Error = False
         else:
+            self.Error = True
             print("Waiting for GPS...")
 
         return self.lat, self.lng, self.alt
@@ -54,5 +57,6 @@ def generate_lines_that_equal(string, fp):
 temp = GPS()
 while True:
     x, y, alt = temp.gps()
-    print(str(x) + ", " + str(y) + ", Alt: " + str(alt))
+    if temp.Error == False:
+        print(str(x) + ", " + str(y) + ", Alt: " + str(alt))
     # time.sleep(0.1)
