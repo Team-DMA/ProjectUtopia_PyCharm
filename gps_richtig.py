@@ -28,6 +28,7 @@ class GPS(object):
         newData = str(self.ser.readline())
 
         if newData[3] == "G" and newData[4] == "P" and newData[5] == "G" and newData[6] == "L" and newData[7] == "L":
+            print(newData)
             newData = newData.replace("b'", "")
             newData = newData.replace("\\r\\n'", "")
             newData = newData.replace("\\n", "")
