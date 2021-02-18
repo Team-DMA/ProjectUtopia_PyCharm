@@ -18,7 +18,7 @@ class GPS(object):
 
         self.lat = 0.0
         self.lng = 0.0
-        self.datei = open('/dev/serial0', 'r')
+        self.alt = 0.0
         print("GPS initialized")
 
     def gps(self):
