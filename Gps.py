@@ -32,7 +32,7 @@ class GPS(object):
         return self.lng
 
 
-temp = GPS()
-while True:
-    temp.gps()
-    print(str(temp.get_latitude()) + ", " + str(temp.get_longitude()))
+#temp = GPS()
+#while True:
+#    temp.gps()
+#    print(str(temp.get_latitude()) + ", " + str(temp.get_longitude()))
