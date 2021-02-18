@@ -38,6 +38,8 @@ class GPS(object):
         #print("0: "+ newData[0]+"1: "+ newData[1]+"2: "+ newData[2]+"3: "+ newData[3]+"4: "+ newData[4]+"5: "+ newData[5]+"6: "+ newData[6]+"7: "+ newData[7]+"8: "+ newData[8])
         if newData[3] == "G" and newData[4] == "P" and newData[5] == "G" and newData[6] == "L" and newData[7] == "L":
             print("juhu2")
+            newData = newData.replace("b'", "")
+            newData = newData.replace("\r\n'", "")
             print(newData)
         #if newData[0:8] == "b'$GPGLL":
         #    print("juhu3")
