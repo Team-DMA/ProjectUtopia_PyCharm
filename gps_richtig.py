@@ -43,4 +43,4 @@ temp = GPS()
 while True:
     temp.gps()
     print(str(temp.get_latitude()) + ", " + str(temp.get_longitude()))
-    time.sleep(0.5)
+    time.sleep(0.1)
