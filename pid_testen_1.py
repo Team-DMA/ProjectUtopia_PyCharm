@@ -9,11 +9,15 @@ import pandas as pd
 from input_simulation import INPUT_SIM
 
 setpoint = 0
-Kp = 1.0
+Kp = 1.05
 Ki = 0.5
-Kd = 0.00
+Kd = 0.007
 # Ki = 0.1
 # Kd = 0.7
+
+"""
+Gute Werte für M-Regler: Kp = 1.05, Ki = 0.5, Kd = 0.007
+"""
 
 pid = PID(Kp, Ki, Kd, setpoint)
 pid.proportional_on_measurement = True
@@ -45,14 +49,14 @@ while True:
 
         # pid.sample_time = timeForPid
         gyro_y = tmpInputClass.gyro_y
-        #output = pid(gyro_y)                           # M-Regler
-        output = pid2.pid(gyro_y, setpoint, 0, 0.01)    # L-Regler
+        output = pid(gyro_y)                           # M-Regler
+        #output = pid2.pid(gyro_y, setpoint, 0, 0.01)    # L-Regler
         now = time.time() - startTime
 
         gyroDataList.append(gyro_y)
 
-        #pidDataList.append(scale(output, 0, 150, 0, 15))   # Regler Skalierung
-        pidDataList.append(output)                          # Regler unskaliert
+        pidDataList.append(scale(output, 0, 150, 0, 15))   # Regler Skalierung
+        #pidDataList.append(output)                          # Regler unskaliert
 
         timeDataList.append(now)
 
