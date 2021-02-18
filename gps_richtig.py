@@ -25,30 +25,19 @@ class GPS(object):
 
         dataout = pynmea2.NMEAStreamReader()  # no idea what that is for
         newData = str(self.ser.readline())
-        #print(str(newData))
-        # if "$GPGLL" in str(newData):
-        #    print(str(newData))
 
-        #if newData.find("GPGLL"):
-        #    print("GPGLL ist da.")
-            #Norden, tmp4, Osten, tmp5 = tmp2.split(",")
-            #print("N: %d" % Norden + ", E: %d" % Osten)
-        #if newData.find('GPGLL'):
-        #    print("juhu")
-        #print("0: "+ newData[0]+"1: "+ newData[1]+"2: "+ newData[2]+"3: "+ newData[3]+"4: "+ newData[4]+"5: "+ newData[5]+"6: "+ newData[6]+"7: "+ newData[7]+"8: "+ newData[8])
         if newData[3] == "G" and newData[4] == "P" and newData[5] == "G" and newData[6] == "L" and newData[7] == "L":
-            print("juhu2")
             newData = newData.replace("b'", "")
             newData = newData.replace("\\r\\n'", "")
             newData = newData.replace("\\n", "")
-            print(newData)
-        #if newData[0:8] == "b'$GPGLL":
-        #    print("juhu3")
-        #if newData[0:2] == "b'":
-        #    print("juhu4")
             newMessage = pynmea2.parse(newData)
             self.lat = newMessage.latitude
             self.lng = newMessage.longitude
+            self.alt = newMessage.altitude
+        else:
+            print("Waiting for GPS...")
+
+        return self.lat, self.lng, self.alt
 
     def get_latitude(self):
         return self.lat
@@ -64,6 +53,6 @@ def generate_lines_that_equal(string, fp):
 
 temp = GPS()
 while True:
-    temp.gps()
-    print(str(temp.get_latitude()) + ", " + str(temp.get_longitude()))
+    x, y, alt = temp.gps()
+    print(str(x) + ", " + str(y) + ", Alt: " + alt)
     # time.sleep(0.1)
