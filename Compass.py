@@ -40,7 +40,7 @@ class COMPASS(object):
             orientation = math.degrees(math.atan2(y, x)) + 42
             if orientation < 0:
                 orientation += 360.0
-            orientation += 2.91666667 # magnetic Correction
+            orientation += 2.45 # magnetic Correction
             if orientation < 0.0:
                 orientation += 360.0
             elif orientation >= 360.0:
