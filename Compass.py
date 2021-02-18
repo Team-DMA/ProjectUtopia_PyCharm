@@ -21,7 +21,7 @@ class COMPASS(object):
         xMag = data[0] * 256 + data[1]
         if xMag > 32767:
             xMag -= 65536
-        #xMag = (xMag + 1048)/4
+        xMag = xMag * 0.75
 
         zMag = data[2] * 256 + data[3]
         if zMag > 32767:
@@ -30,14 +30,14 @@ class COMPASS(object):
         yMag = data[4] * 256 + data[5]
         if yMag > 32767:
             yMag -= 65536
-        yMag = yMag + 120
+        yMag = yMag + 80
 
         [x, y] = [xMag, yMag]
         print("X-Axis : %d" % xMag + ", Y-Axis : %d" % yMag + ", Z-Axis : %d" % zMag)
         if x is None or y is None:
             return None
         else:
-            orientation = math.degrees(math.atan2(y, x))
+            orientation = math.degrees(math.atan2(y, x)) + 42
             if orientation < 0:
                 orientation += 360.0
             orientation += 2.91666667 # magnetic Correction
