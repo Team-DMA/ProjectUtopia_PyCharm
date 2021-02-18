@@ -39,7 +39,7 @@ class GPS(object):
         return self.lng
 
     def datei(self):
-        print(self.datei.read())
+        print(self.datei.readline())
 
 temp = GPS()
 while True:
