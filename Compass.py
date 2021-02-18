@@ -48,3 +48,12 @@ class COMPASS(object):
 
         # tmp123 = self.hmc5883l.get_magnet()
         # return tmp123
+
+    # temp1 = BAROMETER()
+temp2 = COMPASS()
+while True:
+    #    print(str(temp1.Temperature()))
+    #    print(str(temp1.Pressure()))
+    #    print(str(temp1.Altitude()))
+print(str(temp2.Compass()))
+time.sleep(0.2)
