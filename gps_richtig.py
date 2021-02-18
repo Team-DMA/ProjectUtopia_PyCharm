@@ -25,10 +25,10 @@ class GPS(object):
 
         dataout = pynmea2.NMEAStreamReader()  # no idea what that is for
         newData = str(self.ser.readline())
-        #print(str(newData))
+        print(str(newData))
         # if "$GPGLL" in str(newData):
         #    print(str(newData))
-        tmp1, tmp2 = (newData.split("GPGLL,"))
+        tmp1, tmp2 = newData.split("GPGLL,")
         tmp2 = str(tmp2)
         Norden, tmp4, Osten, tmp5 = tmp2.split(",")
         print("N: %d" % Norden + ", E: %d" % Osten)
