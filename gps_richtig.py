@@ -14,8 +14,7 @@ class GPS(object):
            baudrate = 9600,
            parity=serial.PARITY_NONE,
            stopbits=serial.STOPBITS_ONE,
-           bytesize=serial.EIGHTBITS,
-           timeout=1)
+           bytesize=serial.EIGHTBITS)
 
         self.lat = 0.0
         self.lng = 0.0
@@ -26,7 +25,7 @@ class GPS(object):
 
         dataout = pynmea2.NMEAStreamReader()  # no idea what that is for
         newData = self.ser.readline()
-
+        print(newData)
         if newData[2:7] == "$GPGLL":
             print(newData)
             newMessage = pynmea2.parse(newData)
