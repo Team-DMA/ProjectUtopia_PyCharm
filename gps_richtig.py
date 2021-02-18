@@ -31,8 +31,8 @@ class GPS(object):
 
         numb = input('GPGLL,')
         for lines in newData:
-            if numb == lines[1]:
-                print(lines)
+            if numb == lines[0]:
+                print(newData)
             #Norden, tmp4, Osten, tmp5 = tmp2.split(",")
             #print("N: %d" % Norden + ", E: %d" % Osten)
         #if newData.find('GPGLL'):
