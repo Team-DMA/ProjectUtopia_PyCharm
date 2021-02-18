@@ -61,7 +61,7 @@ while True:
 
     heading = math.atan2(y, x) + declination
 
-    # Due to declination check for >360 degree
+    # Due to declinasution check for >360 degree
     if (heading > 2 * pi):
         heading = heading - 2 * pi
 
@@ -73,4 +73,4 @@ while True:
     heading_angle = int(heading * 180 / pi)
 
     print("X: %d" % x + ", Y: %d" % y + ", Z: %d" % z + ", Heading = %d°" % heading_angle)
-    sleep(2)
+    sleep(0.5)
