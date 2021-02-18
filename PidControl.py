@@ -26,7 +26,7 @@ class PID_CONTROL(object):
         print("Kd = {0}".format(self.Kd))
         print("PID_CONTROL initialized")
 
-    def motor_adjust(self, rotation, speed, turn, gyroCompensation: float):
+    def motor_adjust(self, rotation, speed, turn, gyroCompensation: float, timeForPid: float):
 
         # ich weiß nicht, ob das funktioniert, gegebenenfalls muss auch noch turn miteinbezogen werden
         # Der veränderte Sollwert soll dafür sorgen, das sich die Drohne nach vorne/hinten kippt, wenn man speed
@@ -35,7 +35,7 @@ class PID_CONTROL(object):
         # automatisch nach vorne/hinten fährt.
         setpoint = speed * 2
 
-        changedValue = self.PID_CLASS.pid(rotation, setpoint, gyroCompensation)  # PID_CLASS.pid gibt Ausgang zurück
+        changedValue = self.PID_CLASS.pid(rotation, setpoint, gyroCompensation, timeForPid)  # PID_CLASS.pid gibt Ausgang zurück
         return changedValue
 
     def selfrighting(self, rotation, gyroCompensation: float):
@@ -53,7 +53,7 @@ class PID_CONTROL(object):
             self.PID_CLASS.controlError = False
             self.i = 10
 
-    def control(self, rotation, speed: int, turn: int, gyroCompensation: float):
+    def control(self, rotation, speed: int, turn: int, gyroCompensation: float, timeForPid: float):
 
         # if(self.PID_CLASS.controlError == False):
         print("speed: %d" % speed)
@@ -79,7 +79,7 @@ class PID_CONTROL(object):
             self.speedLeft = 0
             self.speedRight = 0
 
-        motorAdj = self.motor_adjust(rotation, speed, turn, gyroCompensation)
+        motorAdj = self.motor_adjust(rotation, speed, turn, gyroCompensation, timeForPid)
         # motoranpassung = 0
         print("speedLeft %d" % (self.speedLeft + motorAdj))
         print("speedRight %d" % (self.speedRight + motorAdj))

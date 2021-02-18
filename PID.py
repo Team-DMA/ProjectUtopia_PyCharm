@@ -15,7 +15,7 @@ class PID(object):
         self.controlError = False
 
         # measured
-        self.timeForARun = 0.00009
+        # self.timeForARun = 0.00009
 
         # still has to be adjusted
         self.maxBuffer = 100.0
@@ -23,15 +23,15 @@ class PID(object):
 
         print("PID initialized")
 
-    def pid(self, inputVar, setpoint, gyroCompensation: float):
+    def pid(self, inputVar, setpoint, gyroCompensation: float, timeForARun: float):
 
         compensatedInput = inputVar - gyroCompensation
         self.difference = setpoint - self.output
-        self.buffer = self.difference * self.timeForARun + self.buffer
+        self.buffer = self.difference * timeForARun + self.buffer
 
         # main PID
         self.output = compensatedInput + self.output + self.Kp * self.difference + self.Ki * self.buffer + self.Kd * \
-                      ((self.differenceBefore - self.difference) / self.timeForARun)
+                      ((self.differenceBefore - self.difference) / timeForARun)
 
         self.differenceBefore = self.difference
 

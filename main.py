@@ -7,6 +7,7 @@ from PidControl import PID_CONTROL
 from Selfdriving import SELFDRIVING
 from Wifi import RCV_WIFI_MODULE
 from Gps import GPS
+import time
 
 GPIO.setmode(GPIO.BOARD)
 pinMotorLeftForwards = 29
@@ -39,20 +40,32 @@ GPS_CLASS = GPS()
 PID_CONTROL_CLASS = None
 SELFDRIVING_CLASS = None
 
+timeForPid = 0.00009  # placeholder for PID-time
+passes = 0  # how often the main loop is passed
+
 print("Main-Class INIT finished.")
 
 if __name__ == "__main__":
     try:
         while True:
             try:
+
+                stopTime = float(time.process_time())  # time end
+                startTime = float(time.process_time())  # time measurement start
+
+                if passes <= 5:
+                    passes = passes + 1
+                else:
+                    timeForPid = float(stopTime) - float(startTime)
+
                 if Kp == 0.0 and Ki == 0.0 and Kd == 0.0:
                     if RCV_WIFI_MODULE_CLASS.constantsReceived:
-                        print("nKp: " + str(RcvWifiThread.Kp))
-                        print("nKi: " + str(RcvWifiThread.Ki))
-                        print("nKd: " + str(RcvWifiThread.Kd))
-                        Kp = RcvWifiThread.Kp
-                        Ki = RcvWifiThread.Ki
-                        Kd = RcvWifiThread.Kd
+                        print("nKp: " + str(RCV_WIFI_MODULE_CLASS.Kp))
+                        print("nKi: " + str(RCV_WIFI_MODULE_CLASS.Ki))
+                        print("nKd: " + str(RCV_WIFI_MODULE_CLASS.Kd))
+                        Kp = RCV_WIFI_MODULE_CLASS.Kp
+                        Ki = RCV_WIFI_MODULE_CLASS.Ki
+                        Kd = RCV_WIFI_MODULE_CLASS.Kd
 
                         # Class init
                         PID_CONTROL_CLASS = PID_CONTROL(MOTOR_CONTROL_CLASS, Kp, Ki, Kd)
@@ -83,14 +96,14 @@ if __name__ == "__main__":
 
                         speed = RCV_WIFI_MODULE_CLASS.targetSpeedFB
                         turn = RCV_WIFI_MODULE_CLASS.rotateStrength
-                        PID_CONTROL_CLASS.control(GYRO_CLASS.yRotation, speed, turn, gyroCompensation)
+                        PID_CONTROL_CLASS.control(GYRO_CLASS.yRotation, speed, turn, gyroCompensation, timeForPid)
                         GPS_CLASS.gps()
                         gps = "Latitude=" + str(GPS_CLASS.get_latitude()) + "and Longitude=" + \
                               str(GPS_CLASS.get_longitude())
                         print(gps)
 
-                    else:
-                        SELFDRIVING_CLASS.drive()
+                    #else:
+                        SELFDRIVING_CLASS.drive(timeForPid)
 
             except Exception as e:
                 print("Main-Error: " + str(e))
