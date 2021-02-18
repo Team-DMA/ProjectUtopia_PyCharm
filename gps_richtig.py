@@ -29,13 +29,13 @@ class GPS(object):
         # if "$GPGLL" in str(newData):
         #    print(str(newData))
 
-        if newData.find("GPGLL"):
-            print("GPGLL ist da.")
+        #if newData.find("GPGLL"):
+        #    print("GPGLL ist da.")
             #Norden, tmp4, Osten, tmp5 = tmp2.split(",")
             #print("N: %d" % Norden + ", E: %d" % Osten)
         #if newData.find('GPGLL'):
         #    print("juhu")
-        print("0: "+ newData[0]+"1: "+ newData[1]+"2: "+ newData[2]+"3: "+ newData[3]+"4: "+ newData[4]+"5: "+ newData[5]+"6: "+ newData[6]+"7: "+ newData[7]+"8: "+ newData[8])
+        #print("0: "+ newData[0]+"1: "+ newData[1]+"2: "+ newData[2]+"3: "+ newData[3]+"4: "+ newData[4]+"5: "+ newData[5]+"6: "+ newData[6]+"7: "+ newData[7]+"8: "+ newData[8])
         if newData[3] == "G" and newData[4] == "P" and newData[5] == "G" and newData[6] == "L" and newData[7] == "L":
             print("juhu2")
             print(newData)
