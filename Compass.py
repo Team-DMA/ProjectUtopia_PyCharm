@@ -1,5 +1,7 @@
 import math
 import smbus
+import time
+
 
 class COMPASS(object):
     def __init__(self):
