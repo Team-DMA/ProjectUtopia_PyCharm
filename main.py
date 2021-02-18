@@ -40,7 +40,7 @@ GPS_CLASS = GPS()
 PID_CONTROL_CLASS = None
 SELFDRIVING_CLASS = None
 
-timeForPid = 0.00009  # placeholder for PID-time
+timeForPid = 0.01  # placeholder for PID-time
 startTime = 0.0
 stopTime = 0.0
 passes = 0  # how often the main loop is passed
