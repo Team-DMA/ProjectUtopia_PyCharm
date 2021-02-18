@@ -29,7 +29,7 @@ class GPS(object):
         #if "$GPGLL" in str(newData):
         #    print(str(newData))
         if newData[2:7] == "$GPGLL":
-            print(str(newData))
+            print("juhu")
           #  newMessage = pynmea2.parse(newData)
            # self.lat = newMessage.latitude
             #self.lng = newMessage.longitude
