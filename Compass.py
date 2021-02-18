@@ -57,5 +57,5 @@ while True:
     #    print(str(temp1.Temperature()))
     #    print(str(temp1.Pressure()))
     #    print(str(temp1.Altitude()))
-    print(str(temp2.Compass()))
+    print(str(temp2.compass()))
     time.sleep(0.2)
