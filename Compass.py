@@ -45,7 +45,7 @@ class COMPASS(object):
                 orientation += 360.0
             elif orientation >= 360.0:
                 orientation -= 360.0
-        return orientation
+        return orientation + 42
         # Output data to screen
 
         # tmp123 = self.hmc5883l.get_magnet()
