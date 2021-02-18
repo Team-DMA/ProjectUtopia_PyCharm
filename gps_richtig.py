@@ -25,7 +25,7 @@ class GPS(object):
 
         dataout = pynmea2.NMEAStreamReader()  # no idea what that is for
         newData = self.ser.readline()
-        print(newData)
+        print(str(newData))
         if "$GPGLL" in newData:
             print(newData)
         #if newData[2:7] == "$GPRMC":
