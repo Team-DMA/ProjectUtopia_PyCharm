@@ -26,8 +26,9 @@ class GPS(object):
 
         dataout = pynmea2.NMEAStreamReader()  # no idea what that is for
         newData = self.ser.readline()
-        print(newData)
+
         if newData[0:6] == "$GPGLL":
+            print(newData)
             newMessage = pynmea2.parse(newData)
             self.lat = newMessage.latitude
             self.lng = newMessage.longitude
@@ -42,5 +43,5 @@ class GPS(object):
 temp = GPS()
 while True:
     temp.gps()
-    print(str(temp.get_latitude()) + ", " + str(temp.get_longitude()))
-    time.sleep(0.1)
+    #print(str(temp.get_latitude()) + ", " + str(temp.get_longitude()))
+    #time.sleep(0.1)
