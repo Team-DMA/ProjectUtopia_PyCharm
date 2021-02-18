@@ -25,22 +25,25 @@ class GPS(object):
     def gps(self):
 
         dataout = pynmea2.NMEAStreamReader()  # no idea what that is for
-        newData = str(self.ser.readline())
+        # newData = str(self.ser.readline())
+        newData = self.ser.readline()
+        newData = newData.decode("utf-8")
 
-        if newData[3] == "G" and newData[4] == "P" and newData[5] == "G" and newData[6] == "L" and newData[7] == "L":
+        # if newData[3] == "G" and newData[4] == "P" and newData[5] == "G" and newData[6] == "L" and newData[7] == "L":
+        if newData.find("GPGLL"):
             print(newData)
-            newData = newData.replace("b'", "")
-            newData = newData.replace("\\r\\n'", "")
-            newData = newData.replace("\\n", "")
-            newData = newData.replace("'", "")
+            # newData = newData.replace("b'", "")
+            # newData = newData.replace("\\r\\n'", "")
+            # newData = newData.replace("\\n", "")
+            # newData = newData.replace("'", "")
             newMessage = pynmea2.parse(newData)
             self.lat = newMessage.latitude
             self.lng = newMessage.longitude
-            #self.alt = newMessage.altitude
+            # self.alt = newMessage.altitude
             self.Error = False
         else:
             self.Error = True
-           #print("Waiting for GPS...")
+        # print("Waiting for GPS...")
 
         return self.lat, self.lng, self.alt
 
@@ -55,6 +58,7 @@ def generate_lines_that_equal(string, fp):
     for line in fp:
         if line == string:
             yield line
+
 
 temp = GPS()
 while True:
