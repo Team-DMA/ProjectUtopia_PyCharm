@@ -41,7 +41,10 @@ PID_CONTROL_CLASS = None
 SELFDRIVING_CLASS = None
 
 timeForPid = 0.00009  # placeholder for PID-time
+startTime = 0.0
+stopTime = 0.0
 passes = 0  # how often the main loop is passed
+passesToUseMeasuredTime = 5
 
 print("Main-Class INIT finished.")
 
@@ -49,14 +52,6 @@ if __name__ == "__main__":
     try:
         while True:
             try:
-
-                stopTime = float(time.process_time())  # time end
-                startTime = float(time.process_time())  # time measurement start
-
-                if passes <= 5:
-                    passes = passes + 1
-                else:
-                    timeForPid = float(stopTime) - float(startTime)
 
                 if Kp == 0.0 and Ki == 0.0 and Kd == 0.0:
                     if RCV_WIFI_MODULE_CLASS.constantsReceived:
@@ -88,6 +83,17 @@ if __name__ == "__main__":
                         # data crunched, RCV_WIFI_MODULE_CLASS can receive again
 
                     if True:
+
+                        stopTime = float(time.process_time())  # time end
+
+                        if passes <= passesToUseMeasuredTime:
+                            passes = passes + 1
+                        else:
+                            timeForPid = float(stopTime) - float(startTime)
+
+                        startTime = float(time.process_time())  # time measurement start
+                        print("Zeit für Regler debug: " + str(timeForPid)) # debug
+
                         # read gyroscope
                         GYRO_CLASS.read_gyro()
 
