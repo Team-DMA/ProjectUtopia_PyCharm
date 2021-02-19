@@ -6,35 +6,49 @@ class PID_Lukas(object):
         self.Kp = Kp
         self.Ki = Ki
         self.Kd = Kd
+        self.KdT = 0.9998
 
         # Variables init
+        self.pValue = 0.0
+        self.iValue = 0.0
+        self.dValue = 0.0
         self.output = 0.0
         self.buffer = 0.0
+        self.buffer2 = 0.0
         self.difference = 0.0
         self.differenceBefore = 0.0
         self.controlError = False
+        self.compensatedInput = 0.0
+
 
         # measured
         # self.timeForARun = 0.00009
 
         # still has to be adjusted
-        self.maxBuffer = 100.0
-        self.maxOutput = 50.0
+        self.maxBuffer = 10000.0
+        self.maxOutput = 100.0
 
         print("PID initialized")
 
     def pid(self, inputVar, setpoint, gyroCompensation: float, timeForARun: float):
 
-        compensatedInput = inputVar/3 - gyroCompensation
-        self.difference = setpoint - self.output
-        self.buffer = self.output * timeForARun + self.buffer
+        self.compensatedInput = inputVar - gyroCompensation
+        self.difference = setpoint - self.compensatedInput
 
         # main PID
-        self.output = compensatedInput + self.Kp * self.difference + self.Ki * self.buffer + self.Kd * \
-                      ((self.differenceBefore - self.difference) / timeForARun)
 
+        self.pValue = self.Kp * self.difference
+        self.iValue = self.Ki * self.buffer
+        self.dValue = -self.Kd * ((self.differenceBefore - self.difference) / timeForARun)
         self.differenceBefore = self.difference
 
+        self.output = self.pValue + self.iValue + self.dValue + self.buffer2
+
+        self.buffer = (self.difference - self.output) * timeForARun + self.buffer
+        self.buffer2 = self.dValue + self.buffer2 * self.KdT
+
+
+        """
         # Catch of extreme values
         if self.buffer > self.maxBuffer:
             self.buffer = self.maxBuffer
@@ -57,7 +71,8 @@ class PID_Lukas(object):
             self.buffer = 0.0
             self.difference = 0.0
             self.differenceBefore = 0.0
+        """
+        print("motor output = %f" % (self.output))
 
-        print("motor output = %f" % int(round((self.output / self.maxOutput) * -15)))
-
-        return int(round((self.output / self.maxOutput) * -15))
+        #return int(round((self.output / self.maxOutput) * -15))
+        return -self.output
