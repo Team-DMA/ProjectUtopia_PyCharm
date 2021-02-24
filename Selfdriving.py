@@ -5,10 +5,7 @@ from PidControl import PID_CONTROL
 
 class SELFDRIVING(object):
 
-    def __init__(self, GyroClass: GYRO, EchoClass: ECHO, PidClass: PID_CONTROL, gyroCompensation):
-
-        # given Variables
-        self.gyroCompensation = gyroCompensation
+    def __init__(self, GyroClass: GYRO, EchoClass: ECHO, PidClass: PID_CONTROL):
 
         # given Classes
         self.ECHO_CLASS = EchoClass
@@ -25,6 +22,6 @@ class SELFDRIVING(object):
     def drive(self, timeForPid: float):
 
         if not self.detect():
-            self.PID_CONTROL_CLASS.control(self.GYRO_CLASS.yRotation, 5, 0, self.gyroCompensation, timeForPid)
+            self.PID_CONTROL_CLASS.control(self.GYRO_CLASS.yRotation, 5, 0)
         else:
-            self.PID_CONTROL_CLASS.control(self.GYRO_CLASS.yRotation, 1, 1, self.gyroCompensation, timeForPid)
+            self.PID_CONTROL_CLASS.control(self.GYRO_CLASS.yRotation, 1, 1)

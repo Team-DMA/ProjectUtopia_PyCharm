@@ -66,7 +66,7 @@ if __name__ == "__main__":
                         PID_CONTROL_CLASS = PID_CONTROL(MOTOR_CONTROL_CLASS, Kp, Ki, Kd)
                         if PID_CONTROL_CLASS is None:
                             print("PID_CLASS not defined")
-                        SELFDRIVING_CLASS = SELFDRIVING(GYRO_CLASS, ECHO_CLASS, PID_CONTROL_CLASS, gyroCompensation)
+                        SELFDRIVING_CLASS = SELFDRIVING(GYRO_CLASS, ECHO_CLASS, PID_CONTROL_CLASS)
                         if SELFDRIVING_CLASS is None:
                             print("SELFDRIVING_CLASS not defined")
                         print("Const. INIT finished.")
@@ -102,7 +102,7 @@ if __name__ == "__main__":
 
                         speed = RCV_WIFI_MODULE_CLASS.targetSpeedFB
                         turn = RCV_WIFI_MODULE_CLASS.rotateStrength
-                        PID_CONTROL_CLASS.control(GYRO_CLASS.yRotation, speed, turn, gyroCompensation, timeForPid)
+                        PID_CONTROL_CLASS.control(GYRO_CLASS.yRotation, speed, turn)
                         GPS_CLASS.gps()
                         gps = "Latitude=" + str(GPS_CLASS.get_latitude()) + "and Longitude=" + \
                               str(GPS_CLASS.get_longitude())

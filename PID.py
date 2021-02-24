@@ -1,13 +1,7 @@
 import time
-import warnings
 
-try:
-    # get monotonic time to ensure that time deltas are always positive
-    currentTime = time.monotonic
-except AttributeError:
-    # time.monotonic() not available (using python < 3.3), fallback to time.time()
-    currentTime = time.time
-    warnings.warn('time.monotonic() not available in python < 3.3, using time.time() as fallback')
+currentTime = time.monotonic
+# currentTime = time.time
 
 
 class PID(object):
@@ -21,6 +15,12 @@ class PID(object):
         self.Ki = Ki
         self.Kd = Kd
         self.sampleTime = sampleTime
+
+        if self.sampleTime is None:
+            self.multiplier = 1 / 1e+15
+        else:
+            self.multiplier = 1
+
         self.minOutput, self.maxOutput = outputLimits
 
         self.controlError = False
@@ -29,9 +29,11 @@ class PID(object):
 
     def __call__(self, inputVar, setpoint=0.0):
 
-        now = time.monotonic()
+        if inputVar > abs(60):
+            self.controlError = True
+            return 0
 
-        print(str(now) + ", " + str(self.lastTime))
+        now = time.monotonic()
 
         dt = now - self.lastTime if now - self.lastTime else 1e-16
 
@@ -45,39 +47,36 @@ class PID(object):
         self.proportional = self.Kp * error
 
         # compute integral and derivative terms
-        self.integral = self.integral + self.Ki * error * dt
-        #       self.integral = self.Ki * self.buffer
+        self.integral = self.integral + self.Ki * error * dt  # M-Regler
+        #       self.integral = self.Ki * self.buffer  # L-Regler
         self.integral = self.clamp(self.integral, self.outputLimits)  # avoid integral windup
 
-        #
-        self.derivative = -self.Kd * d_input / dt
-        #       self.derivative = -self.Kd * ((self.lastError - error) / dt)
+        self.derivative = -self.Kd * d_input / dt  # M-Regler
+        #       self.derivative = -(self.Kd*self.multiplier) * ((self.lastError - error) / dt)  # L-Regler
         self.lastError = error
 
-        self.output = self.proportional + self.integral + self.derivative
-        #       self.output = self.proportional + self.integral + self.derivative + self.buffer2
+        self.output = self.proportional + self.integral + self.derivative  # M-Regler
+        #       self.output = self.proportional + self.integral + self.derivative + self.buffer2  # L-Regler
 
-        #       self.buffer = (self.error - self.output) * dt + self.buffer
-        #       self.buffer2 = self.derivative + self.buffer2 * 0.9998
+        self.buffer = (error - self.output) * dt + self.buffer
+        self.buffer2 = self.derivative + self.buffer2 * 0.9999
 
         # keep track of state
         self.lastOutput = self.output
         self.lastInput = inputVar
         self.lastTime = now
 
-        return -(self.output)
+        return self.output
 
     def clamp(self, value, limits):
         lower, upper = limits
         if value is None:
-            self.controlError = False
             return None
         elif upper is not None and value > upper:
-            self.controlError = True
             return upper
         elif lower is not None and value < lower:
-            self.controlError = True
             return lower
+
         return value
 
     def reset(self):

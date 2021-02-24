@@ -2,6 +2,11 @@ from MotorControl import MOTOR_CONTROL
 from PID import PID
 
 
+def scale(old_value, old_min, old_max, new_min, new_max):
+    new_value = ((old_value - old_min) / (old_max - old_min)) * (new_max - new_min) + new_min
+    return new_value
+
+
 class PID_CONTROL(object):
 
     def __init__(self, MotorControlClass: MOTOR_CONTROL, Kp, Ki, Kd):
@@ -26,7 +31,7 @@ class PID_CONTROL(object):
         print("Kd = {0}".format(self.Kd))
         print("PID_CONTROL initialized")
 
-    def motor_adjust(self, rotation, speed, turn, gyroCompensation: float, timeForPid: float):
+    def motor_adjust(self, rotation, speed, turn):
 
         # ich weiß nicht, ob das funktioniert, gegebenenfalls muss auch noch turn miteinbezogen werden
         # Der veränderte Sollwert soll dafür sorgen, das sich die Drohne nach vorne/hinten kippt, wenn man speed
@@ -35,7 +40,8 @@ class PID_CONTROL(object):
         # automatisch nach vorne/hinten fährt.
         setpoint = speed * 2
 
-        changedValue = self.PID_CLASS.pid(rotation, setpoint, gyroCompensation, timeForPid)  # PID_CLASS.pid gibt Ausgang zurück
+        changedValue = self.PID_CLASS(rotation, setpoint)  # PID_CLASS.pid gibt Ausgang zurück
+        changedValue = int(round(scale(changedValue, -75, 75, -15, 15)))
         return changedValue
 
     def selfrighting(self, rotation, gyroCompensation: float):
@@ -53,7 +59,7 @@ class PID_CONTROL(object):
             self.PID_CLASS.controlError = False
             self.i = 10
 
-    def control(self, rotation, speed: int, turn: int, gyroCompensation: float, timeForPid: float):
+    def control(self, rotation, speed: int, turn: int):
 
         # if(self.PID_CLASS.controlError == False):
         print("speed: %d" % speed)
@@ -79,7 +85,7 @@ class PID_CONTROL(object):
             self.speedLeft = 0
             self.speedRight = 0
 
-        motorAdj = self.motor_adjust(rotation, speed, turn, gyroCompensation, timeForPid)
+        motorAdj = self.motor_adjust(rotation, speed, turn)
         # motoranpassung = 0
         print("speedLeft %d" % (self.speedLeft + motorAdj))
         print("speedRight %d" % (self.speedRight + motorAdj))
