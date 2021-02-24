@@ -1,63 +1,121 @@
+import time
+import warnings
+
+try:
+    # get monotonic time to ensure that time deltas are always positive
+    currentTime = time.monotonic
+except AttributeError:
+    # time.monotonic() not available (using python < 3.3), fallback to time.time()
+    currentTime = time.time
+    warnings.warn('time.monotonic() not available in python < 3.3, using time.time() as fallback')
+
+
 class PID(object):
 
-    def __init__(self, Kp: float, Ki: float, Kd: float):
+    def __init__(self, Kp: float, Ki: float, Kd: float, sampleTime=0.01, outputLimits=(None, None)):
+        """
+            Description
+        """
 
-        # given Variables
         self.Kp = Kp
         self.Ki = Ki
         self.Kd = Kd
+        self.sampleTime = sampleTime
+        self.minOutput, self.maxOutput = outputLimits
 
-        # Variables init
-        self.output = 0.0
-        self.buffer = 0.0
-        self.difference = 0.0
-        self.differenceBefore = 0.0
         self.controlError = False
 
-        # measured
-        # self.timeForARun = 0.00009
+        self.reset()
 
-        # still has to be adjusted
-        self.maxBuffer = 100.0
-        self.maxOutput = 50.0
+    def __call__(self, inputVar, setpoint=0.0):
 
-        print("PID initialized")
+        now = time.monotonic()
 
-    def pid(self, inputVar, setpoint, gyroCompensation: float, timeForARun: float):
+        print(str(now) + ", " + str(self.lastTime))
 
-        compensatedInput = inputVar/3 - gyroCompensation
-        self.difference = setpoint - self.output
-        self.buffer = self.difference * timeForARun + self.buffer
+        dt = now - self.lastTime if now - self.lastTime else 1e-16
 
-        # main PID
-        self.output = compensatedInput + self.output + self.Kp * self.difference + self.Ki * self.buffer + self.Kd * \
-                      ((self.differenceBefore - self.difference) / timeForARun)
+        if self.sampleTime is not None and dt < self.sampleTime and self.lastOutput is not None:
+            # only update every sample_time seconds
+            return self.lastOutput
 
-        self.differenceBefore = self.difference
+        # compute error terms
+        error = setpoint - inputVar
+        d_input = inputVar - (self.lastInput if self.lastInput is not None else inputVar)
+        self.proportional = self.Kp * error
 
-        # Catch of extreme values
-        if self.buffer > self.maxBuffer:
-            self.buffer = self.maxBuffer
+        # compute integral and derivative terms
+        self.integral = self.integral + self.Ki * error * dt
+        #       self.integral = self.Ki * self.buffer
+        self.integral = self.clamp(self.integral, self.outputLimits)  # avoid integral windup
 
-        if self.buffer < -self.maxBuffer:
-            self.buffer = -self.maxBuffer
+        #
+        self.derivative = -self.Kd * d_input / dt
+        #       self.derivative = -self.Kd * ((self.lastError - error) / dt)
+        self.lastError = error
 
-        if self.output > self.maxOutput:
-            self.output = self.maxOutput
+        self.output = self.proportional + self.integral + self.derivative
+        #       self.output = self.proportional + self.integral + self.derivative + self.buffer2
+
+        #       self.buffer = (self.error - self.output) * dt + self.buffer
+        #       self.buffer2 = self.derivative + self.buffer2 * 0.9998
+
+        # keep track of state
+        self.lastOutput = self.output
+        self.lastInput = inputVar
+        self.lastTime = now
+
+        return -(self.output)
+
+    def clamp(self, value, limits):
+        lower, upper = limits
+        if value is None:
+            self.controlError = False
+            return None
+        elif upper is not None and value > upper:
             self.controlError = True
-            self.output = 0.0
-            self.buffer = 0.0
-            self.difference = 0.0
-            self.differenceBefore = 0.0
-
-        if self.output < -self.maxOutput:
-            self.output = -self.maxOutput
+            return upper
+        elif lower is not None and value < lower:
             self.controlError = True
-            self.output = 0.0
-            self.buffer = 0.0
-            self.difference = 0.0
-            self.differenceBefore = 0.0
+            return lower
+        return value
 
-        print("motor output = %f" % int(round((self.output / self.maxOutput) * -15)))
+    def reset(self):
+        """
+        Reset the PID controller internals, setting each term to 0 as well as cleaning the integral,
+        the last output and the last input (derivative calculation).
+        """
+        self.proportional = 0.0
+        self.integral = 0.0
+        self.derivative = 0.0
 
-        return int(round((self.output / self.maxOutput) * -15))
+        self.lastTime = time.monotonic()
+        self.lastOutput = None
+        self.lastInput = None
+
+        self.lastError = 0.0
+        self.buffer = 0.0
+        self.buffer2 = 0.0
+        self.output = 0.0
+
+    @property
+    def outputLimits(self):
+        return self.minOutput, self.maxOutput
+
+    @outputLimits.setter
+    def outputLimits(self, limits):
+        """Setter for the output limits"""
+        if limits is None:
+            self.minOutput, self.maxOutput = None, None
+            return
+
+        minOutput, maxOutput = limits
+
+        if None not in limits and maxOutput < minOutput:
+            raise ValueError('lower limit must be less than upper limit')
+
+        self.minOutput = minOutput
+        self.maxOutput = maxOutput
+
+        self.integral = self.clamp(self.integral, self.outputLimits)
+        self.lastOutput = self.clamp(self.lastOutput, self.outputLimits)
