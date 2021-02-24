@@ -25,6 +25,7 @@ class INPUT_SIM(threading.Thread):
 
         self.gyro_y = 0
         time.sleep(self.waitTime )
+
         self.gyro_y = 25
         time.sleep(self.waitTime / 3)
         self.gyro_y = 50
@@ -55,7 +56,6 @@ class INPUT_SIM(threading.Thread):
         time.sleep(20 * self.waitTime)
         self.gyro_y = 10
         time.sleep(self.waitTime)
-
         self.gyro_y = 0
         time.sleep(self.waitTime * 20)
         self.gyro_y = 100
