@@ -9,8 +9,8 @@ import pandas as pd
 from input_simulation import INPUT_SIM
 
 setpoint = 0
-Kp = 0.2
-Ki = 0.08
+Kp = 0.3
+Ki = 0.008
 Kd = 0.005
 # Ki = 0.1
 # Kd = 0.7
