@@ -2,7 +2,7 @@ from PID_forTest import PID_Lukas
 #from pid_malanders import PID
 from PID import PID
 import time
-
+from pi_test import PID_Dominik
 import matplotlib.pyplot as plt
 
 import pandas as pd
@@ -24,7 +24,7 @@ Gute Werte für L-Regler: Kp = 0.2, Ki = 0.08, Kd = 0.005
 pid = PID(Kp, Ki, Kd, 0.01, (-15, 15))
 
 pid2 = PID_Lukas(Kp, Ki, Kd)
-
+pid3 = PID_Dominik(Kp)
 pidDataList = [setpoint]
 timeDataList = [0]
 gyroDataList = [setpoint]
@@ -49,8 +49,9 @@ while True:
 
         # pid.sample_time = timeForPid
         gyro_y = tmpInputClass.gyro_y
-        output = -pid(gyro_y)                             # M-Regler
+        #output = -pid(gyro_y)                             # M-Regler
         #output = pid2.pid(gyro_y, setpoint, 0, 0.01)    # L-Regler
+        output = pid3.pid(gyro_y, setpoint, 0, 0.01)    #D-Regler
         now = time.time() - startTime
 
         gyroDataList.append(gyro_y)

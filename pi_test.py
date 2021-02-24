@@ -1,12 +1,12 @@
 class PID_Dominik(object):
 
-    def __init__(self, Kp: float, Ki: float):
+    def __init__(self, Kp: float):
 
         # given Variables
         self.Kp = Kp
-        self.Ki = Ki
+
         self.TN_ms = 10.0
-        self.TA_ms
+        self.TA_ms = 0.0
         # Variables init
         self.output = 0.0
         self.outputBefore = 0.0
