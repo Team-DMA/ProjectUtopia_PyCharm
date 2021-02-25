@@ -103,10 +103,10 @@ if __name__ == "__main__":
                         speed = RCV_WIFI_MODULE_CLASS.targetSpeedFB
                         turn = RCV_WIFI_MODULE_CLASS.rotateStrength
                         PID_CONTROL_CLASS.control(GYRO_CLASS.yRotation, speed, turn)
-                        GPS_CLASS.gps()
-                        gps = "Latitude=" + str(GPS_CLASS.get_latitude()) + "and Longitude=" + \
-                              str(GPS_CLASS.get_longitude())
-                        print(gps)
+                        #GPS_CLASS.gps()
+                        #gps = "Latitude=" + str(GPS_CLASS.get_latitude()) + "and Longitude=" + \
+                        #      str(GPS_CLASS.get_longitude())
+                        #print(gps)
 
                     #else:
                         SELFDRIVING_CLASS.drive(timeForPid)

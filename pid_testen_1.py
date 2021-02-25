@@ -17,8 +17,7 @@ Kd = 0.003
 # Kd = 0.7
 
 """
-Gute Werte für M-Regler: Kp = 1.0, Ki = 0.5, Kd = 0.003a
-
+Gute Werte für M-Regler: Kp = 1.0, Ki = 0.5, Kd = 0.003
 Gute Werte für L-Regler: Kp = 0.2, Ki = 0.08, Kd = 0.005
 """
 
