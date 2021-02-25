@@ -32,7 +32,7 @@ try:
 
     # combine rows and column names into pandas dataframe
     # data = pd.DataFrame(rows, columns=columns)
-    data = pd.DataFrame(zip(timeDataList, pidDataList, gyroDataList), columns=columns)
+    data = pd.DataFrame(list(zip(timeDataList, pidDataList, gyroDataList)), columns=columns)
 
     print("2")
 
