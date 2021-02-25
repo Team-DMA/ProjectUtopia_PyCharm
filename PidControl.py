@@ -22,7 +22,7 @@ class PID_CONTROL(object):
         self.i = 10
 
         # given Classes
-        self.PID_CLASS = PID(self.Kp, self.Ki, self.Kd)
+        self.PID_CLASS = PID(self.Kp, self.Ki, self.Kd, None)
         self.MOTOR_CONTROL_CLASS = MotorControlClass
 
         # debug:
