@@ -6,7 +6,7 @@ class PID_Lukas(object):
         self.Kp = Kp
         self.Ki = Ki
         self.Kd = Kd
-        self.KdT = 0.9998
+        self.KdT = 0.99998
 
         # Variables init
         self.pValue = 0.0
