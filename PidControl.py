@@ -3,7 +3,7 @@ from PID import PID
 
 # graph
 import time
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 import pandas as pd
 
 
@@ -55,14 +55,14 @@ class PID_CONTROL(object):
 
             data.plot(x="Time", y=["ControlValue", "Rotation"])
 
-            data.to_excel('PID_DATA_EXCEL.xlsx', sheet_name='new_sheet', index=False)
+            # data.to_excel('PID_DATA_EXCEL.xlsx', sheet_name='new_sheet', index=False)
 
             #plt.show(block=False)
 
-            # plt.xlabel("Zeit in s")
-            # plt.title("Regler macht brrrrr")
+            plt.xlabel("Zeit in s")
+            plt.title("Regler macht brrrrr")
 
-            # plt.savefig('graph_pid.png', bbox_inches='tight')
+            plt.savefig('graph_pid.png', bbox_inches='tight')
 
             print("\nImage generated. Exiting...")
 
