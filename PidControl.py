@@ -55,6 +55,10 @@ class PID_CONTROL(object):
 
             data.plot(x="Time", y=["ControlValue", "Rotation"])
             #plt.show(block=False)
+
+            plt.xlabel("Zeit in s")
+            plt.title("Regler macht brrrrr")
+
             plt.savefig('graph_pid.png', bbox_inches='tight')
 
             print("\nImage generated. Exiting...")
