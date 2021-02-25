@@ -25,10 +25,16 @@ try:
     columns = ["Time", "ControlValue", "Rotation"]
     rows = zip(timeDataList, pidDataList, gyroDataList)
 
+    print("1")
+
     # combine rows and column names into pandas dataframe
     data = pd.DataFrame(rows, columns=columns)
 
+    print("2")
+
     data.plot(x="Time", y=["ControlValue", "Rotation"])
+
+    print("3")
 
     # data.to_excel('PID_DATA_EXCEL.xlsx', sheet_name='new_sheet', index=False)
 
