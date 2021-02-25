@@ -9,12 +9,12 @@ timeDataList = [0.0]
 gyroDataList = [0.0]
 startTime = time.time()
 
-for x in range(1, 10):
-    tmp = round(random.uniform(1, 10), 3)
-    now = time.time() - startTime
-    gyroDataList.append(tmp)
-    pidDataList.append(tmp * round(random.uniform(1, 2), 1))
-    timeDataList.append(now)
+#for x in range(1, 10):
+tmp = round(random.uniform(1, 10), 3)
+now = time.time() - startTime
+gyroDataList.append(tmp)
+pidDataList.append(tmp * round(random.uniform(1, 2), 1))
+timeDataList.append(now)
 
 try:
     # data
