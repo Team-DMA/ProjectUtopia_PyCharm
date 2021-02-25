@@ -64,14 +64,13 @@ if __name__ == "__main__":
 
                         # Class init
                         PID_CONTROL_CLASS = PID_CONTROL(MOTOR_CONTROL_CLASS, Kp, Ki, Kd)
-
+                        if PID_CONTROL_CLASS is None:
+                            print("PID_CLASS not defined")
                         SELFDRIVING_CLASS = SELFDRIVING(GYRO_CLASS, ECHO_CLASS, PID_CONTROL_CLASS)
-
+                        if SELFDRIVING_CLASS is None:
+                            print("SELFDRIVING_CLASS not defined")
                         print("Const. INIT finished.")
-                if PID_CONTROL_CLASS is None:
-                    print("PID_CLASS not defined")
-                if SELFDRIVING_CLASS is None:
-                    print("SELFDRIVING_CLASS not defined")
+
                 if RCV_WIFI_MODULE_CLASS.constantsReceived:
 
                     if RCV_WIFI_MODULE_CLASS.newData:
