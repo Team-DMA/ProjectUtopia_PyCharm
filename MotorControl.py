@@ -53,7 +53,7 @@ class MOTOR_CONTROL(object):
             GPIO.output(self.inBackwardPinL, False)
 
         if forceL > 0:
-            self.pwmL.ChangeDutyCycle(10 + 6 * forceL)
+            self.pwmL.ChangeDutyCycle(25 + 5 * forceL)
         else:
             self.pwmL.ChangeDutyCycle(0)
 
@@ -76,7 +76,7 @@ class MOTOR_CONTROL(object):
             GPIO.output(self.inBackwardPinR, False)
 
         if forceR > 0:
-            self.pwmR.ChangeDutyCycle(10 + 6 * forceR)
+            self.pwmR.ChangeDutyCycle(25 + 5 * forceR)
         else:
             self.pwmR.ChangeDutyCycle(0)
 
