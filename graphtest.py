@@ -11,9 +11,10 @@ startTime = time.time()
 
 #for x in range(1, 10):
 tmp = round(random.uniform(1, 10), 3)
+print(str(tmp))
 now = time.time() - startTime
 gyroDataList.append(tmp)
-pidDataList.append(tmp * round(random.uniform(1, 2), 1))
+pidDataList.append((tmp * (round(random.uniform(1, 2), 1))))
 timeDataList.append(now)
 
 try:
