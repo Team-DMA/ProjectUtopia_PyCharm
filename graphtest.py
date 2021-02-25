@@ -22,7 +22,7 @@ timeDataList.append(now)
 
 try:
     # data
-    columns = ["Time", "ControlValue", "Rotation"]
+    columns = ['Time', 'ControlValue', 'Rotation']
     rows = zip(timeDataList, pidDataList, gyroDataList)
     print(str(timeDataList))
     print(str(pidDataList))
@@ -31,7 +31,8 @@ try:
     print("1")
 
     # combine rows and column names into pandas dataframe
-    data = pd.DataFrame(rows, columns=columns)
+    # data = pd.DataFrame(rows, columns=columns)
+    data = pd.DataFrame(zip(timeDataList, pidDataList, gyroDataList), columns=columns)
 
     print("2")
 
