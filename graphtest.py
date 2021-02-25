@@ -24,6 +24,9 @@ try:
     # data
     columns = ["Time", "ControlValue", "Rotation"]
     rows = zip(timeDataList, pidDataList, gyroDataList)
+    print(str(timeDataList))
+    print(str(pidDataList))
+    print(str(gyroDataList))
 
     print("1")
 
