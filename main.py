@@ -121,6 +121,9 @@ if __name__ == "__main__":
         GPIO.cleanup()
 
     except KeyboardInterrupt:
+
+        PID_CONTROL_CLASS.genImage()
+
         print("Program manually aborted.")
         GPIO.cleanup()
 

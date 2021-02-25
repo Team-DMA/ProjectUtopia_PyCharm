@@ -44,7 +44,7 @@ class PID_CONTROL(object):
         print("Kd = {0}".format(self.Kd))
         print("PID_CONTROL initialized")
 
-    def __del__(self):
+    def genImage(self):
         try:
             # data
             columns = ["Time", "ControlValue", "Rotation"]
