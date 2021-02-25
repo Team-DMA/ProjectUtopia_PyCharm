@@ -8,13 +8,16 @@ pidDataList = [0.0]
 timeDataList = [0.0]
 gyroDataList = [0.0]
 startTime = time.time()
+time.sleep(0.00005)
 
 #for x in range(1, 10):
 tmp = round(random.uniform(1, 10), 3)
 print(str(tmp))
 now = time.time() - startTime
 gyroDataList.append(tmp)
-pidDataList.append((tmp * (round(random.uniform(1, 2), 1))))
+tmp2 = tmp * (round(random.uniform(1, 2), 1))
+print(str(tmp2))
+pidDataList.append(tmp2)
 timeDataList.append(now)
 
 try:
