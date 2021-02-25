@@ -7,6 +7,8 @@ import matplotlib.pyplot as plt
 
 import pandas as pd
 
+print(str(pd.__version__))
+
 from input_simulation import INPUT_SIM
 
 setpoint = 0

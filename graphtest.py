@@ -4,6 +4,8 @@ import pandas as pd
 import random
 import time
 
+print(str(pd.__version__))
+
 pidDataList = [0.0]
 timeDataList = [0.0]
 gyroDataList = [0.0]
