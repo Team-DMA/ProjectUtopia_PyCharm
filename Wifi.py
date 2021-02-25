@@ -76,7 +76,7 @@ class RCV_WIFI_MODULE(threading.Thread):
                             readableString = self.data.decode("utf-8")
                             strengthL, strengthR = readableString.split("|")
 
-                            print("strengthL: " + strengthL + ", strengthR: " + strengthR)
+                            # print("strengthL: " + strengthL + ", strengthR: " + strengthR)
 
                             self.targetSpeedFB = int(strengthL)
                             self.rotateStrength = int(strengthR)

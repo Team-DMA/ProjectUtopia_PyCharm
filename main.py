@@ -74,9 +74,9 @@ if __name__ == "__main__":
                 if RCV_WIFI_MODULE_CLASS.constantsReceived:
 
                     if RCV_WIFI_MODULE_CLASS.newData:
-                        print("\nTargetSpeedFB: " + str(RCV_WIFI_MODULE_CLASS.targetSpeedFB))
+                        #print("\nTargetSpeedFB: " + str(RCV_WIFI_MODULE_CLASS.targetSpeedFB))
                         # forwards or backwards depending on +/-
-                        print("\nRotateStrength: " + str(RCV_WIFI_MODULE_CLASS.rotateStrength))
+                        #print("\nRotateStrength: " + str(RCV_WIFI_MODULE_CLASS.rotateStrength))
                         # left or right depending on -/+
                         # SendWifiThread.Smartphone_IP = RcvWifiThread.Smartphone_IP #IP set
                         RCV_WIFI_MODULE_CLASS.newData = False
@@ -92,23 +92,23 @@ if __name__ == "__main__":
                             timeForPid = float(stopTime) - float(startTime)
 
                         startTime = float(time.process_time())  # time measurement start
-                        print("Zeit für Regler debug: " + str(timeForPid)) # debug
+                        #print("Zeit für Regler debug: " + str(timeForPid)) # debug
 
                         # read gyroscope
                         GYRO_CLASS.read_gyro()
 
                         distance = ECHO_CLASS.distance  # Debug
-                        print("Debug distance: " + str(distance))  # Debug
+                        #print("Debug distance: " + str(distance))  # Debug
 
                         speed = RCV_WIFI_MODULE_CLASS.targetSpeedFB
                         turn = RCV_WIFI_MODULE_CLASS.rotateStrength
                         PID_CONTROL_CLASS.control(GYRO_CLASS.yRotation, speed, turn)
-                        GPS_CLASS.gps()
-                        gps = "Latitude=" + str(GPS_CLASS.get_latitude()) + "and Longitude=" + \
-                              str(GPS_CLASS.get_longitude())
-                        print(gps)
+                        #GPS_CLASS.gps()
+                        #gps = "Latitude=" + str(GPS_CLASS.get_latitude()) + "and Longitude=" + \
+                        #      str(GPS_CLASS.get_longitude())
+                        #print(gps)
 
-                    #else:
+                    else:
                         SELFDRIVING_CLASS.drive(timeForPid)
 
             except Exception as e:
