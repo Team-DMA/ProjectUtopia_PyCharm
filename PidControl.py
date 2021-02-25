@@ -54,7 +54,8 @@ class PID_CONTROL(object):
             data = pd.DataFrame(rows, columns=columns)
 
             data.plot(x="Time", y=["ControlValue", "Rotation"])
-            plt.show(block=False)
+            #plt.show(block=False)
+            plt.savefig('graph_pid.png', bbox_inches='tight')
 
             print("\nImage generated. Exiting...")
 
