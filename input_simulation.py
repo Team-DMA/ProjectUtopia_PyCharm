@@ -8,7 +8,7 @@ class INPUT_SIM(threading.Thread):
         threading.Thread.__init__(self)
         self.daemon = True
 
-        self.waitTime = 0.1  # in seconds
+        self.waitTime = 0.001  # in seconds
 
         self.gyro_y = 0
         self.enabled = True
@@ -23,9 +23,9 @@ class INPUT_SIM(threading.Thread):
         #     time.sleep(self.waitTime)
         #for x in range(80, 0, -1):
 
+        """
         self.gyro_y = 0
-        time.sleep(self.waitTime )
-
+        time.sleep(self.waitTime)
         self.gyro_y = 25
         time.sleep(self.waitTime / 3)
         self.gyro_y = 50
@@ -56,10 +56,12 @@ class INPUT_SIM(threading.Thread):
         time.sleep(20 * self.waitTime)
         self.gyro_y = 10
         time.sleep(self.waitTime)
+        """
         self.gyro_y = 0
-        time.sleep(self.waitTime * 20)
-        self.gyro_y = 100
-        time.sleep(self.waitTime*40)
+        time.sleep(self.waitTime)
+        self.gyro_y = 60
+        #time.sleep(self.waitTime*400)
+        time.sleep(self.waitTime * 1000)
 
         self.enabled = False
 

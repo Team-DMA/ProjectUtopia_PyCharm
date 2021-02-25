@@ -1,7 +1,8 @@
-from pid_malanders import PID
 from PID_forTest import PID_Lukas
+#from pid_malanders import PID
+from PID import PID
 import time
-
+from pi_test import PID_Dominik
 import matplotlib.pyplot as plt
 
 import pandas as pd
@@ -9,23 +10,21 @@ import pandas as pd
 from input_simulation import INPUT_SIM
 
 setpoint = 0
-Kp = 0.7
-Ki = 0.1
-Kd = 0.0
+Kp = 1.0
+Ki = 0.5
+Kd = 0.003
 # Ki = 0.1
 # Kd = 0.7
 
 """
-Gute Werte für M-Regler: Kp = 1.05, Ki = 0.5, Kd = 0.007
+Gute Werte für M-Regler: Kp = 1.0, Ki = 0.5, Kd = 0.003
 Gute Werte für L-Regler: Kp = 0.2, Ki = 0.08, Kd = 0.005
 """
 
-pid = PID(Kp, Ki, Kd, 0)
+pid = PID(Kp, Ki, Kd, 0.01, (-15, 15))
 
 pid2 = PID_Lukas(Kp, Ki, Kd)
-
-startTime = time.time()
-
+pid3 = PID_Dominik(Kp)
 pidDataList = [setpoint]
 timeDataList = [0]
 gyroDataList = [setpoint]
@@ -35,6 +34,7 @@ tmpInputClass = INPUT_SIM()
 
 gyro_y = 0
 
+startTime = time.time()
 
 def scale(old_value, old_min, old_max, new_min, new_max):
     new_value = ((old_value - old_min) / (old_max - old_min)) * (new_max - new_min) + new_min
@@ -49,14 +49,15 @@ while True:
 
         # pid.sample_time = timeForPid
         gyro_y = tmpInputClass.gyro_y
-        output = pid(gyro_y)                                # M-Regler
+        #output = -pid(gyro_y)                             # M-Regler
         #output = pid2.pid(gyro_y, setpoint, 0, 0.01)    # L-Regler
+        output = pid3.pid(gyro_y, setpoint, 0, 0.01)    #D-Regler
         now = time.time() - startTime
 
         gyroDataList.append(gyro_y)
 
-        #pidDataList.append(-(scale(output, 0, 75, 0, 15)))   # Regler Skalierung
-        pidDataList.append(output)                          # Regler unskaliert
+        pidDataList.append(scale(output, -75, 75, -15, 15))   # Regler Skalierung
+        #pidDataList.append(output)                          # Regler unskaliert
 
         timeDataList.append(now)
 
