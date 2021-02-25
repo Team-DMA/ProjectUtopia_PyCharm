@@ -29,7 +29,7 @@ class PID(object):
 
     def __call__(self, inputVar, setpoint=0.0):
 
-        if inputVar > abs(60):
+        if inputVar > abs(90):
             self.controlError = True
             return 0
 

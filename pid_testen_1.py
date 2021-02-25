@@ -17,14 +17,15 @@ Kd = 0.003
 # Kd = 0.7
 
 """
-Gute Werte für M-Regler: Kp = 1.0, Ki = 0.5, Kd = 0.003
+Gute Werte für M-Regler: Kp = 1.0, Ki = 0.5, Kd = 0.003a
+
 Gute Werte für L-Regler: Kp = 0.2, Ki = 0.08, Kd = 0.005
 """
 
 pid = PID(Kp, Ki, Kd, 0.01, (-15, 15))
 
 pid2 = PID_Lukas(Kp, Ki, Kd)
-pid3 = PID_Dominik(Kp)
+pid3 = PID_Dominik(Kp, 10)
 pidDataList = [setpoint]
 timeDataList = [0]
 gyroDataList = [setpoint]
@@ -51,7 +52,7 @@ while True:
         gyro_y = tmpInputClass.gyro_y
         #output = -pid(gyro_y)                             # M-Regler
         #output = pid2.pid(gyro_y, setpoint, 0, 0.01)    # L-Regler
-        output = pid3.pid(gyro_y, setpoint, 0, 0.01)    #D-Regler
+        output = pid3.pid(gyro_y, setpoint)    #D-Regler
         now = time.time() - startTime
 
         gyroDataList.append(gyro_y)
