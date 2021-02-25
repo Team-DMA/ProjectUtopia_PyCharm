@@ -33,7 +33,7 @@ class PID(object):
             self.controlError = True
             return 0
 
-        now = time.monotonic()
+        now = currentTime()
 
         dt = now - self.lastTime if now - self.lastTime else 1e-16
 
@@ -88,7 +88,7 @@ class PID(object):
         self.integral = 0.0
         self.derivative = 0.0
 
-        self.lastTime = time.monotonic()
+        self.lastTime = currentTime()
         self.lastOutput = None
         self.lastInput = None
 
