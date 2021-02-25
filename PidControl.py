@@ -5,6 +5,7 @@ from PID import PID
 import time
 import matplotlib.pyplot as plt
 import pandas as pd
+from datetime import datetime
 
 
 def scale(old_value, old_min, old_max, new_min, new_max):
@@ -62,7 +63,10 @@ class PID_CONTROL(object):
             plt.xlabel("Zeit in s")
             plt.title("Regler macht brrrrr")
 
-            plt.savefig('graph_pid.png', bbox_inches='tight')
+            now = datetime.now()
+            dt_string = now.strftime("%Y-%m-%d-%H-%M-%S")
+            fileName = "graph_pid_" + str(dt_string)
+            plt.savefig(fileName+'.png', bbox_inches='tight')
 
             print("\nImage generated. Exiting...")
 
