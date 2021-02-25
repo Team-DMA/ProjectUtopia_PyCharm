@@ -92,7 +92,7 @@ if __name__ == "__main__":
                             timeForPid = float(stopTime) - float(startTime)
 
                         startTime = float(time.process_time())  # time measurement start
-                        #print("Zeit für Regler debug: " + str(timeForPid)) # debug
+                        print("Zeit für Regler debug: " + str(timeForPid)) # debug
 
                         # read gyroscope
                         GYRO_CLASS.read_gyro()
