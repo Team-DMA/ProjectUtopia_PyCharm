@@ -73,7 +73,8 @@ class PID_CONTROL(object):
         # verwendet.
         # vielleicht würde es auch reichen, den Speed nur über den Sollwert für den Regler zu steuern, da er dadurch
         # automatisch nach vorne/hinten fährt.
-        setpoint = speed * 2
+        #setpoint = speed * 2
+        setpoint = 0
 
         changedValue = self.PID_CLASS(rotation, setpoint)  # PID_CLASS.pid gibt Ausgang zurück
         # changedValue = -(int(round(scale(changedValue, -75, 75, -15, 15))))  # scale, round, to int and minus
