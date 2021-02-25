@@ -2,9 +2,9 @@ from MotorControl import MOTOR_CONTROL
 from PID import PID
 
 # graph
-# import time
+import time
 # import matplotlib.pyplot as plt
-# import pandas as pd
+import pandas as pd
 
 
 def scale(old_value, old_min, old_max, new_min, new_max):
@@ -13,11 +13,11 @@ def scale(old_value, old_min, old_max, new_min, new_max):
 
 
 # graph
-# setpoint = 0.0
-# pidDataList = [setpoint]
-# timeDataList = [0.0]
-# gyroDataList = [setpoint]
-# startTime = time.time()
+setpoint = 0.0
+pidDataList = [setpoint]
+timeDataList = [0.0]
+gyroDataList = [setpoint]
+startTime = time.time()
 
 
 class PID_CONTROL(object):
@@ -44,27 +44,30 @@ class PID_CONTROL(object):
         print("Kd = {0}".format(self.Kd))
         print("PID_CONTROL initialized")
 
-    # def __del__(self):
-    #     try:
-    #         # data
-    #         columns = ["Time", "ControlValue", "Rotation"]
-    #         rows = zip(timeDataList, pidDataList, gyroDataList)
-    #
-    #         # combine rows and column names into pandas dataframe
-    #         data = pd.DataFrame(rows, columns=columns)
-    #
-    #         data.plot(x="Time", y=["ControlValue", "Rotation"])
-    #         #plt.show(block=False)
-    #
-    #         plt.xlabel("Zeit in s")
-    #         plt.title("Regler macht brrrrr")
-    #
-    #         plt.savefig('graph_pid.png', bbox_inches='tight')
-    #
-    #         print("\nImage generated. Exiting...")
-    #
-    #     except Exception as e:
-    #         print("\nError while plotting: " + str(e))
+    def __del__(self):
+        try:
+            # data
+            columns = ["Time", "ControlValue", "Rotation"]
+            rows = zip(timeDataList, pidDataList, gyroDataList)
+
+            # combine rows and column names into pandas dataframe
+            data = pd.DataFrame(rows, columns=columns)
+
+            data.plot(x="Time", y=["ControlValue", "Rotation"])
+
+            data.to_excel('PID_DATA_EXCEL.xlsx', sheet_name='new_sheet', index=False)
+
+            #plt.show(block=False)
+
+            # plt.xlabel("Zeit in s")
+            # plt.title("Regler macht brrrrr")
+
+            # plt.savefig('graph_pid.png', bbox_inches='tight')
+
+            print("\nImage generated. Exiting...")
+
+        except Exception as e:
+            print("\nError while plotting: " + str(e))
 
     def motor_adjust(self, rotation, speed, turn):
 
@@ -81,10 +84,10 @@ class PID_CONTROL(object):
         changedValue = (int(round(changedValue)))
 
         # graph
-        # now = time.time() - startTime
-        # gyroDataList.append(rotation)
-        # pidDataList.append(changedValue)
-        # timeDataList.append(now)
+        now = time.time() - startTime
+        gyroDataList.append(rotation)
+        pidDataList.append(changedValue)
+        timeDataList.append(now)
 
         return changedValue
 
