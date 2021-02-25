@@ -41,7 +41,7 @@ class PID_CONTROL(object):
         setpoint = speed * 2
 
         changedValue = self.PID_CLASS(rotation, setpoint)  # PID_CLASS.pid gibt Ausgang zurück
-        changedValue = -(int(round(scale(changedValue, -75, 75, -15, 15))))
+        changedValue = -(int(round(scale(changedValue, -75, 75, -15, 15))))  # scale, round, to int and minus
         return changedValue
 
     def selfrighting(self, rotation, gyroCompensation: float):
@@ -62,7 +62,7 @@ class PID_CONTROL(object):
     def control(self, rotation, speed: int, turn: int):
 
         # if(self.PID_CLASS.controlError == False):
-        print("speed: %d" % speed)
+        # print("speed: %d" % speed)
         if turn < 0 and speed > 0:
             self.speedLeft = max(0, speed + turn)
             self.speedRight = speed
@@ -87,8 +87,10 @@ class PID_CONTROL(object):
 
         motorAdj = self.motor_adjust(rotation, speed, turn)
         # motoranpassung = 0
-        print("speedLeft %d" % (self.speedLeft + motorAdj))
-        print("speedRight %d" % (self.speedRight + motorAdj))
+        # print("speedLeft %d" % (self.speedLeft + motorAdj))
+        # print("speedRight %d" % (self.speedRight + motorAdj))
+
+        print("Rotation: " + str(rotation) + ", PID-Output: " + str(motorAdj))
 
         self.MOTOR_CONTROL_CLASS.set_speed_left(self.speedLeft + motorAdj)
         self.MOTOR_CONTROL_CLASS.set_speed_right(self.speedRight + motorAdj)
