@@ -41,7 +41,8 @@ class PID_CONTROL(object):
         setpoint = speed * 2
 
         changedValue = self.PID_CLASS(rotation, setpoint)  # PID_CLASS.pid gibt Ausgang zurück
-        changedValue = -(int(round(scale(changedValue, -75, 75, -15, 15))))  # scale, round, to int and minus
+        #changedValue = -(int(round(scale(changedValue, -75, 75, -15, 15))))  # scale, round, to int and minus
+        changedValue = -(int(round(changedValue)))
         return changedValue
 
     def selfrighting(self, rotation, gyroCompensation: float):
