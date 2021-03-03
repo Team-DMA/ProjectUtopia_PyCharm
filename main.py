@@ -2,11 +2,14 @@ import RPi.GPIO as GPIO
 
 from Echo import ECHO
 from Gyro import GYRO
+from Barometer import BAROMETER
+from Compass import COMPASS
 from MotorControl import MOTOR_CONTROL
 from PidControl import PID_CONTROL
 from SELFDRIVING import SELF_DRIVING
 from Wifi import RCV_WIFI_MODULE
-from Gps import GPS
+from Wifi import SEND_WIFI_MODULE
+from gps_richtig import GPS
 import time
 
 GPIO.setmode(GPIO.BOARD)
@@ -27,7 +30,7 @@ gyroCompensation = 0
 
 # everything for wifi
 RCV_WIFI_MODULE_CLASS = RCV_WIFI_MODULE()
-# SendWifiThread = wifi.SEND_WIFI_MODULE()
+SEND_WIFI_MODULE_CLASS = SEND_WIFI_MODULE()
 # tcpHandlerClass = tcpHandler.TCP_HANDLER()
 
 MOTOR_CONTROL_CLASS = MOTOR_CONTROL(pinEnMotorLeft, pinEnMotorRight, pinMotorLeftForwards, pinMotorLeftBackwards,
@@ -35,6 +38,8 @@ MOTOR_CONTROL_CLASS = MOTOR_CONTROL(pinEnMotorLeft, pinEnMotorRight, pinMotorLef
 ECHO_CLASS = ECHO(pinEchoTrigger, pinEchoEcho)
 GYRO_CLASS = GYRO()
 GPS_CLASS = GPS()
+COMPASS_CLASS = COMPASS()
+BAROMETER_CLASS = BAROMETER()
 
 # Placeholder for Classes
 PID_CONTROL_CLASS = None
@@ -45,7 +50,7 @@ startTime = 0.0
 stopTime = 0.0
 passes = 0  # how often the main loop is passed
 passesToUseMeasuredTime = 5
-
+i = 0
 print("Main-Class INIT finished.")
 
 if __name__ == "__main__":
@@ -82,6 +87,8 @@ if __name__ == "__main__":
                         RCV_WIFI_MODULE_CLASS.newData = False
                         # data crunched, RCV_WIFI_MODULE_CLASS can receive again
 
+
+
                     if True:
 
                         stopTime = float(time.process_time())  # time end
@@ -99,7 +106,15 @@ if __name__ == "__main__":
 
                         distance = ECHO_CLASS.distance  # Debug
                         #print("Debug distance: " + str(distance))  # Debug
-
+                        i = i + 1
+                        SEND_WIFI_MODULE_CLASS.msg = ""
+                        if i >= 5:
+                            msg = str(COMPASS_CLASS.compass()) + "|" + str(BAROMETER_CLASS.temperature()) + "|" + \
+                                  str(BAROMETER_CLASS.altitude()) + "|" + str(BAROMETER_CLASS.altitude()) + "|" + \
+                                  str(GPS_CLASS.get_longitude()) + "|" + str(GPS_CLASS.get_latitude()) + "|" + \
+                                  str(GPS_CLASS.get_altitude())
+                            SEND_WIFI_MODULE_CLASS.msg = msg
+                            i = 0
                         speed = RCV_WIFI_MODULE_CLASS.targetSpeedFB
                         turn = RCV_WIFI_MODULE_CLASS.rotateStrength
                         PID_CONTROL_CLASS.control(GYRO_CLASS.yRotation, speed, turn)
@@ -112,20 +127,23 @@ if __name__ == "__main__":
                         SELFDRIVING_CLASS.drive(timeForPid)
 
             except Exception as e:
+                MOTOR_CONTROL_CLASS.stop()
                 print("Main-Error: " + str(e))
                 GPIO.cleanup()
                 break
 
     except Exception as e:
+        MOTOR_CONTROL_CLASS.stop()
         print("Main-Error: " + str(e))
         GPIO.cleanup()
 
     except KeyboardInterrupt:
-
-        PID_CONTROL_CLASS.genImage()
+        MOTOR_CONTROL_CLASS.stop()
+        PID_CONTROL_CLASS.gen_image()
 
         print("\nProgram manually aborted.")
         GPIO.cleanup()
 
     finally:
+        MOTOR_CONTROL_CLASS.stop()
         GPIO.cleanup()

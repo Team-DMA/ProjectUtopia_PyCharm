@@ -59,7 +59,7 @@ class PID(object):
         self.output = self.proportional + self.integral + self.derivative + self.buffer2  # L-Regler
 
         self.buffer = (error - self.output) * dt + self.buffer
-        self.buffer2 = self.derivative + self.buffer2 * 0.9999
+        self.buffer2 = self.derivative + self.buffer2 * 0.998
 
         # keep track of state
         self.lastOutput = self.output

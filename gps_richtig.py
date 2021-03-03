@@ -53,16 +53,19 @@ class GPS(object):
     def get_longitude(self):
         return self.lng
 
+    def get_altitude(self):
+        return self.alt
+
 
 def generate_lines_that_equal(string, fp):
     for line in fp:
         if line == string:
             yield line
 
-
-temp = GPS()
-while True:
-    x, y, alt = temp.gps()
-    if temp.Error == False:
-        print(str(x) + ", " + str(y) + ", Alt: " + str(alt))
-    # time.sleep(0.1)
+#
+# temp = GPS()
+# while True:
+#     x, y, alt = temp.gps()
+#     if temp.Error == False:
+#         print(str(x) + ", " + str(y) + ", Alt: " + str(alt))
+#     # time.sleep(0.1)
