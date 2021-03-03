@@ -6,7 +6,7 @@ from Barometer import BAROMETER
 from Compass import COMPASS
 from MotorControl import MOTOR_CONTROL
 from PidControl import PID_CONTROL
-from SELFDRIVING import SELF_DRIVING
+from SelfDriving import SELF_DRIVING
 from Wifi import RCV_WIFI_MODULE
 from Wifi import SEND_WIFI_MODULE
 from gps_richtig import GPS
