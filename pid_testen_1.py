@@ -1,5 +1,5 @@
 from PID_forTest import PID_Lukas
-#from pid_malanders import PID
+# from pid_malanders import PID
 from PID import PID
 import time
 from pi_test import PID_Dominik
@@ -38,6 +38,7 @@ gyro_y = 0
 
 startTime = time.time()
 
+
 def scale(old_value, old_min, old_max, new_min, new_max):
     new_value = ((old_value - old_min) / (old_max - old_min)) * (new_max - new_min) + new_min
     return new_value
@@ -51,17 +52,17 @@ while True:
 
         # pid.sample_time = timeForPid
         gyro_y = tmpInputClass.gyro_y
-        output = pid(gyro_y)                             # M-Regler
-        #output = pid2.pid(gyro_y, setpoint, 0, 0.01)    # L-Regler
-        #output = pid3.pid(gyro_y, setpoint)    #D-Regler
+        output = pid(gyro_y)  # M-Regler
+        # output = pid2.pid(gyro_y, setpoint, 0, 0.01)    # L-Regler
+        # output = pid3.pid(gyro_y, setpoint)    #D-Regler
         now = time.time() - startTime
 
-       # output = (int(round(output)))
+        # output = (int(round(output)))
 
         gyroDataList.append(gyro_y)
 
-        #pidDataList.append(scale(output, -75, 75, -15, 15))   # Regler Skalierung
-        pidDataList.append(output)                          # Regler unskaliert
+        # pidDataList.append(scale(output, -75, 75, -15, 15))   # Regler Skalierung
+        pidDataList.append(output)  # Regler unskaliert
 
         timeDataList.append(now)
 
@@ -86,7 +87,7 @@ while True:
 
             plt.show()
 
-            #data.to_excel('PID_DATA_EXCEL.xlsx', sheet_name='new_sheet', index=False)
+            # data.to_excel('PID_DATA_EXCEL.xlsx', sheet_name='new_sheet', index=False)
 
             print("\nFile saved. Exiting...")
 
