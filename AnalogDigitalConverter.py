@@ -21,6 +21,7 @@ class ANALOG_DIGITAL_CONVERTER(threading.Thread):
             # 1Bit=3mV
             print(str(self.data/490))
             self.voltage = ((self.data/490) * (33000 + 20000) / 20000)
+            self.voltage = self.data/150
             print("Battery Voltage: " + str(self.voltage))
             time.sleep(0.1)
 
