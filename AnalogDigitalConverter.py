@@ -2,6 +2,8 @@ from ADS1x15 import ADS1015
 import threading
 import time
 
+batteryEmpty = 10
+batteryFull = 13
 
 def scale(old_value, old_min, old_max, new_min, new_max):
     new_value = ((old_value - old_min) / (old_max - old_min)) * (new_max - new_min) + new_min
@@ -35,7 +37,7 @@ class ANALOG_DIGITAL_CONVERTER(threading.Thread):
             self.data = self.adc.read_adc(self.channel, self.gain)
             # 1Bit=3mV
             self.voltage = self.data / 155
-            self.percentage = scale(self.voltage, 10, 12.5, 0, 100)
+            self.percentage = scale(self.voltage, batteryEmpty, batteryFull, 0, 100)
             self.percentage = clamp(self.percentage, 0, 100)
             time.sleep(0.1)
 
