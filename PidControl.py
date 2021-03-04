@@ -141,7 +141,7 @@ class PID_CONTROL(object):
         # print("speedLeft %d" % (self.speedLeft + motorAdj))
         # print("speedRight %d" % (self.speedRight + motorAdj))
 
-        print("Rotation: " + str(rotation) + ", PID-Output: " + str(motorAdj))
+        # print("Rotation: " + str(rotation) + ", PID-Output: " + str(motorAdj))
 
         self.MOTOR_CONTROL_CLASS.set_speed_left(self.speedLeft + motorAdj)
         self.MOTOR_CONTROL_CLASS.set_speed_right(self.speedRight + motorAdj)
