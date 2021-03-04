@@ -124,11 +124,16 @@ class SEND_WIFI_MODULE(threading.Thread):
 
             if self.smartphoneIp is not None:
 
-                # prepare data:
-                self.msg = str(self.COMPASS_CLASS.compass()) + "|" + str(self.BAROMETER_CLASS.temperature()) + "|" + \
-                      str(self.BAROMETER_CLASS.altitude()) + "|" + str(self.BAROMETER_CLASS.pressure()) + "|" + \
-                      str(self.GPS_CLASS.get_longitude()) + "|" + str(self.GPS_CLASS.get_latitude()) + "|" + \
-                      str(self.GPS_CLASS.get_altitude())
+                try:
+                    # prepare data:
+                    self.msg = str(self.COMPASS_CLASS.compass()) + "|" + str(self.BAROMETER_CLASS.temperature()) + "|" + \
+                          str(self.BAROMETER_CLASS.altitude()) + "|" + str(self.BAROMETER_CLASS.pressure()) + "|" + \
+                          str(self.GPS_CLASS.get_longitude()) + "|" + str(self.GPS_CLASS.get_latitude()) + "|" + \
+                          str(self.GPS_CLASS.get_altitude())
+
+                except Exception as e:
+                    print("\nData formatting error: " + str(e))
+                    self.msg = "0|0|0|0|0|0|0"
 
                 data = bytearray(self.msg, "UTF-8")
                 #

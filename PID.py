@@ -65,7 +65,7 @@ class PID(object):
         self.lastOutput = self.output
         self.lastInput = inputVar
         self.lastTime = now
-        print (self.output)
+        #print (self.output)
         return self.output
 
     def clamp(self, value, limits):

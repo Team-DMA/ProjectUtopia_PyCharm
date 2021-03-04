@@ -33,7 +33,7 @@ class COMPASS(object):
         yMag = yMag + 80
 
         [x, y] = [xMag, yMag]
-        print("X-Axis : %d" % xMag + ", Y-Axis : %d" % yMag + ", Z-Axis : %d" % zMag)
+        # print("X-Axis : %d" % xMag + ", Y-Axis : %d" % yMag + ", Z-Axis : %d" % zMag)
         if x is None or y is None:
             return None
         else:
