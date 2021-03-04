@@ -38,7 +38,7 @@ class ANALOG_DIGITAL_CONVERTER(threading.Thread):
             # 1Bit=3mV
             self.voltage = self.data / 155
             self.percentage = scale(self.voltage, batteryEmpty, batteryFull, 0, 100)
-            self.percentage = clamp(self.percentage, 0, 100)
+            self.percentage = int(round(clamp(self.percentage, 0, 100)))
             time.sleep(0.1)
 
             print("Voltage: " + str(self.voltage) + ", Percentage: " + str(self.percentage))
