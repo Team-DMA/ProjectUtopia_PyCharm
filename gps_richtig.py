@@ -19,6 +19,8 @@ class GPS(object):
         self.lat = 0.0
         self.lng = 0.0
         self.alt = 0.0
+        self.latDir = ""
+        self.lngDir = ""
         self.error = False
         print("GPS initialized")
 
@@ -30,16 +32,18 @@ class GPS(object):
         newData = newData.decode("utf-8")
 
         # if newData[3] == "G" and newData[4] == "P" and newData[5] == "G" and newData[6] == "L" and newData[7] == "L":
-        if newData.find("GPGLL"):
+        if newData.find("GPGGA"):
             print(newData)
             # newData = newData.replace("b'", "")
             # newData = newData.replace("\\r\\n'", "")
             # newData = newData.replace("\\n", "")
             # newData = newData.replace("'", "")
             newMessage = pynmea2.parse(newData)
-            self.lat = newMessage.latitude
-            self.lng = newMessage.longitude
-            # self.alt = newMessage.altitude
+            self.lat = newMessage.lat
+            self.latDir = newMessage.lat_dir
+            self.lng = newMessage.lon
+            self.lngDir = newMessage.lon_dir
+            self.alt = newMessage.altitude
             self.Error = False
         else:
             self.Error = True
@@ -47,8 +51,14 @@ class GPS(object):
 
         return self.lat, self.lng, self.alt
 
+    def get_latitude_direction(self):
+        return self.latDir
+
     def get_latitude(self):
         return self.lat
+
+    def get_longitude_direction(self):
+        return self.lngDir
 
     def get_longitude(self):
         return self.lng
