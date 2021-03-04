@@ -133,15 +133,17 @@ class SEND_WIFI_MODULE(threading.Thread):
                                str(self.BAROMETER_CLASS.get_temperature()) + "|" + \
                                str(self.BAROMETER_CLASS.get_altitude()) + "|" + \
                                str(self.BAROMETER_CLASS.get_pressure()) + "|" + \
+                               str(self.GPS_CLASS.get_longitude_direction()) + "|" + \
                                str(self.GPS_CLASS.get_longitude()) + "|" + \
-                               str(self.GPS_CLASS.get_latitude()) + "|" + \
+                               str(self.GPS_CLASS.get_latitude_direction()) + "|" + \
+                               str(self.GPS_CLASS.get_longitude()) + "|" + \
                                str(self.GPS_CLASS.get_altitude()) + "|" + \
                                str(self.ANALOG_DIGITAL_CONVERTER_CLASS.percentage)
 
                 except Exception as e:
                     trace_back = sys.exc_info()[2]
                     line = trace_back.tb_lineno
-                    self.msg = "0|0|0|0|0|0|0|0"
+                    self.msg = "0|0|0|0|0|0|0|0|0|0"
                     print("Data formatting Error in line " + str(line) + ": " + str(e))
 
                 data = bytearray(self.msg, "UTF-8")
