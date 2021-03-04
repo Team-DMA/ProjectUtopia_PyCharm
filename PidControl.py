@@ -2,10 +2,14 @@ from MotorControl import MOTOR_CONTROL
 from PID import PID
 
 # graph
+enableGraph = False
+
 import time
-import matplotlib.pyplot as plt
-import pandas as pd
-from datetime import datetime
+
+if enableGraph:
+    import matplotlib.pyplot as plt
+    import pandas as pd
+    from datetime import datetime
 
 
 def scale(old_value, old_min, old_max, new_min, new_max):
@@ -47,28 +51,29 @@ class PID_CONTROL(object):
 
     def gen_image(self):
         try:
-            # data
-            columns = ["Time", "ControlValue", "Rotation"]
-            rows = zip(timeDataList, pidDataList, gyroDataList)
+            if enableGraph:
+                # data
+                columns = ["Time", "ControlValue", "Rotation"]
+                rows = zip(timeDataList, pidDataList, gyroDataList)
 
-            # combine rows and column names into pandas dataframe
-            data = pd.DataFrame(rows, columns=columns)
+                # combine rows and column names into pandas dataframe
+                data = pd.DataFrame(rows, columns=columns)
 
-            data.plot(x="Time", y=["ControlValue", "Rotation"])
+                data.plot(x="Time", y=["ControlValue", "Rotation"])
 
-            # data.to_excel('PID_DATA_EXCEL.xlsx', sheet_name='new_sheet', index=False)
+                # data.to_excel('PID_DATA_EXCEL.xlsx', sheet_name='new_sheet', index=False)
 
-            #plt.show(block=False)
+                # plt.show(block=False)
 
-            plt.xlabel("Zeit in s")
-            plt.title("Regler macht brrrrr")
+                plt.xlabel("Zeit in s")
+                plt.title("Regler macht brrrrr")
 
-            now = datetime.now()
-            dt_string = now.strftime("%Y-%m-%d-%H-%M-%S")
-            fileName = "graph_pid_" + str(dt_string)
-            plt.savefig(fileName+'.png', bbox_inches='tight')
+                now = datetime.now()
+                dt_string = now.strftime("%Y-%m-%d-%H-%M-%S")
+                fileName = "graph_pid_" + str(dt_string)
+                plt.savefig(fileName + '.png', bbox_inches='tight')
 
-            print("\nImage generated. Exiting...")
+                print("\nImage generated. Exiting...")
 
         except Exception as e:
             print("\nError while plotting: " + str(e))
@@ -88,10 +93,11 @@ class PID_CONTROL(object):
         changedValue = (int(round(changedValue)))
 
         # graph
-        now = time.time() - startTime
-        gyroDataList.append(rotation)
-        pidDataList.append(changedValue)
-        timeDataList.append(now)
+        if enableGraph:
+            now = time.time() - startTime
+            gyroDataList.append(rotation)
+            pidDataList.append(changedValue)
+            timeDataList.append(now)
 
         return changedValue
 
