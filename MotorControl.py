@@ -28,7 +28,7 @@ class MOTOR_CONTROL(object):
 
         self.pwmL = GPIO.PWM(enPinL, 20)
         #it has to be tested, if a higher or a lower frequencie performes better
-        self.pwmR = GPIO.PWM(enPinR, 20)
+        self.pwmR = GPIO.PWM(enPinR, 50)
         self.pwmL.start(0)
         self.pwmR.start(0)
         self.pwmL.ChangeDutyCycle(0)
