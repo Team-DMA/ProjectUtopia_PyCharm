@@ -34,14 +34,7 @@ class ANALOG_DIGITAL_CONVERTER(threading.Thread):
         while True:
             data = self.adc.read_adc(self.channel)
             # 1Bit=3mV
-            print(str(data))
             voltage = data / 155.44
             voltageScaled = scale(voltage, batteryEmpty, batteryFull, 0, 100)
             self.percentage = int(round(clamp(voltageScaled, 0, 100)))
             time.sleep(0.1)
-
-
-tmp = ANALOG_DIGITAL_CONVERTER()
-
-while True:
-    pass
