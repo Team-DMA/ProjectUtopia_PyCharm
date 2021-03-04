@@ -25,3 +25,6 @@ class ANALOG_DIGITAL_CONVERTER(threading.Thread):
 
 
 tmp = ANALOG_DIGITAL_CONVERTER()
+
+while True:
+    pass
