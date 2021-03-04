@@ -7,6 +7,7 @@ import sys
 from gps_richtig import GPS
 from Barometer import BAROMETER
 from Compass import COMPASS
+from AnalogDigitalConverter import ANALOG_DIGITAL_CONVERTER
 
 
 class RCV_WIFI_MODULE(threading.Thread):
@@ -112,6 +113,7 @@ class SEND_WIFI_MODULE(threading.Thread):
         self.GPS_CLASS = GPS()
         self.COMPASS_CLASS = COMPASS()
         self.BAROMETER_CLASS = BAROMETER()
+        self.ANALOG_DIGITAL_CONVERTER_CLASS = ANALOG_DIGITAL_CONVERTER()
 
         self.start()
 
@@ -127,17 +129,19 @@ class SEND_WIFI_MODULE(threading.Thread):
 
                 try:
                     # prepare data:
-                    self.msg = str(self.COMPASS_CLASS.compass()) + "|" + str(
-                        self.BAROMETER_CLASS.get_temperature()) + "|" + \
-                               str(self.BAROMETER_CLASS.get_altitude()) + "|" + str(
-                        self.BAROMETER_CLASS.get_pressure()) + "|" + \
-                               str(self.GPS_CLASS.get_longitude()) + "|" + str(self.GPS_CLASS.get_latitude()) + "|" + \
-                               str(self.GPS_CLASS.get_altitude())
+                    self.msg = str(self.COMPASS_CLASS.compass()) + "|" + \
+                               str(self.BAROMETER_CLASS.get_temperature()) + "|" + \
+                               str(self.BAROMETER_CLASS.get_altitude()) + "|" + \
+                               str(self.BAROMETER_CLASS.get_pressure()) + "|" + \
+                               str(self.GPS_CLASS.get_longitude()) + "|" + \
+                               str(self.GPS_CLASS.get_latitude()) + "|" + \
+                               str(self.GPS_CLASS.get_altitude()) + "|" + \
+                               str(self.ANALOG_DIGITAL_CONVERTER_CLASS.percentage)
 
                 except Exception as e:
                     trace_back = sys.exc_info()[2]
                     line = trace_back.tb_lineno
-                    self.msg = "0|0|0|0|0|0|0"
+                    self.msg = "0|0|0|0|0|0|0|0"
                     print("Data formatting Error in line " + str(line) + ": " + str(e))
 
                 data = bytearray(self.msg, "UTF-8")
