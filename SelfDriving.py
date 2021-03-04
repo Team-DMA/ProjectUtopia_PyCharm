@@ -19,7 +19,7 @@ class SELF_DRIVING(object):
         else:
             return False
 
-    def drive(self, timeForPid: float):
+    def drive(self):
 
         if not self.detect():
             self.PID_CONTROL_CLASS.control(self.GYRO_CLASS.yRotation, 5, 0)

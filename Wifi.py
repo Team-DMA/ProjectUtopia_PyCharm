@@ -2,6 +2,11 @@ import socket
 import threading
 import time
 
+# for sending msgs
+from gps_richtig import GPS
+from Barometer import BAROMETER
+from Compass import COMPASS
+
 
 class RCV_WIFI_MODULE(threading.Thread):
 
@@ -41,7 +46,7 @@ class RCV_WIFI_MODULE(threading.Thread):
 
         print("\nOwn IP: " + str(socket.gethostbyname(socket.gethostname() + ".local")))
 
-        print("\nWait for first Data from Smartphone..")
+        print("\nWaiting for Dominik...")
         while True:
 
             if not self.newData:
@@ -98,10 +103,14 @@ class SEND_WIFI_MODULE(threading.Thread):
         self.daemon = True
 
         # VAR INIT
-        self.smartphoneIp = 0
+        self.smartphoneIp = None
         self.sendPort = 12348
         self.sendFlag = True
         self.msg = ""
+
+        self.GPS_CLASS = GPS()
+        self.COMPASS_CLASS = COMPASS()
+        self.BAROMETER_CLASS = BAROMETER()
 
         self.start()
 
@@ -113,24 +122,26 @@ class SEND_WIFI_MODULE(threading.Thread):
 
             time.sleep(1)
 
-            if self.smartphoneIp != 0:
+            if self.smartphoneIp is not None:
 
-                if self.msg != "":
+                # prepare data:
+                self.msg = str(self.COMPASS_CLASS.compass()) + "|" + str(self.BAROMETER_CLASS.temperature()) + "|" + \
+                      str(self.BAROMETER_CLASS.altitude()) + "|" + str(self.BAROMETER_CLASS.pressure()) + "|" + \
+                      str(self.GPS_CLASS.get_longitude()) + "|" + str(self.GPS_CLASS.get_latitude()) + "|" + \
+                      str(self.GPS_CLASS.get_altitude())
 
-                    # prepare data:
-                    data = bytearray(self.msg, "UTF-8")
+                data = bytearray(self.msg, "UTF-8")
+                #
 
-                    #
+                if self.sendFlag:
 
-                    if self.sendFlag:
+                    self.sendFlag = False
 
-                        self.sendFlag = False
+                    try:
+                        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+                        sock.sendto(data, (self.smartphoneIp, self.sendPort))
+                        print("Msg: '"+str(self.msg)+"' send to: "+str(self.smartphoneIp)+":"+str(self.sendPort))
+                        self.sendFlag = True
 
-                        try:
-                            sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-                            sock.sendto(data, (self.smartphoneIp, self.sendPort))
-                            # print("Msg: '"+str(self.msg)+"' send to: "+str(self.smartphoneIp)+":"+str(self.sendPort))
-                            self.sendFlag = True
-
-                        except Exception as e:
-                            print("\nWifi Error: " + str(e))
+                    except Exception as e:
+                        print("\nWifi Error: " + str(e))

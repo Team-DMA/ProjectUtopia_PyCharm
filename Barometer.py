@@ -20,7 +20,7 @@ class BAROMETER(object):
         self.pressure = 0
         self.altitude = 0
 
-    def get_temperature_pressure(self):
+    def temperature(self):
         # Send OSR and channel setting command, 0x44(68)
         self.bus.write_byte(0x76, 0x44 | 0x00)
         time.sleep(0.1)
@@ -28,9 +28,19 @@ class BAROMETER(object):
 
         # Convert the data to 20-bits
         self.cTemp = (((data[0] & 0x0F) * 65536) + (data[1] * 256) + data[2]) / 100.00
-        self.pressure = (((data[3] & 0x0F) * 65536) + (data[4] * 256) + data[5]) / 100.00
+        return self.cTemp
 
-    def get_altitude(self):
+    def pressure(self):
+        # Send OSR and channel setting command, 0x44(68)
+        self.bus.write_byte(0x76, 0x44 | 0x00)
+        time.sleep(0.1)
+        data = self.bus.read_i2c_block_data(0x76, 0x10, 6)
+
+        # Convert the data to 20-bits
+        self.pressure = (((data[3] & 0x0F) * 65536) + (data[4] * 256) + data[5]) / 100.00
+        return self.pressure
+
+    def altitude(self):
         # HP206C address, 0x76(118)
         # Send OSR and channel setting command, 0x44(68)
         self.bus.write_byte(0x76, 0x44 | 0x01)
@@ -44,17 +54,6 @@ class BAROMETER(object):
 
         # Convert the data to 20-bits
         self.altitude = (((data[0] & 0x0F) * 65536) + (data[1] * 256) + data[2]) / 100.00
-
-    def temperature(self):
-        self.get_temperature_pressure()
-        return self.cTemp
-
-    def pressure(self):
-        self.get_temperature_pressure()
-        return self.pressure
-
-    def altitude(self):
-        self.get_altitude()
         return self.altitude
 
 
