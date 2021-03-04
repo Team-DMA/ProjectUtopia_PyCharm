@@ -17,6 +17,7 @@ class ANALOG_DIGITAL_CONVERTER(threading.Thread):
     def run(self):
         while True:
             self.data = self.adc.read_adc(self.channel, self.gain)
+            #1Bit=3mV
             self.voltage = 33000/((self.data/3)/1000*20000)
 
             time.sleep(0.1)
