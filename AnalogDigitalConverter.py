@@ -5,6 +5,7 @@ import time
 batteryEmpty = 10
 batteryFull = 13
 
+
 def scale(old_value, old_min, old_max, new_min, new_max):
     new_value = ((old_value - old_min) / (old_max - old_min)) * (new_max - new_min) + new_min
     return new_value
@@ -26,22 +27,18 @@ class ANALOG_DIGITAL_CONVERTER(threading.Thread):
         self.daemon = True
         self.adc = ADS1015()
         self.channel = 0
-        self.gain = 1
-        self.data = 0
-        self.voltage = 0
         self.percentage = 0
         self.start()
 
     def run(self):
         while True:
-            self.data = self.adc.read_adc(self.channel, self.gain)
+            data = self.adc.read_adc(self.channel)
             # 1Bit=3mV
-            self.voltage = self.data / 155
-            self.percentage = scale(self.voltage, batteryEmpty, batteryFull, 0, 100)
-            self.percentage = int(round(clamp(self.percentage, 0, 100)))
+            print(str(data))
+            voltage = data / 155.44
+            voltageScaled = scale(voltage, batteryEmpty, batteryFull, 0, 100)
+            self.percentage = int(round(clamp(voltageScaled, 0, 100)))
             time.sleep(0.1)
-
-            print("Voltage: " + str(self.voltage) + ", Percentage: " + str(self.percentage))
 
 
 tmp = ANALOG_DIGITAL_CONVERTER()
