@@ -1,6 +1,7 @@
 import socket
 import threading
 import time
+import sys
 
 # for sending msgs
 from gps_richtig import GPS
@@ -126,14 +127,18 @@ class SEND_WIFI_MODULE(threading.Thread):
 
                 try:
                     # prepare data:
-                    self.msg = str(self.COMPASS_CLASS.compass()) + "|" + str(self.BAROMETER_CLASS.temperature()) + "|" + \
-                          str(self.BAROMETER_CLASS.altitude()) + "|" + str(self.BAROMETER_CLASS.pressure()) + "|" + \
-                          str(self.GPS_CLASS.get_longitude()) + "|" + str(self.GPS_CLASS.get_latitude()) + "|" + \
-                          str(self.GPS_CLASS.get_altitude())
+                    self.msg = str(self.COMPASS_CLASS.compass()) + "|" + str(
+                        self.BAROMETER_CLASS.get_temperature()) + "|" + \
+                               str(self.BAROMETER_CLASS.get_altitude()) + "|" + str(
+                        self.BAROMETER_CLASS.get_pressure()) + "|" + \
+                               str(self.GPS_CLASS.get_longitude()) + "|" + str(self.GPS_CLASS.get_latitude()) + "|" + \
+                               str(self.GPS_CLASS.get_altitude())
 
                 except Exception as e:
-                    print("\nData formatting error: " + str(e))
+                    trace_back = sys.exc_info()[2]
+                    line = trace_back.tb_lineno
                     self.msg = "0|0|0|0|0|0|0"
+                    print("Data formatting Error in line " + str(line) + ": " + str(e))
 
                 data = bytearray(self.msg, "UTF-8")
                 #
@@ -145,7 +150,8 @@ class SEND_WIFI_MODULE(threading.Thread):
                     try:
                         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
                         sock.sendto(data, (self.smartphoneIp, self.sendPort))
-                        print("Msg: '"+str(self.msg)+"' send to: "+str(self.smartphoneIp)+":"+str(self.sendPort))
+                        print("Msg: '" + str(self.msg) + "' send to: " + str(self.smartphoneIp) + ":" + str(
+                            self.sendPort))
                         self.sendFlag = True
 
                     except Exception as e:
