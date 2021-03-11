@@ -40,6 +40,7 @@ class GYRO(object):
         self.accelerationZScaled = 0
         self.xRotation = 0
         self.yRotation = 0
+        self.yRotationRaw = 0
 
         # kalman
         self.kalmanX = KalmanAngle()
@@ -56,6 +57,19 @@ class GYRO(object):
         self.compAngleX = 0
         self.compAngleY = 0
         print("gyroscope initialized")
+
+        # average
+
+        self.yRotationk_10 = 0
+        self.yRotationk_9 = 0
+        self.yRotationk_8 = 0
+        self.yRotationk_7 = 0
+        self.yRotationk_6 = 0
+        self.yRotationk_5 = 0
+        self.yRotationk_4 = 0
+        self.yRotationk_3 = 0
+        self.yRotationk_2 = 0
+        self.yRotationk_1 = 0
 
     # Methods
     def read_byte(self, reg):
@@ -152,8 +166,19 @@ class GYRO(object):
         self.compAngleY = 0.93 * (self.compAngleY + gyroYRate * dt) + 0.07 * self.pitch
 
         self.xRotation = self.kalAngleX
-        self.yRotation = self.kalAngleY
 
+        self.yRotationk_10 = self.yRotationk_9
+        self.yRotationk_9 = self.yRotationk_8
+        self.yRotationk_8 = self.yRotationk_7
+        self.yRotationk_7 = self.yRotationk_6
+        self.yRotationk_6 = self.yRotationk_5
+        self.yRotationk_5 = self.yRotationk_4
+        self.yRotationk_4 = self.yRotationk_3
+        self.yRotationk_3 = self.yRotationk_2
+        self.yRotationk_2 = self.yRotationk_1
+        self.yRotationk_1 = self.yRotationRaw
+        self.yRotationRaw = self.kalAngleY
+        self.yRotation = (self.yRotationk_10 + self.yRotationk_9 + self.yRotationk_8 + self.yRotationk_7 + self.yRotationk_6 + self.yRotationk_5 + self.yRotationk_4 + self.yRotationk_3 + self.yRotationk_2 + self.yRotationk_1 + self.yRotationRaw) / 11
 # debug
 # temp = GYRO()
 # while True:
