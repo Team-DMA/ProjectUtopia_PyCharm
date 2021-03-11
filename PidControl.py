@@ -68,8 +68,11 @@ class PID_CONTROL(object):
                 data = DataFrame(rows, columns=columns)
 
                 print("Plotting...")
+                t1 = datetime.now()
                 data.plot(x="Time", y=["ControlValue", "Rotation"])
-
+                t2 = datetime.now()
+                delta = t2 - t1
+                print("Plotting took %.2fs" % delta.total_seconds())
                 # data.to_excel('PID_DATA_EXCEL.xlsx', sheet_name='new_sheet', index=False)
 
                 # plt.show(block=False)
