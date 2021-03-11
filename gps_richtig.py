@@ -19,8 +19,8 @@ class GPS(object):
         self.lat = 0.0
         self.lng = 0.0
         self.alt = 0.0
-        self.latDir = ""
-        self.lngDir = ""
+        self.latDir = "N"
+        self.lngDir = "O"
         self.error = False
         print("GPS initialized")
 
