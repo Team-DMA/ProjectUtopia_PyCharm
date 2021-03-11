@@ -134,7 +134,7 @@ class SEND_WIFI_MODULE(threading.Thread):
                                str(self.BAROMETER_CLASS.get_altitude()) + "|" + \
                                str(self.BAROMETER_CLASS.get_pressure()) + "|" + \
                                str(self.GPS_CLASS.get_longitude()) + "|" + \
-                               str(self.GPS_CLASS.get_longitude()) + "|" + \
+                               str(self.GPS_CLASS.get_latitude()) + "|" + \
                                str(self.GPS_CLASS.get_altitude()) + "|" + \
                                str(self.ANALOG_DIGITAL_CONVERTER_CLASS.percentage)
                     # str(self.COMPASS_CLASS.compass()) + "|" + \ has to be send first
