@@ -103,6 +103,7 @@ if __name__ == "__main__":
 
     except KeyboardInterrupt:
         MOTOR_CONTROL_CLASS.stop()
+        SEND_WIFI_MODULE_CLASS.stop_wifi()
         PID_CONTROL_CLASS.gen_image()
 
         print("\nProgram manually aborted.")

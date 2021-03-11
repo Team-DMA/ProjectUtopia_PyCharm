@@ -6,7 +6,7 @@ import sys
 # for sending msgs
 from gps_richtig import GPS
 from Barometer import BAROMETER
-#from Compass import COMPASS
+# from Compass import COMPASS
 from AnalogDigitalConverter import ANALOG_DIGITAL_CONVERTER
 
 
@@ -111,7 +111,7 @@ class SEND_WIFI_MODULE(threading.Thread):
         self.msg = ""
 
         self.GPS_CLASS = GPS()
-        #self.COMPASS_CLASS = COMPASS()
+        # self.COMPASS_CLASS = COMPASS()
         self.BAROMETER_CLASS = BAROMETER()
         self.ANALOG_DIGITAL_CONVERTER_CLASS = ANALOG_DIGITAL_CONVERTER()
 
@@ -137,7 +137,7 @@ class SEND_WIFI_MODULE(threading.Thread):
                                str(self.GPS_CLASS.get_longitude()) + "|" + \
                                str(self.GPS_CLASS.get_altitude()) + "|" + \
                                str(self.ANALOG_DIGITAL_CONVERTER_CLASS.percentage)
-                                # str(self.COMPASS_CLASS.compass()) + "|" + \ has to be send first
+                    # str(self.COMPASS_CLASS.compass()) + "|" + \ has to be send first
                 except Exception as e:
                     trace_back = sys.exc_info()[2]
                     line = trace_back.tb_lineno
@@ -160,3 +160,6 @@ class SEND_WIFI_MODULE(threading.Thread):
 
                     except Exception as e:
                         print("\nWifi Error: " + str(e))
+
+    def stop_wifi(self):
+        self.stop()
