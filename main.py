@@ -116,7 +116,6 @@ if __name__ == "__main__":
         MOTOR_CONTROL_CLASS.stop()
 
         # delete objects
-        del MOTOR_CONTROL_CLASS
         del GYRO_CLASS
         del ECHO_CLASS
         del RCV_WIFI_MODULE_CLASS
