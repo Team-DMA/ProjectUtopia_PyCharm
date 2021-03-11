@@ -7,8 +7,10 @@ enableGraph = True
 import time
 
 if enableGraph:
+    print("Importing matplotlib...")
     import matplotlib.pyplot as plt
-    import pandas as pd
+    print("Importing pandas...")
+    from pandas import DataFrame
     from datetime import datetime
 
 
@@ -63,7 +65,7 @@ class PID_CONTROL(object):
 
                 print("Combining rows and columns")
                 # combine rows and column names into pandas dataframe
-                data = pd.DataFrame(rows, columns=columns)
+                data = DataFrame(rows, columns=columns)
 
                 print("Plotting...")
                 data.plot(x="Time", y=["ControlValue", "Rotation"])
