@@ -102,9 +102,9 @@ class GYRO(object):
 
         self.xRotation = self.get_x_rotation(self.accelerationXScaled, self.accelerationYScaled,
                                              self.accelerationZScaled)
-        self.yRotationraw = self.get_y_rotation(self.accelerationXScaled, self.accelerationYScaled,
-                                                self.accelerationZScaled)
-
+        self.yRotation = self.get_y_rotation(self.accelerationXScaled, self.accelerationYScaled,
+                                             self.accelerationZScaled)
+        """
         self.yRotationk_6 = self.yRotationk_5
         self.yRotationk_5 = self.yRotationk_4
         self.yRotationk_4 = self.yRotationk_3
@@ -113,7 +113,7 @@ class GYRO(object):
         self.yRotationk_1 = self.yRotation
         self.yRotation = (self.yRotationk_6 + self.yRotationk_5 + self.yRotationk_4*2 + self.yRotationk_3*2 + \
                           self.yRotationk_2*3 + self.yRotationk_1*3 + self.yRotationraw*3) / 15
-
+        """
 # debug
 # temp = GYRO()
 # while True:
