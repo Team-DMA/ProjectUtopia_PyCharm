@@ -154,8 +154,8 @@ class SEND_WIFI_MODULE(threading.Thread):
                     try:
                         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
                         sock.sendto(data, (self.smartphoneIp, self.sendPort))
-                        print("Msg: '" + str(self.msg) + "' send to: " + str(self.smartphoneIp) + ":" + str(
-                            self.sendPort))
+                        # print("Msg: '" + str(self.msg) + "' send to: " + str(self.smartphoneIp) + ":" + str(
+                        #    self.sendPort))
                         self.sendFlag = True
 
                     except Exception as e:
