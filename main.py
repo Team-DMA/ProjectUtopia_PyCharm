@@ -1,5 +1,7 @@
 import RPi.GPIO as GPIO
 
+print("Importing libs...")
+
 from Echo import ECHO
 from Gyro import GYRO
 from MotorControl import MOTOR_CONTROL
