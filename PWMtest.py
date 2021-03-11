@@ -116,6 +116,14 @@ class MOTOR_CONTROL(object):
         self.set_speed(0)
 
 
-MOTOR_CONTROL_CLASS = MOTOR_CONTROL()
+GPIO.setmode(GPIO.BOARD)
+pinMotorLeftForwards = 29
+pinMotorRightForwards = 31
+pinMotorLeftBackwards = 33
+pinMotorRightBackwards = 35
+pinEnMotorLeft = 37
+pinEnMotorRight = 38
+MOTOR_CONTROL_CLASS = MOTOR_CONTROL(pinEnMotorLeft, pinEnMotorRight, pinMotorLeftForwards, pinMotorLeftBackwards,
+                                    pinMotorRightForwards, pinMotorRightBackwards)
 while True:
     MOTOR_CONTROL_CLASS.set_speed(7)
