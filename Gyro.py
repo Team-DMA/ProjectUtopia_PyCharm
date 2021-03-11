@@ -4,6 +4,7 @@ from Kalman import KalmanAngle
 # debug
 import time
 
+
 # debug
 
 class GYRO(object):
@@ -82,9 +83,8 @@ class GYRO(object):
 
     def get_y_rotation(self, x, y, z):
 
-        # radians = math.atan2(x, self.dist(y, z))
-        # return -math.degrees(radians)
-        return self.yRotation
+        radians = math.atan2(x, self.dist(y, z))
+        return -math.degrees(radians)
 
     def get_x_rotation(self, x, y, z):
 
@@ -109,10 +109,10 @@ class GYRO(object):
         self.accelerationYScaled = self.accelerationY / 16384.0
         self.accelerationZScaled = self.accelerationZ / 16384.0
 
-        self.xRotation = self.get_x_rotation(self.accelerationXScaled, self.accelerationYScaled,
-                                             self.accelerationZScaled)
-        self.yRotation = self.get_y_rotation(self.accelerationXScaled, self.accelerationYScaled,
-                                             self.accelerationZScaled)
+        # self.xRotation = self.get_x_rotation(self.accelerationXScaled, self.accelerationYScaled,
+        #                                      self.accelerationZScaled)
+        # self.yRotation = self.get_y_rotation(self.accelerationXScaled, self.accelerationYScaled,
+        #                                      self.accelerationZScaled)
 
         self.kalmanX.setAngle(self.roll)
         self.kalmanY.setAngle(self.pitch)
@@ -124,12 +124,12 @@ class GYRO(object):
         dt = time.time() - self.timer
         self.timer = time.time()
 
-        self.roll = math.atan(self.accelerationY / math.sqrt((self.accelerationX ** 2) + (self.accelerationZ ** 2))) * 57.2957786
+        self.roll = math.atan(
+            self.accelerationY / math.sqrt((self.accelerationX ** 2) + (self.accelerationZ ** 2))) * 57.2957786
         self.pitch = math.atan2(-self.accelerationX, self.accelerationZ) * 57.2957786
 
         gyroXRate = self.gyroscopeXScaled
         gyroYRate = self.gyroscopeYScaled
-
 
         if (self.pitch < -90 and self.kalAngleY > 90) or (self.pitch > 90 and self.kalAngleY < -90):
             self.kalmanY.setAngle(self.pitch)
@@ -146,20 +146,13 @@ class GYRO(object):
         # angle = (rate of change of angle) * change in time
         self.gyroXAngle = gyroXRate * dt
         self.gyroYAngle = self.gyroYAngle * dt
-        self.xRotation = self.gyroXAngle
-        self.yRotation = self.gyroYAngle
 
         # compAngle = constant * (old_compAngle + angle_obtained_from_gyro) + constant * angle_obtained from accelerometer
         self.compAngleX = 0.93 * (self.compAngleX + gyroXRate * dt) + 0.07 * self.roll
         self.compAngleY = 0.93 * (self.compAngleY + gyroYRate * dt) + 0.07 * self.pitch
 
-        if (self.gyroXAngle < -180) or (self.gyroXAngle > 180):
-            self.xRotation = self.kalAngleX
-        if (self.gyroYAngle < -180) or (self.gyroYAngle > 180):
-            self.yRotation = self.kalAngleY
-
-        print("Y-Rotation: " + str(self.yRotation) + ", kalAngleY: " + str(self.kalAngleY))
-
+        self.xRotation = self.kalAngleX
+        self.yRotation = self.kalAngleY
 
 # debug
 # temp = GYRO()
