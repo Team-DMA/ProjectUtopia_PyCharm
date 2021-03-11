@@ -103,6 +103,15 @@ if __name__ == "__main__":
 
     except KeyboardInterrupt:
         MOTOR_CONTROL_CLASS.stop()
+
+        # delete objects
+        del MOTOR_CONTROL_CLASS
+        del GYRO_CLASS
+        del ECHO_CLASS
+        del RCV_WIFI_MODULE_CLASS
+        del SEND_WIFI_MODULE_CLASS
+        del TCP_HANDLER_CLASS
+
         PID_CONTROL_CLASS.gen_image()
 
         print("\nProgram manually aborted.")
