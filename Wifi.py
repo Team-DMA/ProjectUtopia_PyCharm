@@ -160,6 +160,3 @@ class SEND_WIFI_MODULE(threading.Thread):
 
                     except Exception as e:
                         print("\nWifi Error: " + str(e))
-
-    def stop_wifi(self):
-        self.stop()
