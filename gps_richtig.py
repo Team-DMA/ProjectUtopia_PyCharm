@@ -40,9 +40,7 @@ class GPS(object):
             # newData = newData.replace("'", "")
             newMessage = pynmea2.parse(newData)
             self.lat = newMessage.lat
-            self.latDir = newMessage.lat_dir
             self.lng = newMessage.lon
-            self.lngDir = newMessage.lon_dir
             self.alt = newMessage.altitude
             self.Error = False
         else:
@@ -51,14 +49,8 @@ class GPS(object):
 
         return self.lat, self.lng, self.alt
 
-    def get_latitude_direction(self):
-        return self.latDir
-
     def get_latitude(self):
         return self.lat
-
-    def get_longitude_direction(self):
-        return self.lngDir
 
     def get_longitude(self):
         return self.lng
