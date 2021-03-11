@@ -16,8 +16,8 @@ class GPS(object):
             stopbits=serial.STOPBITS_ONE,
             bytesize=serial.EIGHTBITS)
 
-        self.lat = 0.0
-        self.lng = 0.0
+        self.lat = 49.18249126495341
+        self.lng = 8.542124178274259
         self.alt = 0.0
         self.latDir = "N"
         self.lngDir = "O"
@@ -40,9 +40,7 @@ class GPS(object):
             # newData = newData.replace("'", "")
             newMessage = pynmea2.parse(newData)
             self.lat = newMessage.lat
-            self.latDir = newMessage.lat_dir
             self.lng = newMessage.lon
-            self.lngDir = newMessage.lon_dir
             self.alt = newMessage.altitude
             self.Error = False
         else:
@@ -51,14 +49,8 @@ class GPS(object):
 
         return self.lat, self.lng, self.alt
 
-    def get_latitude_direction(self):
-        return self.latDir
-
     def get_latitude(self):
         return self.lat
-
-    def get_longitude_direction(self):
-        return self.lngDir
 
     def get_longitude(self):
         return self.lng
