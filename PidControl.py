@@ -73,20 +73,25 @@ class PID_CONTROL(object):
                 data.plot(x="Time", y=["ControlValue", "Rotation"])
                 t2 = datetime.now()
                 delta = t2 - t1
-                print("Plotting took %.2fs" % delta.total_seconds())
+                print("Plotting took %.2fs." % delta.total_seconds())
                 # data.to_excel('PID_DATA_EXCEL.xlsx', sheet_name='new_sheet', index=False)
 
                 # plt.show(block=False)
 
                 xlabel("Zeit in s")
-                title("Regler macht Sachen")
+                title("Regler")
 
                 now = datetime.now()
                 dt_string = now.strftime("%Y-%m-%d-%H-%M-%S")
                 fileName = "graph_pid_" + str(dt_string)
 
                 print("Saving...")
+                t1 = datetime.now()
                 savefig(fileName + '.png', bbox_inches='tight')
+                t2 = datetime.now()
+                delta = t2 - t1
+                print("Saving took %.2fs." % delta.total_seconds())
+
 
                 print("\nImage generated and saved.")
 
