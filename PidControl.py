@@ -8,7 +8,8 @@ import time
 
 if enableGraph:
     print("Importing matplotlib...")
-    import matplotlib.pyplot as plt
+    from matplotlib.pyplot import savefig, xlabel, title
+    #import matplotlib.pyplot as plt
     print("Importing pandas...")
     from pandas import DataFrame
     from datetime import datetime
@@ -77,15 +78,15 @@ class PID_CONTROL(object):
 
                 # plt.show(block=False)
 
-                plt.xlabel("Zeit in s")
-                plt.title("Regler macht Sachen")
+                xlabel("Zeit in s")
+                title("Regler macht Sachen")
 
                 now = datetime.now()
                 dt_string = now.strftime("%Y-%m-%d-%H-%M-%S")
                 fileName = "graph_pid_" + str(dt_string)
 
                 print("Saving...")
-                plt.savefig(fileName + '.png', bbox_inches='tight')
+                savefig(fileName + '.png', bbox_inches='tight')
 
                 print("\nImage generated and saved.")
 
