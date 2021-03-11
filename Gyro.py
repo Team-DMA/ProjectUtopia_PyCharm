@@ -39,6 +39,13 @@ class GYRO(object):
         self.accelerationZScaled = 0
         self.xRotation = 0
         self.yRotation = 0
+        self.yRotationraw = 0
+        self.yRotationk_6 = 0
+        self.yRotationk_5 = 0
+        self.yRotationk_4 = 0
+        self.yRotationk_3 = 0
+        self.yRotationk_2 = 0
+        self.yRotationk_1 = 0
         print("gyroscope initialized")
 
     # Methods
@@ -95,9 +102,17 @@ class GYRO(object):
 
         self.xRotation = self.get_x_rotation(self.accelerationXScaled, self.accelerationYScaled,
                                              self.accelerationZScaled)
-        self.yRotation = self.get_y_rotation(self.accelerationXScaled, self.accelerationYScaled,
-                                             self.accelerationZScaled)
+        self.yRotationraw = self.get_y_rotation(self.accelerationXScaled, self.accelerationYScaled,
+                                                self.accelerationZScaled)
 
+        self.yRotationk_6 = self.yRotationk_5
+        self.yRotationk_5 = self.yRotationk_4
+        self.yRotationk_4 = self.yRotationk_3
+        self.yRotationk_3 = self.yRotationk_2
+        self.yRotationk_2 = self.yRotationk_1
+        self.yRotationk_1 = self.yRotation
+        self.yRotation = (self.yRotationk_6 + self.yRotationk_5 + self.yRotationk_4 + self.yRotationk_3 + \
+                          self.yRotationk_2 + self.yRotationk_1 + self.yRotationraw) / 7
 
 # debug
 # temp = GYRO()
