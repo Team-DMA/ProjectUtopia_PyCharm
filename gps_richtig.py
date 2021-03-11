@@ -16,8 +16,8 @@ class GPS(object):
             stopbits=serial.STOPBITS_ONE,
             bytesize=serial.EIGHTBITS)
 
-        self.lat = 8.542124178274259
-        self.lng = 49.18249126495341
+        self.lat = 49.18249126495341
+        self.lng = 8.542124178274259
         self.alt = 0.0
         self.latDir = "N"
         self.lngDir = "O"
