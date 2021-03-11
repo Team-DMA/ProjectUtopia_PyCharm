@@ -11,7 +11,6 @@ class GYRO(object):
     def __init__(self):
 
         # Register
-        self.complAngleY = self.pitch
         self.power_mgmt_1 = 0x6b
 
         self.bus = smbus.SMBus(1)  # bus = smbus.SMBus(0) for Revision 1
