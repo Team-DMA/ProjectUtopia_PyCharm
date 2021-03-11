@@ -102,6 +102,8 @@ if __name__ == "__main__":
         GPIO.cleanup()
 
     except KeyboardInterrupt:
+        print("Interrupting program...")
+
         MOTOR_CONTROL_CLASS.stop()
 
         # delete objects
