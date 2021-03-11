@@ -7,8 +7,10 @@ enableGraph = True
 import time
 
 if enableGraph:
+    print("Importing matplotlib...")
     import matplotlib.pyplot as plt
-    import pandas as pd
+    print("Importing pandas...")
+    from pandas import DataFrame
     from datetime import datetime
 
 
@@ -52,13 +54,20 @@ class PID_CONTROL(object):
     def gen_image(self):
         try:
             if enableGraph:
+
+                print("Starting with image generation...")
+
                 # data
+                print("Generating column names")
                 columns = ["Time", "ControlValue", "Rotation"]
+                print("Zipping rows")
                 rows = zip(timeDataList, pidDataList, gyroDataList)
 
+                print("Combining rows and columns")
                 # combine rows and column names into pandas dataframe
-                data = pd.DataFrame(rows, columns=columns)
+                data = DataFrame(rows, columns=columns)
 
+                print("Plotting...")
                 data.plot(x="Time", y=["ControlValue", "Rotation"])
 
                 # data.to_excel('PID_DATA_EXCEL.xlsx', sheet_name='new_sheet', index=False)
@@ -66,14 +75,16 @@ class PID_CONTROL(object):
                 # plt.show(block=False)
 
                 plt.xlabel("Zeit in s")
-                plt.title("Regler macht brrrrr")
+                plt.title("Regler macht Sachen")
 
                 now = datetime.now()
                 dt_string = now.strftime("%Y-%m-%d-%H-%M-%S")
                 fileName = "graph_pid_" + str(dt_string)
+
+                print("Saving...")
                 plt.savefig(fileName + '.png', bbox_inches='tight')
 
-                print("\nImage generated. Exiting...")
+                print("\nImage generated and saved.")
 
         except Exception as e:
             print("\nError while plotting: " + str(e))

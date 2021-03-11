@@ -1,5 +1,7 @@
 import RPi.GPIO as GPIO
 
+print("Importing libs...")
+
 from Echo import ECHO
 from Gyro import GYRO
 from MotorControl import MOTOR_CONTROL
@@ -123,7 +125,7 @@ if __name__ == "__main__":
 
         PID_CONTROL_CLASS.gen_image()
 
-        print("\nProgram manually aborted.")
+        print("\nProgram manually aborted. Exiting...")
         GPIO.cleanup()
 
     finally:
