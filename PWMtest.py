@@ -27,7 +27,7 @@ class MOTOR_CONTROL(object):
         GPIO.setup(enPinR, GPIO.OUT)
 
         self.pwmL = GPIO.PWM(enPinL, 1000)
-        #it has to be tested, if a higher or a lower frequencie performes better
+        # it has to be tested, if a higher or a lower frequencie performes better
         self.pwmR = GPIO.PWM(enPinR, 1000)
         self.pwmL.start(0)
         self.pwmR.start(0)
@@ -114,3 +114,16 @@ class MOTOR_CONTROL(object):
     def stop(self):
 
         self.set_speed(0)
+
+
+GPIO.setmode(GPIO.BOARD)
+pinMotorLeftForwards = 29
+pinMotorRightForwards = 31
+pinMotorLeftBackwards = 33
+pinMotorRightBackwards = 35
+pinEnMotorLeft = 37
+pinEnMotorRight = 38
+MOTOR_CONTROL_CLASS = MOTOR_CONTROL(pinEnMotorLeft, pinEnMotorRight, pinMotorLeftForwards, pinMotorLeftBackwards,
+                                    pinMotorRightForwards, pinMotorRightBackwards)
+while True:
+    MOTOR_CONTROL_CLASS.set_speed(7)
