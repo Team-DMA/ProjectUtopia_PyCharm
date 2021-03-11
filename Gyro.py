@@ -82,8 +82,9 @@ class GYRO(object):
 
     def get_y_rotation(self, x, y, z):
 
-        radians = math.atan2(x, self.dist(y, z))
-        return -math.degrees(radians)
+        # radians = math.atan2(x, self.dist(y, z))
+        # return -math.degrees(radians)
+        return self.yRotation
 
     def get_x_rotation(self, x, y, z):
 
@@ -123,11 +124,16 @@ class GYRO(object):
         dt = time.time() - self.timer
         self.timer = time.time()
 
+        self.roll = math.atan(self.accelerationY / math.sqrt((self.accelerationX ** 2) + (self.accelerationZ ** 2))) * 57.2957786
+        self.pitch = math.atan2(-self.accelerationX, self.accelerationZ) * 57.2957786
+
         gyroXRate = self.gyroscopeXScaled
         gyroYRate = self.gyroscopeYScaled
 
+
         if (self.pitch < -90 and self.kalAngleY > 90) or (self.pitch > 90 and self.kalAngleY < -90):
             self.kalmanY.setAngle(self.pitch)
+            self.compAngleY = self.pitch
             self.kalAngleY = self.pitch
             self.gyroYAngle = self.pitch
         else:
@@ -151,6 +157,8 @@ class GYRO(object):
             self.xRotation = self.kalAngleX
         if (self.gyroYAngle < -180) or (self.gyroYAngle > 180):
             self.yRotation = self.kalAngleY
+
+        print("Y-Rotation: " + str(self.yRotation) + ", kalAngleY: " + str(self.kalAngleY))
 
 
 # debug
