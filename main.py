@@ -123,7 +123,7 @@ if __name__ == "__main__":
 
         PID_CONTROL_CLASS.gen_image()
 
-        print("\nProgram manually aborted.")
+        print("\nProgram manually aborted. Exiting...")
         GPIO.cleanup()
 
     finally:
