@@ -112,7 +112,7 @@ class GYRO(object):
         self.yRotationk_2 = self.yRotationk_1
         self.yRotationk_1 = self.yRotation
         self.yRotation = (self.yRotationk_6 + self.yRotationk_5 + self.yRotationk_4 + self.yRotationk_3 + \
-                          self.yRotationk_2 + self.yRotationk_1 + self.yRotationraw) / 7
+                          self.yRotationk_2 + self.yRotationk_1 + self.yRotationraw*4) / 10
 
 # debug
 # temp = GYRO()
