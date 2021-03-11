@@ -47,9 +47,9 @@ class PID(object):
         self.proportional = self.Kp * error
 
         # compute integral and derivative terms
-        #       self.integral = self.integral + self.Ki * error * dt  # M-Regler
-        #       self.integral = self.clamp(self.integral, self.outputLimits)  # avoid integral windup
-        self.integral = self.Ki * self.buffer  # L-Regler
+        self.integral = self.integral + self.Ki * error * dt  # M-Regler
+        self.integral = self.clamp(self.integral, self.outputLimits)  # avoid integral windup
+        #       self.integral = self.Ki * self.buffer  # L-Regler
 
         #       self.derivative = -self.Kd * d_input / dt  # M-Regler
         self.derivative = -(self.Kd*self.multiplier) * ((self.lastError - error) / dt)  # L-Regler

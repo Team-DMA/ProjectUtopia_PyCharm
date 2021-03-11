@@ -167,12 +167,12 @@ class GYRO(object):
 
         self.xRotation = self.kalAngleX
 
-        self.yRotationk_10 = self.yRotationk_9
-        self.yRotationk_9 = self.yRotationk_8
-        self.yRotationk_8 = self.yRotationk_7
-        self.yRotationk_7 = self.yRotationk_6
-        self.yRotationk_6 = self.yRotationk_5
-        self.yRotationk_5 = self.yRotationk_4
+        # self.yRotationk_10 = self.yRotationk_9
+        # self.yRotationk_9 = self.yRotationk_8
+        # self.yRotationk_8 = self.yRotationk_7
+        # self.yRotationk_7 = self.yRotationk_6
+        # self.yRotationk_6 = self.yRotationk_5
+        # self.yRotationk_5 = self.yRotationk_4
         self.yRotationk_4 = self.yRotationk_3
         self.yRotationk_3 = self.yRotationk_2
         self.yRotationk_2 = self.yRotationk_1
