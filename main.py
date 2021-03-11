@@ -9,6 +9,8 @@ from Wifi import RCV_WIFI_MODULE
 from Wifi import SEND_WIFI_MODULE
 from TcpHandler import TCP_HANDLER
 
+print("Starting program...")
+
 GPIO.setmode(GPIO.BOARD)
 pinMotorLeftForwards = 29
 pinMotorRightForwards = 31
@@ -24,14 +26,19 @@ Ki = 0.0
 Kd = 0.0
 
 # everything for wifi
+print("Generating RCV_WIFI_MODULE_CLASS...")
 RCV_WIFI_MODULE_CLASS = RCV_WIFI_MODULE()
+print("Generating SEND_WIFI_MODULE_CLASS...")
 SEND_WIFI_MODULE_CLASS = SEND_WIFI_MODULE()
+print("Generating TCP_HANDLER_CLASS...")
 TCP_HANDLER_CLASS = TCP_HANDLER()
 #
-
+print("Generating MOTOR_CONTROL_CLASS...")
 MOTOR_CONTROL_CLASS = MOTOR_CONTROL(pinEnMotorLeft, pinEnMotorRight, pinMotorLeftForwards, pinMotorLeftBackwards,
                                     pinMotorRightForwards, pinMotorRightBackwards)
+print("Generating ECHO_CLASS...")
 ECHO_CLASS = ECHO(pinEchoTrigger, pinEchoEcho)
+print("Generating GYRO_CLASS...")
 GYRO_CLASS = GYRO()
 
 # Placeholder for Classes
