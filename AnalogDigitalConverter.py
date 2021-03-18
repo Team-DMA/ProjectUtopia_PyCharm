@@ -28,13 +28,24 @@ class ANALOG_DIGITAL_CONVERTER(threading.Thread):
         self.adc = ADS1015()
         self.channel = 0
         self.percentage = 0
+
+        # debug
+        self.voltage = 0
+        self.voltageScaled = 0
+
         self.start()
 
     def run(self):
         while True:
             data = self.adc.read_adc(self.channel)
             # 1Bit=3mV
-            voltage = data / 155.44
-            voltageScaled = scale(voltage, batteryEmpty, batteryFull, 0, 100)
-            self.percentage = int(round(clamp(voltageScaled, 0, 100)))
+            self.voltage = data / 155.44
+            self.voltageScaled = scale(self.voltage, batteryEmpty, batteryFull, 0, 100)
+            self.percentage = int(round(clamp(self.voltageScaled, 0, 100)))
             time.sleep(0.1)
+
+
+# debug
+tmp = ANALOG_DIGITAL_CONVERTER()
+while True:
+    print("Akkustand in Prozent: " + str(tmp.percentage) + ", Voltage: " + str(tmp.voltage) + ", Voltage (Scaled): " + str(tmp.voltageScaled))
