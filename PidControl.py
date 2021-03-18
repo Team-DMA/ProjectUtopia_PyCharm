@@ -108,9 +108,9 @@ class PID_CONTROL(object):
         setpoint = speed * 2
         # setpoint = 0
 
-        changedValue = self.PID_CLASS(rotation, setpoint)  # PID_CLASS.pid gibt Ausgang zurück
+        # changedValue = self.PID_CLASS(rotation, setpoint)  # PID_CLASS.pid gibt Ausgang zurück
         # changedValue = -(int(round(scale(changedValue, -75, 75, -15, 15))))  # scale, round, to int and minus
-        changedValue = (int(round(changedValue)))
+        # changedValue = (int(round(changedValue)))
 
         # graph
         if enableGraph:
@@ -119,7 +119,8 @@ class PID_CONTROL(object):
             pidDataList.append(changedValue)
             timeDataList.append(now)
 
-        return changedValue
+        #return changedValue
+        return 0
 
     def selfrighting(self, rotation, gyroCompensation: float):
 
