@@ -169,8 +169,8 @@ class PID_CONTROL(object):
 
         # print("Rotation: " + str(rotation) + ", PID-Output: " + str(motorAdj))
 
-        #self.MOTOR_CONTROL_CLASS.set_speed_left(self.speedLeft + motorAdj)
-        #self.MOTOR_CONTROL_CLASS.set_speed_right(self.speedRight + motorAdj)
+        self.MOTOR_CONTROL_CLASS.set_speed_left(self.speedLeft + motorAdj)
+        self.MOTOR_CONTROL_CLASS.set_speed_right(self.speedRight + motorAdj)
 
         # else:
         #   self.selfrighting(rotation, gyroCompensation)
