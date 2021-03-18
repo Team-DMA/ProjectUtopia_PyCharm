@@ -2,8 +2,8 @@ from ADS1x15 import ADS1015
 import threading
 import time
 
-batteryEmpty = 10
-batteryFull = 13
+batteryEmpty = 11
+batteryFull = 13.5
 
 
 def scale(old_value, old_min, old_max, new_min, new_max):
