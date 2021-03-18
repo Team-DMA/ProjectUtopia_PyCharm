@@ -40,7 +40,7 @@ class ANALOG_DIGITAL_CONVERTER(threading.Thread):
         while True:
             self.data = self.adc.read_adc(self.channel)
             # 1Bit=3mV
-            self.voltage = self.data / 155.44
+            self.voltage = self.data / 136.452095
             self.voltageScaled = scale(self.voltage, batteryEmpty, batteryFull, 0, 100)
             self.percentage = int(round(clamp(self.voltageScaled, 0, 100)))
             time.sleep(0.1)
