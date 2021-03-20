@@ -1,5 +1,3 @@
-from PID_forTest import PID_Lukas
-# from pid_malanders import PID
 from PID import PID
 import time
 from pi_test import PID_Dominik
@@ -25,7 +23,6 @@ Gute Werte für L-Regler: Kp = 0.2, Ki = 0.08, Kd = 0.005
 
 pid = PID(Kp, Ki, Kd, None)
 
-pid2 = PID_Lukas(Kp, Ki, Kd)
 pid3 = PID_Dominik(Kp, 10)
 pidDataList = [setpoint]
 timeDataList = [0.0]
