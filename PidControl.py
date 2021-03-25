@@ -2,7 +2,7 @@ from MotorControl import MOTOR_CONTROL
 from PID import PID
 
 # graph
-enableGraph = False
+enableGraph = True
 
 import time
 
