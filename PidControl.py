@@ -124,7 +124,6 @@ class PID_CONTROL(object):
             timeDataList.append(now)
 
         return changedValue
-        return 0
 
     def selfrighting(self, rotation, gyroCompensation: float):
 
