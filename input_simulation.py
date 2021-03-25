@@ -25,43 +25,12 @@ class INPUT_SIM(threading.Thread):
 
 
         self.gyro_y = 0
-        time.sleep(self.waitTime)
-        self.gyro_y = 25
-        time.sleep(self.waitTime / 3)
-        self.gyro_y = 50
-        time.sleep(self.waitTime / 3)
-        self.gyro_y = 70
-        time.sleep(self.waitTime / 3)
-        self.gyro_y = 85
-        time.sleep(self.waitTime / 3)
-        self.gyro_y = 95
-        time.sleep(self.waitTime / 3)
-        self.gyro_y = 100
-        time.sleep(self.waitTime / 3)
-        self.gyro_y = 95
-        time.sleep(self.waitTime / 3)
-        self.gyro_y = 85
-        time.sleep(self.waitTime / 3)
-        self.gyro_y = 70
-        time.sleep(self.waitTime / 3)
-        self.gyro_y = 50
-        time.sleep(self.waitTime / 3)
-        self.gyro_y = 25
-        time.sleep(self.waitTime / 3)
-        self.gyro_y = 0
-        time.sleep(self.waitTime*2)
-        self.gyro_y = -100
-        time.sleep(20*self.waitTime)
-        self.gyro_y = 0
-        time.sleep(20 * self.waitTime)
-        self.gyro_y = 10
-        time.sleep(self.waitTime)
+        time.sleep(self.waitTime*20)
 
+        self.gyro_y = 70
+        time.sleep(self.waitTime*50)
         self.gyro_y = 0
-        time.sleep(self.waitTime)
-        self.gyro_y = 60
-        #time.sleep(self.waitTime*400)
-        time.sleep(self.waitTime * 100)
+        time.sleep(self.waitTime * 20)
 
         self.enabled = False
 

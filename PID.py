@@ -35,12 +35,11 @@ class PID(object):
 
         now = currentTime()
 
-        dt = now - self.lastTime if now - self.lastTime else 1e-16
+        dt = now - self.lastTime if now - self.lastTime else 0.00009
 
         if self.sampleTime is not None and dt < self.sampleTime and self.lastOutput is not None:
             # only update every sample_time seconds
             return self.lastOutput
-
         # compute error terms
         error = setpoint - inputVar
         d_input = inputVar - (self.lastInput if self.lastInput is not None else inputVar)
@@ -48,18 +47,22 @@ class PID(object):
 
         # compute integral and derivative terms
         self.integral = self.integral + self.Ki * error * dt  # M-Regler
+        if abs(self.output) > abs(inputVar):
+            self.integral = self.integral * 0.996
         self.integral = self.clamp(self.integral, self.outputLimits)  # avoid integral windup
-        #       self.integral = self.Ki * self.buffer  # L-Regler
+        #self.integral = self.Ki * self.buffer  # L-Regler
 
         #       self.derivative = -self.Kd * d_input / dt  # M-Regler
-        self.derivative = -(self.Kd*self.multiplier) * ((self.lastError - error) / dt)  # L-Regler
+        self.derivative = -(self.Kd*0.01) * ((self.lastError - error) / dt)  # L-Regler
         self.lastError = error
 
         #       self.output = self.proportional + self.integral + self.derivative  # M-Regler
         self.output = self.proportional + self.integral + self.derivative + self.buffer2  # L-Regler
 
-        #self.buffer = error * dt + self.buffer
-        self.buffer2 = self.derivative + self.buffer2 * 0.9995
+        self.output = self.clamp(self.output, self.outputLimits)
+        print(self.output)
+        #self.buffer = (error - self.output)* dt + self.buffer
+        self.buffer2 = self.derivative + self.buffer2 * 0.995
 
         # keep track of state
         self.lastOutput = self.output
