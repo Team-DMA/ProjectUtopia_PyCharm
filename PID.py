@@ -48,7 +48,7 @@ class PID(object):
         # compute integral and derivative terms
         self.integral = self.integral + self.Ki * error * dt  # M-Regler
         if abs(self.output) > abs(inputVar):
-            self.integral = self.integral * 0.996
+            self.integral = self.integral * 0.9
         self.integral = self.clamp(self.integral, self.outputLimits)  # avoid integral windup
         #self.integral = self.Ki * self.buffer  # L-Regler
 
@@ -61,7 +61,7 @@ class PID(object):
 
         self.output = self.clamp(self.output, self.outputLimits)
         #self.buffer = (error - self.output)* dt + self.buffer
-        self.buffer2 = self.derivative + self.buffer2 * 0.995
+        self.buffer2 = self.derivative + self.buffer2 * 0.9
 
         # keep track of state
         self.lastOutput = self.output
