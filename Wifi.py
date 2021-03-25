@@ -4,7 +4,7 @@ import time
 import sys
 
 # for sending msgs
-from gps_richtig import GPS
+from GPS import GPS
 from Barometer import BAROMETER
 # from Compass import COMPASS
 from AnalogDigitalConverter import ANALOG_DIGITAL_CONVERTER
@@ -43,17 +43,12 @@ class RCV_WIFI_MODULE(threading.Thread):
 
     def run(self):
 
-        # global newData
-        # newData = False
-
         print("\nOwn IP: " + str(socket.gethostbyname(socket.gethostname() + ".local")))
 
         print("\nWaiting for Dominik...")
         while True:
 
             if not self.newData:
-
-                # start = float(time.process_time()) #debug time measurement
 
                 self.data, (self.ip, self.port) = self.sock.recvfrom(1024)  # buffer size is 1024 bytes
                 self.smartphoneIp = self.ip  # set Smartphone IP
@@ -83,13 +78,8 @@ class RCV_WIFI_MODULE(threading.Thread):
                             readableString = self.data.decode("utf-8")
                             strengthL, strengthR = readableString.split("|")
 
-                            # print("strengthL: " + strengthL + ", strengthR: " + strengthR)
-
                             self.targetSpeedFB = int(strengthL)
                             self.rotateStrength = int(strengthR)
-
-                            # print("\n cycle time: " + str(float(float(time.process_time()) - float(start))))
-                            # debug cycle time
 
                             self.newData = True
                         else:
@@ -154,8 +144,6 @@ class SEND_WIFI_MODULE(threading.Thread):
                     try:
                         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
                         sock.sendto(data, (self.smartphoneIp, self.sendPort))
-                        # print("Msg: '" + str(self.msg) + "' send to: " + str(self.smartphoneIp) + ":" + str(
-                        #    self.sendPort))
                         self.sendFlag = True
 
                     except Exception as e:

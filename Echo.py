@@ -1,13 +1,15 @@
 import threading
 import time
-
 import RPi.GPIO as GPIO
 
 
 class ECHO(threading.Thread):
     
     def __init__(self, trigger, echo):
-
+        """
+        :param trigger: trigger pin
+        :param echo: echo pin
+        """
         threading.Thread.__init__(self)
         self.daemon = True
 
@@ -26,6 +28,9 @@ class ECHO(threading.Thread):
         print("Ultrasonic distance measurement system initialized")
 
     def run(self):
+        """
+        calculates distance every 0.5s
+        """
 
         while True:
 
@@ -46,10 +51,3 @@ class ECHO(threading.Thread):
             self.distance = (duration * 34320) / 2
 
             time.sleep(0.5)
-
-
-#GPIO.setmode(GPIO.BOARD)
-#temp = ECHO(16, 18)
-#while True:
-#    print(str(temp.distance))
-#    time.sleep(0.2)

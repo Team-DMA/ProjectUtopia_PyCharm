@@ -8,7 +8,12 @@ class PID(object):
 
     def __init__(self, Kp: float, Ki: float, Kd: float, sampleTime=0.01, outputLimits=(None, None)):
         """
-            Description
+        constructor of PID controller
+        :param Kp: proportional value
+        :param Ki: integral value
+        :param Kd: derivative value
+        :param sampleTime: sample time or no sample time
+        :param outputLimits: output limits or no output limits
         """
 
         self.Kp = Kp
@@ -28,6 +33,12 @@ class PID(object):
         self.reset()
 
     def __call__(self, inputVar, setpoint=0.0):
+        """
+        calculates the PID output
+        :param inputVar: input value
+        :param setpoint: setpoint
+        :return: PID output
+        """
 
         if inputVar > abs(90):
             self.controlError = True
@@ -46,28 +57,23 @@ class PID(object):
         self.proportional = self.Kp * error
 
         # compute integral and derivative terms
-        self.integral = self.integral + self.Ki * error * dt  # M-Regler
+        self.integral = self.integral + self.Ki * error * dt
         if abs(self.output) > abs(inputVar):
             self.integral = self.integral * 0.9
         self.integral = self.clamp(self.integral, self.outputLimits)  # avoid integral windup
-        #self.integral = self.Ki * self.buffer  # L-Regler
 
-        #       self.derivative = -self.Kd * d_input / dt  # M-Regler
-        self.derivative = -(self.Kd*0.01) * ((self.lastError - error) / dt)  # L-Regler
+        self.derivative = -(self.Kd*0.01) * ((self.lastError - error) / dt)
         self.lastError = error
 
-        #       self.output = self.proportional + self.integral + self.derivative  # M-Regler
-        self.output = self.proportional + self.integral + self.derivative + self.buffer2  # L-Regler
+        self.output = self.proportional + self.integral + self.derivative + self.buffer2
 
         self.output = self.clamp(self.output, self.outputLimits)
-        #self.buffer = (error - self.output)* dt + self.buffer
         self.buffer2 = self.derivative + self.buffer2 * 0.9
 
         # keep track of state
         self.lastOutput = self.output
         self.lastInput = inputVar
         self.lastTime = now
-        #print (self.output)
         return self.output
 
     def clamp(self, value, limits):

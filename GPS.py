@@ -1,12 +1,13 @@
 import serial
-import time
-import string
 import pynmea2
+import threading
 
-
-class GPS(object):
+class GPS(threading.Thread):
 
     def __init__(self):
+
+        threading.Thread.__init__(self)
+        self.daemon = True
 
         port = "/dev/serial0"
         self.ser = serial.Serial(
@@ -23,31 +24,25 @@ class GPS(object):
         self.lngDir = "O"
         self.error = False
         print("GPS initialized")
+        self.start()
 
-    def gps(self):
-
-        dataout = pynmea2.NMEAStreamReader()  # no idea what that is for
-        # newData = str(self.ser.readline())
+    def run(self):
+        """
+        gets the current position
+        """
+        dataout = pynmea2.NMEAStreamReader()
         newData = self.ser.readline()
         newData = newData.decode("utf-8")
 
-        # if newData[3] == "G" and newData[4] == "P" and newData[5] == "G" and newData[6] == "L" and newData[7] == "L":
         if newData.find("GPGGA"):
             print(newData)
-            # newData = newData.replace("b'", "")
-            # newData = newData.replace("\\r\\n'", "")
-            # newData = newData.replace("\\n", "")
-            # newData = newData.replace("'", "")
             newMessage = pynmea2.parse(newData)
             self.lat = newMessage.lat
             self.lng = newMessage.lon
             self.alt = newMessage.altitude
-            self.Error = False
+            self.error = False
         else:
-            self.Error = True
-        # print("Waiting for GPS...")
-
-        return self.lat, self.lng, self.alt
+            self.error = True
 
     def get_latitude(self):
         return self.lat
@@ -59,15 +54,3 @@ class GPS(object):
         return self.alt
 
 
-def generate_lines_that_equal(string, fp):
-    for line in fp:
-        if line == string:
-            yield line
-
-#
-# temp = GPS()
-# while True:
-#     x, y, alt = temp.gps()
-#     if temp.Error == False:
-#         print(str(x) + ", " + str(y) + ", Alt: " + str(alt))
-#     # time.sleep(0.1)

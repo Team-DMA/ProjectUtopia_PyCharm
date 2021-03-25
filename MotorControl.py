@@ -27,7 +27,6 @@ class MOTOR_CONTROL(object):
         GPIO.setup(enPinR, GPIO.OUT)
 
         self.pwmL = GPIO.PWM(enPinL, 1000)
-        #it has to be tested, if a higher or a lower frequency performes better
         self.pwmR = GPIO.PWM(enPinR, 1000)
         self.pwmL.start(0)
         self.pwmR.start(0)
@@ -36,12 +35,11 @@ class MOTOR_CONTROL(object):
         print("motor control initialized")
 
     def set_speed_left(self, speed: int):
-
         """
-            speed might be -15...+15
+        setting the speed of the left motor
+        :param speed: wanted speed
         """
         forceL = min(15, abs(speed))
-        # print ("forceL %d" % forceL)
 
         if speed > 0:
             GPIO.output(self.inBackwardPinL, False)
@@ -59,12 +57,11 @@ class MOTOR_CONTROL(object):
             self.pwmL.ChangeDutyCycle(0)
 
     def set_speed_right(self, speed: int):
-
         """
-            speed might be -15...+15
+        setting the speed of the right motor
+        :param speed: wanted speed
         """
         forceR = min(15, abs(speed))
-        # print ("forceR %d" % forceR)
 
         if speed > 0:
             GPIO.output(self.inBackwardPinR, False)
@@ -82,35 +79,15 @@ class MOTOR_CONTROL(object):
             self.pwmR.ChangeDutyCycle(0)
 
     def set_speed(self, speed: int):
-
+        """
+        setting the speed of both motors
+        :param speed: wanted speed
+        """
         self.set_speed_left(speed)
         self.set_speed_right(speed)
-        # print("speed: %f" % speed)
-
-    def turn_left(self, speed: int):
-
-        self.set_speed_left(0)
-        self.set_speed_right(speed)
-        print("turn left")
-
-    def turn_right(self, speed: int):
-
-        self.set_speed_right(0)
-        self.set_speed_left(speed)
-        print("turn right")
-
-    def forward(self, speed: int):
-
-        if speed > 0:
-            self.set_speed(speed)
-            print("Forwards")
-
-    def backward(self, speed: int):
-
-        if speed < 0:
-            self.set_speed(speed)
-            print("Backwards")
 
     def stop(self):
-
+        """
+        stopping the motors
+        """
         self.set_speed(0)

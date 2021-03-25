@@ -1,6 +1,6 @@
 import math
 import smbus
-import time
+
 
 
 class COMPASS(object):
@@ -14,6 +14,9 @@ class COMPASS(object):
         # self.hmc5883l = i2c_QMC5883L.QMC5883L(output_range=i2c_QMC5883L.RNG_8G)  # if not the first I2C Device, the 1 has to be changed
 
     def compass(self):
+        """
+        :return: current orientation related to north in degree
+        """
         # HMC5883 address, 0x1E and Read data
         data = self.bus.read_i2c_block_data(self.address, 0x03, 6)
 
@@ -33,7 +36,6 @@ class COMPASS(object):
         yMag = yMag + 80
 
         [x, y] = [xMag, yMag]
-        # print("X-Axis : %d" % xMag + ", Y-Axis : %d" % yMag + ", Z-Axis : %d" % zMag)
         if x is None or y is None:
             return None
         else:
@@ -46,16 +48,3 @@ class COMPASS(object):
             elif orientation >= 360.0:
                 orientation -= 360.0
         return orientation
-        # Output data to screen
-
-        # tmp123 = self.hmc5883l.get_magnet()
-        # return tmp123
-
-    # temp1 = BAROMETER()
-#temp2 = COMPASS()
-#while True:
-    #    print(str(temp1.Temperature()))
-    #    print(str(temp1.Pressure()))
-    #    print(str(temp1.Altitude()))
-#    print(str(temp2.compass()))
-#    time.sleep(0.2)

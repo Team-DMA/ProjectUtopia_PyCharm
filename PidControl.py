@@ -10,7 +10,8 @@ if enableGraph:
     print("Graph is on...")
     print("Importing matplotlib...")
     from matplotlib.pyplot import savefig, xlabel, title
-    #import matplotlib.pyplot as plt
+
+    # import matplotlib.pyplot as plt
     print("Importing pandas...")
     from pandas import DataFrame
     from datetime import datetime
@@ -34,6 +35,13 @@ startTime = time.time()
 class PID_CONTROL(object):
 
     def __init__(self, MotorControlClass: MOTOR_CONTROL, Kp, Ki, Kd):
+        """
+        constructor of PID_CONTROL
+        :param MotorControlClass: given MotorControll class
+        :param Kp: proportional value
+        :param Ki: integral value
+        :param Kd: derivative value
+        """
 
         # given variables
         self.Kp = Kp
@@ -56,9 +64,11 @@ class PID_CONTROL(object):
         print("PID_CONTROL initialized")
 
     def gen_image(self):
+        """
+        image generation for debugging
+        """
         try:
             if enableGraph:
-
                 print("Starting with image generation...")
 
                 # data
@@ -77,9 +87,6 @@ class PID_CONTROL(object):
                 t2 = datetime.now()
                 delta = t2 - t1
                 print("Plotting took %.2fs." % delta.total_seconds())
-                # data.to_excel('PID_DATA_EXCEL.xlsx', sheet_name='new_sheet', index=False)
-
-                # plt.show(block=False)
 
                 xlabel("Zeit in s")
                 title("Regler")
@@ -95,7 +102,6 @@ class PID_CONTROL(object):
                 delta = t2 - t1
                 print("Saving took %.2fs." % delta.total_seconds())
 
-
                 print("\nImage generated and saved.")
 
         except Exception as e:
@@ -103,18 +109,11 @@ class PID_CONTROL(object):
 
     def motor_adjust(self, rotation, speed, turn):
 
-        # ich weiß nicht, ob das funktioniert, gegebenenfalls muss auch noch turn miteinbezogen werden
-        # Der veränderte Sollwert soll dafür sorgen, das sich die Drohne nach vorne/hinten kippt, wenn man speed
-        # verwendet.
-        # vielleicht würde es auch reichen, den Speed nur über den Sollwert für den Regler zu steuern, da er dadurch
-        # automatisch nach vorne/hinten fährt.
+        # unfinished idea
         setpoint = speed * 2
-        # setpoint = 0
 
-        changedValue = self.PID_CLASS(rotation, setpoint)  # PID_CLASS.pid gibt Ausgang zurück
-        changedValue = (int(round(scale(changedValue, -75, 75, -15, 15))))  # scale, round, to int and minus
-        print("changedValue: " + str(changedValue))
-        # changedValue = (int(round(changedValue)))
+        changedValue = self.PID_CLASS(rotation, setpoint)  # PID_CLASS gibt Ausgang zurück
+        changedValue = (int(round(scale(changedValue, -75, 75, -15, 15))))  # scale, round, to int
 
         # graph
         if enableGraph:
@@ -142,8 +141,6 @@ class PID_CONTROL(object):
 
     def control(self, rotation, speed: int, turn: int):
 
-        # if(self.PID_CLASS.controlError == False):
-        # print("speed: %d" % speed)
         if turn < 0 and speed > 0:
             self.speedLeft = max(0, speed + turn)
             self.speedRight = speed
@@ -167,14 +164,7 @@ class PID_CONTROL(object):
             self.speedRight = 0
 
         motorAdj = self.motor_adjust(rotation, speed, turn)
-        # motoranpassung = 0
-        # print("speedLeft %d" % (self.speedLeft + motorAdj))
-        # print("speedRight %d" % (self.speedRight + motorAdj))
-
-        # print("Rotation: " + str(rotation) + ", PID-Output: " + str(motorAdj))
 
         self.MOTOR_CONTROL_CLASS.set_speed_left(self.speedLeft + motorAdj)
         self.MOTOR_CONTROL_CLASS.set_speed_right(self.speedRight + motorAdj)
 
-        # else:
-        #   self.selfrighting(rotation, gyroCompensation)

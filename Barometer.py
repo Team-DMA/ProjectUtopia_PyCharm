@@ -1,7 +1,6 @@
 import time
-import math
 import smbus
-#import i2c_QMC5883L
+
 
 
 # HP206C address, 0x76(118)

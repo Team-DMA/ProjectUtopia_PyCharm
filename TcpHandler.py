@@ -20,6 +20,9 @@ class TCP_HANDLER(threading.Thread):
         print("\nTCP Handler init.")
 
     def run(self):
+        """
+        Handling the TCP connection for smartphone
+        """
 
         print("\nwait for first TCP Data")
         while True:
@@ -27,7 +30,6 @@ class TCP_HANDLER(threading.Thread):
             connection, client_address = self.sock.accept()
 
             try:
-                # print("\nConnection from: "+str(client_address))
                 data = connection.recv(self.bufferSize)
 
             except Exception as e:

@@ -8,19 +8,6 @@ class KalmanAngle:
         self.rate = 0.0
         self.P = [[0.0, 0.0], [0.0, 0.0]]
 
-    '''def kalman():
-        QAngle = 0.001
-        QBias = 0.003
-        RMeasure = 0.03
-
-        angle = 0.0
-        bias = 0.0
-
-        P[0][0] = 0.0
-        P[0][1] = 0.0
-        P[1][0] = 0.0
-        P[1][1] = 0.0'''
-
     def getAngle(self, newAngle, newRate, dt):
         # step 1:
         self.rate = newRate - self.bias  # new_rate is the latest Gyro measurement

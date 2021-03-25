@@ -1,11 +1,7 @@
 import math
 import smbus
 from Kalman import KalmanAngle
-# debug
 import time
-
-
-# debug
 
 class GYRO(object):
 
@@ -58,17 +54,6 @@ class GYRO(object):
         self.compAngleY = 0
         print("gyroscope initialized")
 
-        # average
-
-        self.yRotationk_10 = 0
-        self.yRotationk_9 = 0
-        self.yRotationk_8 = 0
-        self.yRotationk_7 = 0
-        self.yRotationk_6 = 0
-        self.yRotationk_5 = 0
-        self.yRotationk_4 = 0
-        self.yRotationk_3 = 0
-        self.yRotationk_2 = 0
         self.yRotationk_1 = 0
 
     # Methods
@@ -106,7 +91,9 @@ class GYRO(object):
         return math.degrees(radians)
 
     def read_gyro(self):
-
+        """
+        writes the y-rotation in the yRotation variable
+        """
         self.gyroscopeX = self.read_word_2c(0x43)
         self.gyroscopeY = self.read_word_2c(0x45)
         self.gyroscopeZ = self.read_word_2c(0x47)
@@ -122,11 +109,6 @@ class GYRO(object):
         self.accelerationXScaled = self.accelerationX / 16384.0
         self.accelerationYScaled = self.accelerationY / 16384.0
         self.accelerationZScaled = self.accelerationZ / 16384.0
-
-        # self.xRotation = self.get_x_rotation(self.accelerationXScaled, self.accelerationYScaled,
-        #                                      self.accelerationZScaled)
-        # self.yRotation = self.get_y_rotation(self.accelerationXScaled, self.accelerationYScaled,
-        #                                      self.accelerationZScaled)
 
         self.kalmanX.setAngle(self.roll)
         self.kalmanY.setAngle(self.pitch)
@@ -157,30 +139,14 @@ class GYRO(object):
             gyroXRate = -gyroXRate
             self.kalAngleX = self.kalmanX.getAngle(self.roll, gyroXRate, dt)
 
-        # angle = (rate of change of angle) * change in time
         self.gyroXAngle = gyroXRate * dt
         self.gyroYAngle = self.gyroYAngle * dt
 
-        # compAngle = constant * (old_compAngle + angle_obtained_from_gyro) + constant * angle_obtained from accelerometer
         self.compAngleX = 0.93 * (self.compAngleX + gyroXRate * dt) + 0.07 * self.roll
         self.compAngleY = 0.93 * (self.compAngleY + gyroYRate * dt) + 0.07 * self.pitch
 
         self.xRotation = self.kalAngleX
 
-        # self.yRotationk_10 = self.yRotationk_9
-        # self.yRotationk_9 = self.yRotationk_8
-        # self.yRotationk_8 = self.yRotationk_7
-        # self.yRotationk_7 = self.yRotationk_6
-        # self.yRotationk_6 = self.yRotationk_5
-        # self.yRotationk_5 = self.yRotationk_4
-        # self.yRotationk_4 = self.yRotationk_3
-        # self.yRotationk_3 = self.yRotationk_2
-        # self.yRotationk_2 = self.yRotationk_1
         self.yRotationk_1 = self.yRotationRaw
         self.yRotationRaw = self.kalAngleY
         self.yRotation = (self.yRotationk_1 + self.yRotationRaw) / 2
-# debug
-# temp = GYRO()
-# while True:
-#     temp.read_gyro()
-#     time.sleep(0.2)

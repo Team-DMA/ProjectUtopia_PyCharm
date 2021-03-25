@@ -7,11 +7,27 @@ batteryFull = 13.5
 
 
 def scale(old_value, old_min, old_max, new_min, new_max):
+    """
+    scaling old scale to new scale
+    :param old_value: old value
+    :param old_min: old minimum
+    :param old_max: old maximum
+    :param new_min: new minimum
+    :param new_max: new maximum
+    :return: value, which is accordingly scaled
+    """
     new_value = ((old_value - old_min) / (old_max - old_min)) * (new_max - new_min) + new_min
     return new_value
 
 
 def clamp(value, minOut, maxOut):
+    """
+    value gets clamped
+    :param value: value
+    :param minOut: lower limit
+    :param maxOut: upper limit
+    :return: clamped value
+    """
     if value > maxOut:
         return maxOut
     elif value < minOut:

@@ -13,6 +13,7 @@ from TcpHandler import TCP_HANDLER
 
 print("Starting program...")
 
+# setting pins
 GPIO.setmode(GPIO.BOARD)
 pinMotorLeftForwards = 29
 pinMotorRightForwards = 31
@@ -23,6 +24,7 @@ pinEnMotorRight = 38
 pinEchoTrigger = 16
 pinEchoEcho = 18
 
+# default values for PID
 Kp = 0.0
 Ki = 0.0
 Kd = 0.0
@@ -43,7 +45,7 @@ ECHO_CLASS = ECHO(pinEchoTrigger, pinEchoEcho)
 print("Generating GYRO_CLASS...")
 GYRO_CLASS = GYRO()
 
-# Placeholder for Classes
+# Placeholder for classes
 PID_CONTROL_CLASS = None
 SELFDRIVING_CLASS = None
 
@@ -56,6 +58,7 @@ if __name__ == "__main__":
 
                 if Kp == 0.0 and Ki == 0.0 and Kd == 0.0:
                     if RCV_WIFI_MODULE_CLASS.constantsReceived:
+                        # wait until constants received from smartphone
                         print("nKp: " + str(RCV_WIFI_MODULE_CLASS.Kp))
                         print("nKi: " + str(RCV_WIFI_MODULE_CLASS.Ki))
                         print("nKd: " + str(RCV_WIFI_MODULE_CLASS.Kd))
@@ -63,7 +66,7 @@ if __name__ == "__main__":
                         Ki = RCV_WIFI_MODULE_CLASS.Ki
                         Kd = RCV_WIFI_MODULE_CLASS.Kd
 
-                        # Class init
+                        # class init
                         PID_CONTROL_CLASS = PID_CONTROL(MOTOR_CONTROL_CLASS, Kp, Ki, Kd)
                         if PID_CONTROL_CLASS is None:
                             print("PID_CLASS not defined")
@@ -76,41 +79,28 @@ if __name__ == "__main__":
                 if RCV_WIFI_MODULE_CLASS.constantsReceived and (PID_CONTROL_CLASS is not None):
 
                     if RCV_WIFI_MODULE_CLASS.newData:
-                        # print("\nTargetSpeedFB: " + str(RCV_WIFI_MODULE_CLASS.targetSpeedFB))
-                        # forwards or backwards depending on +/-
-                        # print("\nRotateStrength: " + str(RCV_WIFI_MODULE_CLASS.rotateStrength))
-                        # left or right depending on -/+
                         SEND_WIFI_MODULE_CLASS.smartphoneIp = RCV_WIFI_MODULE_CLASS.smartphoneIp  # IP set
                         RCV_WIFI_MODULE_CLASS.newData = False
-                        # data crunched, RCV_WIFI_MODULE_CLASS can receive again
+                        # data get, RCV_WIFI_MODULE_CLASS can receive again
 
-                    if True:
+                    # read gyroscope
+                    GYRO_CLASS.read_gyro()
+                    speed = RCV_WIFI_MODULE_CLASS.targetSpeedFB
+                    turn = RCV_WIFI_MODULE_CLASS.rotateStrength
+                    PID_CONTROL_CLASS.control(GYRO_CLASS.yRotation, speed, turn)
 
-                        # read gyroscope
-                        GYRO_CLASS.read_gyro()
-
-                        distance = ECHO_CLASS.distance  # Debug
-                        # print("Debug distance: " + str(distance))  # Debug
-
-                        speed = RCV_WIFI_MODULE_CLASS.targetSpeedFB
-                        turn = RCV_WIFI_MODULE_CLASS.rotateStrength
-                        PID_CONTROL_CLASS.control(GYRO_CLASS.yRotation, speed, turn)
-
-                    else:
-                        SELFDRIVING_CLASS.drive()
-
-            except Exception as e:
+            except Exception as e:  # error handling
                 MOTOR_CONTROL_CLASS.stop()
                 print("Main-Error: " + str(e))
                 GPIO.cleanup()
                 break
 
-    except Exception as e:
+    except Exception as e:  # error handling
         MOTOR_CONTROL_CLASS.stop()
         print("Main-Error: " + str(e))
         GPIO.cleanup()
 
-    except KeyboardInterrupt:
+    except KeyboardInterrupt:  # KeyboardInterrupt handling
         print("Interrupting program...")
 
         MOTOR_CONTROL_CLASS.stop()
@@ -127,6 +117,6 @@ if __name__ == "__main__":
         print("\nProgram manually aborted. Exiting...")
         GPIO.cleanup()
 
-    finally:
+    finally:  # after finishing, cleanup
         MOTOR_CONTROL_CLASS.stop()
         GPIO.cleanup()
