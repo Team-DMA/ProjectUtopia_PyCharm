@@ -112,7 +112,8 @@ class PID_CONTROL(object):
         # setpoint = 0
 
         changedValue = self.PID_CLASS(rotation, setpoint)  # PID_CLASS.pid gibt Ausgang zurück
-        changedValue = -(int(round(scale(changedValue, -75, 75, -15, 15))))  # scale, round, to int and minus
+        changedValue = (int(round(scale(changedValue, -75, 75, -15, 15))))  # scale, round, to int and minus
+        print("changedValue: " + str(changedValue))
         # changedValue = (int(round(changedValue)))
 
         # graph
