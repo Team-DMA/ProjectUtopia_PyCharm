@@ -7,12 +7,15 @@ enableGraph = False
 import time
 
 if enableGraph:
+    print("Graph is on...")
     print("Importing matplotlib...")
     from matplotlib.pyplot import savefig, xlabel, title
     #import matplotlib.pyplot as plt
     print("Importing pandas...")
     from pandas import DataFrame
     from datetime import datetime
+else:
+    print("Graph is off...")
 
 
 def scale(old_value, old_min, old_max, new_min, new_max):

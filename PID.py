@@ -60,7 +60,6 @@ class PID(object):
         self.output = self.proportional + self.integral + self.derivative + self.buffer2  # L-Regler
 
         self.output = self.clamp(self.output, self.outputLimits)
-        print(self.output)
         #self.buffer = (error - self.output)* dt + self.buffer
         self.buffer2 = self.derivative + self.buffer2 * 0.995
 
