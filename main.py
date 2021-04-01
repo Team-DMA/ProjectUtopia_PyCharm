@@ -6,7 +6,6 @@ from Echo import ECHO
 from Gyro import GYRO
 from MotorControl import MOTOR_CONTROL
 from PidControl import PID_CONTROL
-from SelfDriving import SELF_DRIVING
 from Wifi import RCV_WIFI_MODULE
 from Wifi import SEND_WIFI_MODULE
 from TcpHandler import TCP_HANDLER
@@ -47,7 +46,6 @@ GYRO_CLASS = GYRO()
 
 # Placeholder for classes
 PID_CONTROL_CLASS = None
-SELFDRIVING_CLASS = None
 
 print("Main-Class INIT finished.")
 
@@ -70,9 +68,7 @@ if __name__ == "__main__":
                         PID_CONTROL_CLASS = PID_CONTROL(MOTOR_CONTROL_CLASS, Kp, Ki, Kd)
                         if PID_CONTROL_CLASS is None:
                             print("PID_CLASS not defined")
-                        SELFDRIVING_CLASS = SELF_DRIVING(GYRO_CLASS, ECHO_CLASS, PID_CONTROL_CLASS)
-                        if SELFDRIVING_CLASS is None:
-                            print("SELFDRIVING_CLASS not defined")
+
 
                         print("Const. INIT finished.")
 
