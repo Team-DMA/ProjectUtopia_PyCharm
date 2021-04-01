@@ -163,8 +163,8 @@ class PID_CONTROL(object):
             self.speedLeft = 0
             self.speedRight = 0
 
-        motorAdj = self.motor_adjust(rotation, speed, turn)
-
+        #motorAdj = self.motor_adjust(rotation, speed, turn)
+        motorAdj = 0            #Debug
         self.MOTOR_CONTROL_CLASS.set_speed_left(self.speedLeft + motorAdj)
         self.MOTOR_CONTROL_CLASS.set_speed_right(self.speedRight + motorAdj)
 
