@@ -54,16 +54,3 @@ class BAROMETER(object):
         # Convert the data to 20-bits
         self.altitude = (((data[0] & 0x0F) * 65536) + (data[1] * 256) + data[2]) / 100.00
         return self.altitude
-
-
-
-
-#
-#temp1 = BAROMETER()
-#temp2 = COMPASS()
-#while True:
-#    print(str(temp1.Temperature()))
-#    print(str(temp1.Pressure()))
-#    print(str(temp1.Altitude()))
-#    print(str(temp2.Compass()))
-#    time.sleep(0.2)

@@ -45,7 +45,7 @@ class RCV_WIFI_MODULE(threading.Thread):
 
         print("\nOwn IP: " + str(socket.gethostbyname(socket.gethostname() + ".local")))
 
-        print("\nWaiting for Dominik...")
+        print("\nWaiting for Smartphone...")
         while True:
 
             if not self.newData:
